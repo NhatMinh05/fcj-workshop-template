@@ -1,57 +1,32 @@
 ---
 title: "Week 9 Worklog"
-date: 2024-01-01
-weight: 1
+date: 2026-09-14
+weight: 9
 chapter: false
 pre: " <b> 1.9. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
-
 
 ### Week 9 Objectives:
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Implement asynchronous event-driven messaging with SNS, SQS, and EventBridge.
+* Build secure user authentication flows for Single Page Applications (SPA) with Amazon Cognito.
+* Deep dive into AWS Artificial Intelligence services (Bedrock, Rekognition, Polly, Transcribe, Comprehend).
+* Orchestrate serverless microservice workflows using AWS Step Functions.
+* Construct full-stack serverless pipelines connecting Lambda, S3, and DynamoDB.
+* Complete FCAJ YouTube video lessons 216 - 240.
 
 ### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-
+| Day | Task | Start Date | Completion Date | Reference Material |
+| --- | --- | --- | --- | --- |
+| 2 | - Microservices Messaging and Eventing:<br>&emsp;+ Configure Amazon SNS topics for pub/sub fan-out notifications.<br>&emsp;+ Decouple batch message processing with Amazon SQS standard and FIFO dead-letter queues.<br>&emsp;+ Route complex operational events with Amazon EventBridge rules. | 09/11/2026 | 09/11/2026 | <https://000054.awsfcaj.com/> |
+| 3 | - Single Page Application (SPA) Security & Authentication:<br>&emsp;+ Create Amazon Cognito User Pools and Identity Pools.<br>&emsp;+ Implement user signup, sign-in, MFA verification, and JWT token authorization for client apps. | 10/11/2026 | 10/11/2026 | <https://000055.awsfcaj.com/> |
+| 4 | - **Advanced AWS AI Services Deep Dive:**<br>&emsp;+ Computer vision with Amazon Rekognition (object detection and facial analysis).<br>&emsp;+ Natural Language Processing with Amazon Comprehend (sentiment analysis and entity extraction).<br>&emsp;+ Speech synthesis and transcription with Amazon Polly & Transcribe.<br>&emsp;+ LLM invocation with Amazon Bedrock Nova/Claude foundation models. | 11/11/2026 | 11/11/2026 | <https://000056.awsfcaj.com/> |
+| 5 | - Serverless Workflow Orchestration with AWS Step Functions:<br>&emsp;+ Design visual state machines coordinating parallel and conditional Lambda execution.<br>&emsp;+ Implement robust retry mechanisms, catch handlers, and human-in-the-loop task approval. | 12/11/2026 | 12/11/2026 | <https://000047.awsfcaj.com/> |
+| 6 | - End-to-end Serverless Pipeline:<br>&emsp;+ Configure S3 ObjectCreated event notifications triggering AWS Lambda.<br>&emsp;+ Process document metadata and write structured records into Amazon DynamoDB.<br>&emsp;+ Complete FCAJ YouTube Lessons 216 - 240. | 13/11/2026 | 13/11/2026 | <https://000078.awsfcaj.com/> |
 
 ### Week 9 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Successfully created and configured an AWS Free Tier account.
-
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
-
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
-
-* Used AWS CLI to perform basic operations such as:
-
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* Architected resilient asynchronous messaging using Amazon SNS, SQS, and EventBridge.
+* Secured frontend web applications with Amazon Cognito JWT authentication.
+* Integrated pre-trained and generative AI capabilities (Bedrock, Rekognition, Comprehend, Polly, Transcribe).
+* Orchestrated multi-step serverless processing pipelines with AWS Step Functions.

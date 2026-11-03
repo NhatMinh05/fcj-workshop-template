@@ -1,57 +1,32 @@
 ---
 title: "Week 6 Worklog"
-date: 2024-01-01
-weight: 1
+date: 2026-09-14
+weight: 6
 chapter: false
 pre: " <b> 1.6. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
-
 
 ### Week 6 Objectives:
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Assess compliance and aggregate security findings with AWS Security Hub.
+* Manage cryptographic keys and data envelope encryption with AWS KMS.
+* Containerize web applications using Docker and publish images to Amazon ECR.
+* Orchestrate container workloads using Amazon Elastic Container Service (ECS).
+* Automate continuous integration and continuous delivery with AWS CodePipeline.
+* Complete FCAJ YouTube video lessons 136 - 160.
 
 ### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-
+| Day | Task | Start Date | Completion Date | Reference Material |
+| --- | --- | --- | --- | --- |
+| 2 | - Security posture assessment and application protection:<br>&emsp;+ Enable AWS Security Hub and run automated checks against CIS AWS Foundations Benchmark.<br>&emsp;+ Remediate non-compliant security findings.<br>&emsp;+ Review AWS WAF and Shield protection patterns. | 19/10/2026 | 19/10/2026 | <https://000018.awsfcaj.com/> <br> <https://000026.awsfcaj.com/> |
+| 3 | - Cryptographic Key Management with AWS Key Management Service (KMS):<br>&emsp;+ Create and configure Customer Managed Keys (CMKs).<br>&emsp;+ Set up Key Policies and automatic annual key rotation.<br>&emsp;+ Implement client-side and server-side encryption for S3 buckets and EBS volumes. | 20/10/2026 | 20/10/2026 | <https://000033.awsfcaj.com/> |
+| 4 | - Application Containerization with Docker:<br>&emsp;+ Author optimized multi-stage Dockerfiles.<br>&emsp;+ Build and test container images locally.<br>&emsp;+ Create Amazon Elastic Container Registry (ECR) repository and push image tags. | 21/10/2026 | 21/10/2026 | <https://000015.awsfcaj.com/> |
+| 5 | - Container Orchestration on Amazon ECS:<br>&emsp;+ Define ECS Task Definitions specifying container ports, CPU/memory limits, and logging.<br>&emsp;+ Launch ECS Cluster and run resilient ECS Services behind an Application Load Balancer (ALB). | 22/10/2026 | 22/10/2026 | <https://000016.awsfcaj.com/> |
+| 6 | - Continuous Delivery Pipeline with AWS CodePipeline:<br>&emsp;+ Configure automated pipeline sourcing code from GitHub/CodeCommit.<br>&emsp;+ Build container images with AWS CodeBuild and deploy revisions to Amazon ECS.<br>&emsp;+ Complete FCAJ YouTube Lessons 136 - 160. | 23/10/2026 | 23/10/2026 | <https://000029.awsfcaj.com/> |
 
 ### Week 6 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Successfully created and configured an AWS Free Tier account.
-
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
-
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
-
-* Used AWS CLI to perform basic operations such as:
-
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* Benchmarked cloud compliance against CIS standards using AWS Security Hub.
+* Secured data at rest across storage services using AWS KMS customer-managed keys.
+* Containerized web applications with Docker and Amazon ECR.
+* Built an automated CI/CD deployment pipeline to Amazon ECS using AWS CodePipeline.

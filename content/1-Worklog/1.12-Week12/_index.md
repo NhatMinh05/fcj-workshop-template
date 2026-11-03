@@ -1,57 +1,35 @@
 ---
 title: "Week 12 Worklog"
-date: 2024-01-01
-weight: 2
+date: 2026-09-14
+weight: 12
 chapter: false
 pre: " <b> 1.12. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
-
 
 ### Week 12 Objectives:
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Enforce intelligent threat detection with Amazon GuardDuty and secret credential rotation with Secrets Manager.
+* Construct an enterprise Data Lake on Amazon S3 with AWS Lake Formation governance.
+* Create interactive Business Intelligence dashboards using Amazon QuickSight.
+* Execute serverless ad-hoc SQL big data queries with Amazon Athena.
+* Master Machine Learning model training, tuning, and endpoint deployment on Amazon SageMaker (SageMaker Immersion Day).
+* Complete 100% of the 296 FCAJ YouTube video lessons.
+* Finalize personal workshop repository, summarize internship accomplishments, and defend final report.
 
 ### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-
+| Day | Task | Start Date | Completion Date | Reference Material |
+| --- | --- | --- | --- | --- |
+| 2 | - Threat Detection and Secrets Management:<br>&emsp;+ Enable Amazon GuardDuty for continuous malicious activity monitoring and anomaly detection.<br>&emsp;+ Store, encrypt, and configure automated rotation of database credentials with AWS Secrets Manager. | 30/11/2026 | 30/11/2026 | <https://000098.awsfcaj.com/> <br> <https://000096.awsfcaj.com/> |
+| 3 | - Enterprise Data Lake Construction:<br>&emsp;+ Ingest and catalog diverse raw business data on Amazon S3.<br>&emsp;+ Configure AWS Lake Formation for centralized column-level access control and audit logging. | 01/12/2026 | 01/12/2026 | <https://000070.awsfcaj.com/> |
+| 4 | - Business Intelligence & Visual Analytics:<br>&emsp;+ Connect Amazon QuickSight to Athena and S3 data sources.<br>&emsp;+ Build interactive analytical dashboards, visual KPI graphs, and schedule automated report delivery. | 02/12/2026 | 02/12/2026 | <https://000073.awsfcaj.com/> |
+| 5 | - Serverless Analytics at Scale with Amazon Athena:<br>&emsp;+ Execute complex analytical SQL queries against petabyte-scale data stored in S3.<br>&emsp;+ Optimize query performance and cost using Apache Parquet columnar storage and partition projection. | 03/12/2026 | 03/12/2026 | <https://000106.awsfcaj.com/> |
+| 6 | - **Machine Learning & AI on Amazon SageMaker (Immersion Day):**<br>&emsp;+ Launch Amazon SageMaker Studio notebooks.<br>&emsp;+ Perform data preprocessing, feature engineering, and model training using built-in algorithms.<br>&emsp;+ Deploy trained models to real-time SageMaker HTTPS inference endpoints.<br>&emsp;+ **Successfully complete 100% of all 296 FCAJ YouTube video lessons!** | 04/12/2026 | 04/12/2026 | <https://000200.awsfcaj.com/> |
+| Wrap-up (07/12 - 14/12) | - Finalize individual Workshop guide and documentation on GitHub.<br>- Consolidate 12-week worklog, self-assessment, and mentor feedback reports.<br>- Deliver final internship project defense and complete the First Cloud AI Journey Bootcamp! | 07/12/2026 | 14/12/2026 | <https://cloudjourney.awsfcaj.com/1-explore/> |
 
 ### Week 12 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Successfully created and configured an AWS Free Tier account.
-
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
-
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
-
-* Used AWS CLI to perform basic operations such as:
-
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* Harden security posture with Amazon GuardDuty threat intelligence and Secrets Manager rotation.
+* Built an enterprise-ready Data Lake analyzed through Athena and visualized in Amazon QuickSight.
+* Acquired comprehensive hands-on machine learning expertise with Amazon SageMaker.
+* Completed 100% of all 296 online video lessons of First Cloud Journey Kick off 2024.
+* Successfully defended the 3-month Cloud & AI Internship Report at AWS First Cloud AI Journey!

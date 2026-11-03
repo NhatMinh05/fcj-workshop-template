@@ -1,57 +1,32 @@
 ---
 title: "Week 7 Worklog"
-date: 2024-01-01
-weight: 1
+date: 2026-09-14
+weight: 7
 chapter: false
 pre: " <b> 1.7. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
-
 
 ### Week 7 Objectives:
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Deploy fully managed shared Windows storage with Amazon FSx.
+* Architect a secure, scalable Data Lake foundation on Amazon S3.
+* Design high-throughput, low-latency NoSQL databases with Amazon DynamoDB.
+* Optimize cloud expenditures using Savings Plans and Reserved Instances.
+* Right-size compute instances using AWS Compute Optimizer.
+* Complete FCAJ YouTube video lessons 161 - 185.
 
 ### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-
+| Day | Task | Start Date | Completion Date | Reference Material |
+| --- | --- | --- | --- | --- |
+| 2 | - Deploy enterprise Windows file storage with Amazon FSx for Windows File Server:<br>&emsp;+ Integrate with Microsoft Active Directory.<br>&emsp;+ Configure high-availability multi-AZ file shares and test automated failover. | 26/10/2026 | 26/10/2026 | <https://000025.awsfcaj.com/> |
+| 3 | - Build Data Lake storage foundation on Amazon S3:<br>&emsp;+ Structure Raw, Transformed, and Curated data tiers.<br>&emsp;+ Apply S3 Lifecycle policies (transition to S3 Glacier) and S3 Object Lock for immutability.<br>&emsp;+ Configure S3 Access Points for departmental governance. | 27/10/2026 | 27/10/2026 | <https://000035.awsfcaj.com/> |
+| 4 | - Advanced NoSQL Database Architecture with Amazon DynamoDB:<br>&emsp;+ Model partition keys, sort keys, and global secondary indexes (GSI).<br>&emsp;+ Configure DynamoDB Streams for change data capture.<br>&emsp;+ Enable DynamoDB Point-in-Time Recovery (PITR) and auto-scaling. | 28/10/2026 | 28/10/2026 | <https://000039.awsfcaj.com/> |
+| 5 | - Long-term Cloud Cost Financial Engineering:<br>&emsp;+ Analyze workload stability using AWS Cost Explorer.<br>&emsp;+ Evaluate Compute Savings Plans, EC2 Instance Savings Plans, and Reserved Instances (RI). | 29/10/2026 | 29/10/2026 | <https://000029.awsfcaj.com/> |
+| 6 | - Compute Workload Optimization:<br>&emsp;+ Leverage AWS Compute Optimizer to detect over-provisioned and under-utilized EC2 instances.<br>&emsp;+ Execute instance right-sizing to reduce compute costs.<br>&emsp;+ Complete FCAJ YouTube Lessons 161 - 185. | 30/10/2026 | 30/10/2026 | <https://000032.awsfcaj.com/> |
 
 ### Week 7 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
-
-* Successfully created and configured an AWS Free Tier account.
-
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
-
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
-
-* Used AWS CLI to perform basic operations such as:
-
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+* Delivered enterprise file storage with Amazon FSx for Windows.
+* Architected structured multi-tier Data Lake storage on Amazon S3.
+* Designed resilient NoSQL database models using Amazon DynamoDB GSIs and Streams.
+* Formulated long-term cost reduction strategies with Savings Plans and Compute Optimizer.
