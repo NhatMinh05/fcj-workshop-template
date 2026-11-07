@@ -81,5 +81,3 @@ Tham gia sự kiện **“Buildrathon Kickoff: Code the Future with CMC Global�
 ### Một Số Hình Ảnh Khi Tham Gia Sự Kiện
 
 ![Check-in tại Bitexco Financial Tower - FCAJ & CMC Global Buildrathon Kickoff](https://nhatminh05.github.io/fcj-workshop-template/images/4-EventParticipated/4.1-Event1/event1_checkin.jpg)
-
-> Tổng kết lại, sự kiện không chỉ trang bị cho tôi những kiến thức chuyên sâu về Cloud & Generative AI mà còn truyền cảm hứng mạnh mẽ để tôi tự tin bứt phá trên con đường sự nghiệp công nghệ sắp tới.

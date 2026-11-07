@@ -83,5 +83,3 @@ Tham gia **“AWS Cloud & AI Day 2026 – HCMC Watch Party”** trực tiếp t�
 ### Một Số Hình Ảnh Khi Tham Gia Sự Kiện
 
 ![Check-in thẻ tham dự tại Văn phòng AWS cùng nhóm bạn FPT University](https://nhatminh05.github.io/fcj-workshop-template/images/4-EventParticipated/4.2-Event2/event2_group.jpg)
-
-> Nhìn chung, AWS Cloud & AI Day 2026 Watch Party không chỉ mang đến cho tôi một khối lượng kiến thức khổng lồ về Cloud & AI mà còn tiếp thêm ngọn lửa nhiệt huyết để tôi kiên định theo đuổi đam mê công nghệ.
