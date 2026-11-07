@@ -1,6 +1,6 @@
 ---
 title: "Week 6 Worklog"
-date: 2026-10-19
+date: 2026-09-14
 weight: 6
 chapter: false
 pre: " <b> 1.6. </b> "
@@ -18,19 +18,19 @@ pre: " <b> 1.6. </b> "
 
 | Day | Task | Start Date | Completion Date | Reference Material |
 | --- | --- | --- | --- | --- |
-| 2 | - Enable AWS Security Hub and run CIS AWS Foundations Benchmark checks<br>- Prioritize and remediate critical security posture findings<br>- Configure AWS WAF web ACLs with managed rule groups on ALB | 19/10/2026 | 19/10/2026 | https://000018.awsfcaj.com/ <br> https://000026.awsfcaj.com/ |
-| 3 | - Create Customer Managed Keys (CMKs) in AWS KMS<br>- Configure key policies, aliases, and automated annual key rotation<br>- Test envelope encryption on S3 buckets and EBS volumes with KMS | 20/10/2026 | 20/10/2026 | https://000033.awsfcaj.com/ |
-| 4 | - Write optimized multi-stage Dockerfiles for Node.js application<br>- Build and run local Docker containers, verifying health endpoints<br>- Create Amazon ECR private repository and push tagged container images | 21/10/2026 | 21/10/2026 | https://000015.awsfcaj.com/ |
-| 5 | - Create Amazon ECS cluster with EC2 and Fargate capacity providers<br>- Define Task Definitions specifying CPU, memory, and ECR image URI<br>- Deploy ECS Service with Application Load Balancer and target groups | 22/10/2026 | 22/10/2026 | https://000016.awsfcaj.com/ |
-| 6 | - Build automated CI/CD pipeline connecting GitHub, CodeBuild, and ECS<br>- Configure buildspec.yml to build Docker images and update task definitions<br>- Test continuous deployment on git push<br>- Watch FCAJ YouTube Lessons 136 - 160 | 23/10/2026 | 23/10/2026 | https://000029.awsfcaj.com/ <br> https://www.youtube.com/@AWSStudyGroup |
+| 2 | - Enable AWS Security Hub and review standard security score<br>- Identify and fix common security configuration findings<br>- Create AWS WAF Web ACL and attach to Application Load Balancer | 19/10/2026 | 19/10/2026 | https://000018.awsfcaj.com/ <br> https://000026.awsfcaj.com/ |
+| 3 | - Create Customer Managed Keys (CMK) in AWS Key Management Service (KMS)<br>- Configure key policies and enable automatic key rotation<br>- Encrypt S3 buckets and EBS volumes using custom KMS keys | 20/10/2026 | 20/10/2026 | https://000033.awsfcaj.com/ |
+| 4 | - Write a Dockerfile for a sample Node.js web application<br>- Build and run Docker container image on local machine<br>- Create Amazon ECR repository and push Docker image to ECR | 21/10/2026 | 21/10/2026 | https://000015.awsfcaj.com/ |
+| 5 | - Create Amazon ECS cluster with EC2 launch type<br>- Create ECS Task Definition using the container image from ECR<br>- Deploy ECS Service behind an Application Load Balancer | 22/10/2026 | 22/10/2026 | https://000016.awsfcaj.com/ |
+| 6 | - Set up AWS CodePipeline with CodeBuild to automate deployments<br>- Trigger pipeline on Git push to automatically build and deploy to ECS<br>- Watch FCAJ YouTube Lessons 136 - 160 | 23/10/2026 | 23/10/2026 | https://000029.awsfcaj.com/ <br> https://www.youtube.com/@AWSStudyGroup |
 
 ### Week 6 Achievements:
 
-* Evaluated CIS security benchmarks with Security Hub and added WAF rules
-* Created Customer Managed Keys and configured KMS encryption
-* Containerized Node.js applications with Docker and pushed to Amazon ECR
-* Deployed scalable container services on Amazon ECS behind an ALB
-* Built automated deployment pipeline connecting GitHub and ECS
+* Checked cloud security benchmarks with Security Hub and added WAF rules
+* Managed encryption keys and encrypted storage resources using AWS KMS
+* Built Docker container images and pushed them to Amazon ECR
+* Deployed and load balanced containerized applications on Amazon ECS
+* Created automated CI/CD deployment pipeline with AWS CodePipeline
 
 AWS services used:
 
@@ -43,7 +43,7 @@ AWS services used:
 
 Skills gained:
 
-* Automated cloud security posture assessment
-* Application layer protection and cryptographic key management
-* Docker image optimization and container packaging
-* Container orchestration and automated CI/CD pipelines
+* Cloud security auditing and web application firewall protection
+* Key management and data-at-rest encryption
+* Container packaging with Docker and image registry management
+* Container orchestration on ECS and automated CI/CD workflows

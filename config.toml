@@ -1,4 +1,5 @@
 baseURL = "https://nhatminh05.github.io/fcj-workshop-template/"
+buildFuture = true
 relativeURLs = false
 canonifyURLs = false
 defaultContentLanguage = "en"
