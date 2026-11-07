@@ -6,10 +6,9 @@ chapter: false
 pre: " <b> 1. </b> "
 ---
 
-During the 3-month internship program at **Amazon Web Services (AWS) - First Cloud AI Journey (FCAJ)** (from September 14, 2026 to December 14, 2026), I carried out a structured technical learning roadmap. This journey combined hands-on cloud architecture labs, serverless application development, deep dives into AWS Generative AI & Machine Learning services, and earning the official **AWS Cloud Quest: Generative AI Practitioner** certification badge.
+On this page, you will need to introduce your worklog. How did you complete it? How many weeks did you take to complete the program? What did you do in those weeks?
 
-The detailed weekly progress and achievements are organized as follows:
-
+Typically, and as a standard, a worklog is carried out over about 3 months (throughout the internship period) with weekly contents as follows:
 **Week 1:** [Onboarding, $200 AWS Credit, Skill Builder Premium, and GenAI Foundation](1.1-week1/)
 
 **Week 2:** [Earning AWS GenAI Practitioner Certification, EC2 hands-on, and RDS Multi-AZ](1.2-week2/)
