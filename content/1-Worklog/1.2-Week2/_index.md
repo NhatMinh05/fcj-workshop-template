@@ -8,23 +8,26 @@ pre: " <b> 1.2. </b> "
 
 ### Week 2 Objectives:
 
-* Download and configure AWS CLI
-* Launch and manage Amazon EC2 instances
-* Learn RDS database fundamentals and complete Cloud Quest GenAI certification
+* Complete AWS Cloud Quest: Generative AI Practitioner (Labs 4 - 10)
+* Earn and verify official AWS Cloud Quest: Generative AI Practitioner badge on Credly
+* Master Amazon EC2 instances, custom AMIs, Key Pairs, and User Data
+* Set up cloud development environment with AWS Cloud9 IDE
+* Provision highly available relational databases with Amazon RDS Multi-AZ
+* Complete FCAJ YouTube Lessons 26 - 55
 
 ### Tasks to be carried out this week:
 
 | Day | Task | Start Date | Completion Date | Reference Material |
 | --- | --- | --- | --- | --- |
-| 2 | - Launched and configured Amazon EC2 instances on Amazon Linux and Windows<br>- Deployed sample Node.js CRUD app on EC2<br>- Implemented resource access control using IAM policies<br>- Terminated EC2 instances for cost cleanup | 21/09/2026 | 21/09/2026 | https://000004.awsfcaj.com/ |
-| 3 | - Learn about Instance types<br>- Learn about AMI / Backup / Key Pair<br>- Learn about Elastic Block Store & Instance Store<br>- Cloud Quest: GenAI Labs 4-6 | 22/09/2026 | 22/09/2026 | https://000004.awsfcaj.com/1-introduce/ <br> https://skillbuilder.aws |
-| 4 | - Learn about User data and Meta data<br>- Learn about EC2 Auto Scaling<br>- Cloud Quest: GenAI Labs 7-8 | 23/09/2026 | 23/09/2026 | https://000004.awsfcaj.com/1-introduce/ <br> https://skillbuilder.aws |
-| 5 | - Use Cloud IDE with AWS Cloud9<br>- Cloud Quest: GenAI Labs 9-10<br>- Earn AWS Cloud Quest: GenAI Practitioner badge on Credly | 24/09/2026 | 24/09/2026 | https://000049.awsfcaj.com/ <br> https://skillbuilder.aws |
-| 6 | - Create database on Amazon RDS<br>- Watch FCAJ YouTube Lessons 26 - 50<br>- Perform resource cleanup | 25/09/2026 | 25/09/2026 | https://000005.awsfcaj.com/ <br> https://www.youtube.com/@AWSStudyGroup |
+| 2 | - Cloud Quest GenAI Lab 4: Generate Web Code with Bedrock<br>- Cloud Quest GenAI Lab 5: Few-shot Sentiment Classifier<br>- Cloud Quest GenAI Lab 6: Bedrock Guardrails & content filters | 21/09/2026 | 21/09/2026 | https://skillbuilder.aws |
+| 3 | - Cloud Quest GenAI Lab 7: Enterprise RAG Knowledge Base in S3<br>- Cloud Quest GenAI Lab 8: Autonomous Bedrock HR Agent with Lambda & DynamoDB | 22/09/2026 | 22/09/2026 | https://skillbuilder.aws |
+| 4 | - Cloud Quest GenAI Lab 9 & 10: Pre-trained AI services & Agentic AI<br>- Earn official Credly Badge: AWS Cloud Quest Generative AI Practitioner<br>- Share credential verification on LinkedIn profile | 23/09/2026 | 23/09/2026 | https://www.credly.com/ <br> https://skillbuilder.aws |
+| 5 | - Launch EC2 instances (Amazon Linux 2023 & Windows Server 2025)<br>- Explore Instance Types, AMIs, EBS volumes, and Key Pairs<br>- Automate bootstrapping with User Data & query Instance Metadata<br>- Configure browser-based IDE with AWS Cloud9 | 24/09/2026 | 24/09/2026 | https://000004.awsfcaj.com/ <br> https://000049.awsfcaj.com/ |
+| 6 | - Provision Amazon RDS database instances in private subnets<br>- Configure Multi-AZ standby deployment for automated failover<br>- Secure EC2 to RDS connectivity via Security Groups<br>- Watch FCAJ YouTube Lessons 26 - 55 | 25/09/2026 | 25/09/2026 | https://000005.awsfcaj.com/ <br> https://www.youtube.com/@AWSStudyGroup |
 
 ### Week 2 Achievements:
 
-* Hands-on lab with EC2 and deployed Node.js application
-* Mastered AMI, EBS storage, and EC2 Auto Scaling
-* Completed AWS Cloud Quest: Generative AI Practitioner certification badge
-* Created and managed relational databases with Amazon RDS
+* Earned international digital credential: AWS Cloud Quest - Generative AI Practitioner via Credly
+* Gained hands-on experience in Bedrock Prompt Engineering, RAG Knowledge Bases, and AI Agents
+* Mastered automated EC2 instance management and browser-based coding in AWS Cloud9
+* Provisioned and secured highly available Multi-AZ Amazon RDS databases

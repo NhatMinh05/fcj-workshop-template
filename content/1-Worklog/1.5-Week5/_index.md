@@ -8,23 +8,26 @@ pre: " <b> 1.5. </b> "
 
 ### Week 5 Objectives:
 
-* Systems Manager Session Manager
-* AWS CloudFormation Infrastructure as Code
-* Lambda automation and Organization SSO setup
+* Manage EC2 instances securely without open SSH ports via AWS Systems Manager
+* Provision reproducible infrastructure as code with AWS CloudFormation
+* Automate scheduled operational tasks using AWS Lambda and EventBridge
+* Implement centralized enterprise identity management with AWS IAM Identity Center (SSO)
+* Enforce security guardrails using IAM Permission Boundaries
+* Complete FCAJ YouTube Lessons 111 - 135
 
 ### Tasks to be carried out this week:
 
 | Day | Task | Start Date | Completion Date | Reference Material |
 | --- | --- | --- | --- | --- |
-| 2 | - Working with AWS Systems Manager - Session Manager | 12/10/2026 | 12/10/2026 | https://000058.awsfcaj.com/ |
-| 3 | - Initialize Infrastructure as Code with AWS CloudFormation | 13/10/2026 | 13/10/2026 | https://000037.awsfcaj.com/ |
-| 4 | - Automated server shutdown and Slack messaging with AWS Lambda | 14/10/2026 | 14/10/2026 | https://000022.awsfcaj.com/ |
-| 5 | - Set Single Sign-On (Amazon SSO) for the Organization | 15/10/2026 | 15/10/2026 | https://000012.awsfcaj.com/ |
-| 6 | - Limit User Permissions with IAM Permission Boundary<br>- Watch FCAJ YouTube Lessons 101 - 125 | 16/10/2026 | 16/10/2026 | https://000030.awsfcaj.com/ |
+| 2 | - Attach IAM instance profiles and verify SSM Agent on EC2<br>- Start interactive shell sessions via Session Manager without opening port 22<br>- Run fleet-wide commands with SSM Run Command and Patch Manager | 12/10/2026 | 12/10/2026 | https://000058.awsfcaj.com/ |
+| 3 | - Author declarative CloudFormation YAML templates for VPC & EC2<br>- Parameterize templates with Mappings, Parameters, and Outputs<br>- Deploy stacks, test drift detection, and verify rollback protection | 13/10/2026 | 13/10/2026 | https://000037.awsfcaj.com/ |
+| 4 | - Author Python Lambda function to stop idle EC2 instances off-hours<br>- Schedule automated execution with Amazon EventBridge cron rules<br>- Send operational notifications to Slack using Incoming Webhooks | 14/10/2026 | 14/10/2026 | https://000022.awsfcaj.com/ |
+| 5 | - Configure AWS IAM Identity Center (AWS SSO) directory & users<br>- Define multi-account Permission Sets with least-privilege policies<br>- Test single sign-on access across developer and admin accounts | 15/10/2026 | 15/10/2026 | https://000012.awsfcaj.com/ |
+| 6 | - Create IAM Permission Boundaries to cap maximum delegable permissions<br>- Verify privilege escalation prevention on delegated admin users<br>- Watch FCAJ YouTube Lessons 111 - 135 | 16/10/2026 | 16/10/2026 | https://000030.awsfcaj.com/ <br> https://www.youtube.com/@AWSStudyGroup |
 
 ### Week 5 Achievements:
 
-* Configured Session Manager for secure instance access without SSH keys
-* Automated infrastructure deployments with CloudFormation templates
-* Built automated server shutdown bot with Lambda and Slack alerts
-* Strengthened enterprise access control with SSO and permission boundaries
+* Eliminated bastion hosts and open SSH ports using SSM Session Manager
+* Automated repeatable cloud infrastructure provisioning with CloudFormation IaC
+* Built serverless operational cost-saving automation with Lambda and Slack alerts
+* Enforced organizational governance with SSO and IAM Permission Boundaries
