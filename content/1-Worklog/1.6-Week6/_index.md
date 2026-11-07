@@ -8,12 +8,11 @@ pre: " <b> 1.6. </b> "
 
 ### Week 6 Objectives:
 
-* Evaluate cloud security posture against CIS benchmarks with AWS Security Hub
-* Protect web applications from OWASP top 10 threats using AWS WAF
-* Manage envelope encryption and key rotation with AWS Key Management Service (KMS)
-* Containerize web applications with Docker and deploy to Amazon ECS
-* Automate container image builds and deployments with AWS CodePipeline
-* Complete FCAJ YouTube Lessons 136 - 160
+* Assess cloud security posture with AWS Security Hub and AWS WAF
+* Manage data encryption and keys using AWS KMS
+* Containerize web applications with Docker and Amazon ECR
+* Deploy container workloads on Amazon ECS with load balancing
+* Build automated container CI/CD pipelines with AWS CodePipeline
 
 ### Tasks to be carried out this week:
 
@@ -27,7 +26,24 @@ pre: " <b> 1.6. </b> "
 
 ### Week 6 Achievements:
 
-* Hardened security posture with AWS Security Hub and AWS WAF web protection
-* Implemented cryptographic data-at-rest encryption with AWS KMS
-* Containerized applications with Docker and published images to Amazon ECR
-* Built automated container deployment pipelines with Amazon ECS and CodePipeline
+* Evaluated CIS security benchmarks with Security Hub and added WAF rules
+* Created Customer Managed Keys and configured KMS encryption
+* Containerized Node.js applications with Docker and pushed to Amazon ECR
+* Deployed scalable container services on Amazon ECS behind an ALB
+* Built automated deployment pipeline connecting GitHub and ECS
+
+AWS services used:
+
+* AWS Security Hub
+* AWS WAF
+* AWS Key Management Service (KMS)
+* Amazon Elastic Container Registry (ECR)
+* Amazon Elastic Container Service (ECS)
+* AWS CodePipeline & CodeBuild
+
+Skills gained:
+
+* Automated cloud security posture assessment
+* Application layer protection and cryptographic key management
+* Docker image optimization and container packaging
+* Container orchestration and automated CI/CD pipelines

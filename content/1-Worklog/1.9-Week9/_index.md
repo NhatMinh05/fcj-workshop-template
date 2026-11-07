@@ -8,12 +8,11 @@ pre: " <b> 1.9. </b> "
 
 ### Week 9 Objectives:
 
-* Implement decoupled asynchronous messaging with Amazon SNS and Amazon SQS
-* Secure Single Page Applications (SPA) with Amazon Cognito user pools
-* Integrate pre-trained and generative AI services on AWS
-* Orchestrate serverless workflows using AWS Step Functions state machines
-* Build automated event-driven processing with S3, Lambda, and DynamoDB
-* Complete FCAJ YouTube Lessons 211 - 235
+* Implement asynchronous messaging with Amazon SNS and Amazon SQS
+* Add user authentication to Single Page Apps using Amazon Cognito
+* Explore pre-trained AI services and Amazon Bedrock models
+* Orchestrate multi-step workflows with AWS Step Functions
+* Build event-driven data processing with S3, Lambda, and DynamoDB
 
 ### Tasks to be carried out this week:
 
@@ -27,7 +26,24 @@ pre: " <b> 1.9. </b> "
 
 ### Week 9 Achievements:
 
-* Built reliable event-driven messaging pipelines using SNS and SQS fanout
-* Secured web applications with Amazon Cognito authentication and JWT tokens
-* Integrated managed AI services and Amazon Bedrock foundation models into apps
-* Orchestrated resilient serverless workflows with AWS Step Functions
+* Built pub/sub fanout messaging using Amazon SNS and SQS queues
+* Added user registration, login, and JWT verification with Amazon Cognito
+* Tested Amazon Rekognition, Comprehend, and Amazon Bedrock foundation models
+* Created visual serverless state machines using AWS Step Functions
+* Automated file processing pipelines with S3 events, Lambda, and DynamoDB
+
+AWS services used:
+
+* Amazon Simple Notification Service (SNS)
+* Amazon Simple Queue Service (SQS)
+* Amazon Cognito
+* Amazon Bedrock & AI Services
+* AWS Step Functions
+* AWS Lambda & Amazon DynamoDB
+
+Skills gained:
+
+* Decoupled asynchronous event messaging
+* User authentication and authorization workflows
+* Managed AI and generative AI model consumption
+* Serverless workflow orchestration and error handling

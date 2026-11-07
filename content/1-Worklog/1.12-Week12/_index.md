@@ -8,12 +8,12 @@ pre: " <b> 1.12. </b> "
 
 ### Week 12 Objectives:
 
-* Implement intelligent threat detection and credential rotation with GuardDuty and Secrets Manager
-* Build enterprise Data Lake governance with AWS Lake Formation
-* Create interactive Business Intelligence visual dashboards in Amazon QuickSight
-* Query petabyte-scale data using Amazon Athena serverless SQL
-* Train and deploy Machine Learning models on Amazon SageMaker (Immersion Day)
-* Complete 100% of all 296 FCAJ YouTube video lessons and deliver final internship report
+* Enable automated threat detection with GuardDuty and secret rotation
+* Manage Data Lake access permissions with AWS Lake Formation
+* Build interactive Business Intelligence dashboards in Amazon QuickSight
+* Query large datasets with Amazon Athena serverless SQL
+* Train and deploy Machine Learning models on Amazon SageMaker
+* Complete all 296 FCAJ YouTube lessons and submit final internship report
 
 ### Tasks to be carried out this week:
 
@@ -27,9 +27,26 @@ pre: " <b> 1.12. </b> "
 
 ### Week 12 Achievements:
 
-* Strengthened threat detection with GuardDuty and automated Secrets Manager rotation
-* Enforced column-level Data Lake governance using AWS Lake Formation
-* Built visual executive analytics dashboards in Amazon QuickSight
-* Optimized big data analytics with Athena SQL and Apache Parquet columnar formatting
-* Trained and deployed Machine Learning models on Amazon SageMaker
-* Completed all 296 FCAJ YouTube video courses and delivered comprehensive internship report
+* Enabled Amazon GuardDuty threat monitoring and automated Secrets Manager rotation
+* Configured centralized Data Lake access policies in AWS Lake Formation
+* Built visual analytics and KPI dashboards in Amazon QuickSight
+* Optimized serverless SQL queries using Athena and Apache Parquet
+* Trained and deployed ML models on Amazon SageMaker
+* Completed all 296 FCAJ YouTube video lessons and finalized internship report
+
+AWS services used:
+
+* Amazon GuardDuty
+* AWS Secrets Manager
+* AWS Lake Formation
+* Amazon QuickSight
+* Amazon Athena
+* Amazon SageMaker
+
+Skills gained:
+
+* Automated cloud threat detection and secret lifecycle management
+* Data Lake governance and granular permission management
+* Business intelligence data visualization and KPI reporting
+* Serverless query performance optimization with columnar storage
+* End-to-end Machine Learning model development and deployment

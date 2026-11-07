@@ -8,12 +8,11 @@ pre: " <b> 1.5. </b> "
 
 ### Week 5 Objectives:
 
-* Manage EC2 instances securely without open SSH ports via AWS Systems Manager
-* Provision reproducible infrastructure as code with AWS CloudFormation
-* Automate scheduled operational tasks using AWS Lambda and EventBridge
-* Implement centralized enterprise identity management with AWS IAM Identity Center (SSO)
-* Enforce security guardrails using IAM Permission Boundaries
-* Complete FCAJ YouTube Lessons 111 - 135
+* Connect to EC2 securely without open SSH ports via SSM Session Manager
+* Define infrastructure as code templates with AWS CloudFormation
+* Automate off-hours server shutdown with AWS Lambda and Slack alerts
+* Set up enterprise single sign-on with AWS IAM Identity Center (SSO)
+* Apply security guardrails with IAM Permission Boundaries
 
 ### Tasks to be carried out this week:
 
@@ -27,7 +26,23 @@ pre: " <b> 1.5. </b> "
 
 ### Week 5 Achievements:
 
-* Eliminated bastion hosts and open SSH ports using SSM Session Manager
-* Automated repeatable cloud infrastructure provisioning with CloudFormation IaC
-* Built serverless operational cost-saving automation with Lambda and Slack alerts
-* Enforced organizational governance with SSO and IAM Permission Boundaries
+* Managed EC2 instances securely with SSM Session Manager
+* Automated VPC and EC2 deployments using CloudFormation templates
+* Built automated server shutdown bot with Lambda, EventBridge, and Slack
+* Configured AWS SSO access and enforced IAM Permission Boundaries
+
+AWS services used:
+
+* AWS Systems Manager (SSM)
+* AWS CloudFormation
+* AWS Lambda
+* Amazon EventBridge
+* AWS IAM Identity Center (SSO)
+* AWS IAM (Permission Boundaries)
+
+Skills gained:
+
+* Bastionless remote server administration
+* Infrastructure as Code (IaC) template authoring
+* Event-driven serverless operational automation
+* Enterprise identity federation and permission boundary guardrails

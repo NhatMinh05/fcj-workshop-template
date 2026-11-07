@@ -8,12 +8,11 @@ pre: " <b> 1.10. </b> "
 
 ### Week 10 Objectives:
 
-* Deploy and manage Kubernetes clusters on Amazon EKS
-* Build multi-stage CI/CD pipelines with AWS CodePipeline
-* Run serverless container workloads using AWS Fargate
-* Implement GitOps automated delivery to Amazon EKS from GitHub
-* Build full-stack serverless frontend calling Amazon API Gateway REST APIs
-* Complete FCAJ YouTube Lessons 236 - 260
+* Provision and manage Kubernetes clusters on Amazon EKS
+* Build multi-stage CI/CD pipelines with manual approval gates
+* Deploy serverless containers using AWS Fargate
+* Set up GitOps automated delivery from GitHub to EKS
+* Connect serverless frontend to Amazon API Gateway and Lambda
 
 ### Tasks to be carried out this week:
 
@@ -27,7 +26,23 @@ pre: " <b> 1.10. </b> "
 
 ### Week 10 Achievements:
 
-* Mastered container orchestration with Kubernetes on Amazon EKS
-* Automated end-to-end continuous delivery pipelines from GitHub to EKS
-* Deployed scalable serverless container microservices on AWS Fargate
-* Built complete full-stack serverless web application with API Gateway and Lambda
+* Deployed containerized applications to Amazon EKS with kubectl
+* Built multi-stage CI/CD pipelines in AWS CodePipeline
+* Ran serverless container tasks on AWS Fargate without managing servers
+* Automated continuous deployment from GitHub to EKS
+* Built full-stack serverless web app with API Gateway and S3 hosting
+
+AWS services used:
+
+* Amazon Elastic Kubernetes Service (EKS)
+* AWS Fargate
+* AWS CodePipeline & CodeBuild
+* Amazon API Gateway
+* Amazon S3 & Amazon CloudFront
+
+Skills gained:
+
+* Kubernetes cluster management and container orchestration
+* Serverless container execution with Fargate
+* GitOps continuous deployment workflows
+* Full-stack serverless frontend-to-backend integration

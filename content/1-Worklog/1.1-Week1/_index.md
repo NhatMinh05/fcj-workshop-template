@@ -8,11 +8,11 @@ pre: " <b> 1.1. </b> "
 
 ### Week 1 Objectives:
 
-* Onboard with FCAJ mentors and review internship policies and guidelines
-* Register AWS Free Tier account and set up strict budget alerts
-* Complete SheerID verification on AWS Builder Center for 12 months Skill Builder Premium ($449)
-* Master cloud foundations via FCAJ YouTube lessons 01 - 25
-* Kick off AWS Cloud Quest: Generative AI Practitioner (Labs 1-3)
+* Set up AWS Free Tier account and claim $200 free AWS credits
+* Verify SheerID on AWS Builder Center for 12 months Skill Builder Premium
+* Learn AWS billing, cost budgets, and CloudWatch alerts
+* Master IAM access control, policies, and MFA security
+* Build custom VPC and kick off AWS Cloud Quest: GenAI Practitioner
 
 ### Tasks to be carried out this week:
 
@@ -26,8 +26,25 @@ pre: " <b> 1.1. </b> "
 
 ### Week 1 Achievements:
 
-* Activated AWS Free Tier account and secured $200 free AWS credits
-* Unlocked 12 months AWS Skill Builder Premium ($449 value) via SheerID verification
-* Implemented financial governance with AWS Budgets and CloudWatch Alarms
-* Enforced IAM security baselines with MFA and least-privilege policies
-* Deployed production-ready custom VPC and initiated Amazon Bedrock GenAI labs
+* Created AWS Free Tier account and claimed $200 credits
+* Unlocked 12 months AWS Skill Builder Premium ($449 value) via SheerID
+* Set up AWS Budgets and CloudWatch billing alerts
+* Configured IAM users, groups, roles, and MFA security
+* Deployed custom VPC and started Cloud Quest GenAI labs
+
+AWS services used:
+
+* AWS Budgets
+* Amazon CloudWatch
+* AWS Identity and Access Management (IAM)
+* Amazon VPC
+* Amazon S3
+* Amazon EC2
+* Amazon Bedrock
+
+Skills gained:
+
+* Cost monitoring and zero-spend budget governance
+* IAM access control and least-privilege security
+* Custom VPC networking architecture
+* Foundation model exploration in Amazon Bedrock

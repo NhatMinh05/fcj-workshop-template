@@ -8,12 +8,11 @@ pre: " <b> 1.3. </b> "
 
 ### Week 3 Objectives:
 
-* Automate cloud operations programmatically with AWS CLI on EC2
-* Implement centralized system monitoring and alarms with Amazon CloudWatch
-* Set up Hybrid DNS architecture between on-premises and VPC with Route 53
-* Perform server and database migration with VM Import/Export and AWS DMS
-* Automate system-wide backups and disaster recovery with AWS Backup
-* Complete FCAJ YouTube Lessons 56 - 80
+* Automate AWS operations with AWS CLI on EC2 instances
+* Build system monitoring dashboards and alarms with Amazon CloudWatch
+* Set up Hybrid DNS between on-premises and VPC with Route 53
+* Plan server and database migration with VM Import/Export and AWS DMS
+* Automate backup plans and disaster recovery with AWS Backup
 
 ### Tasks to be carried out this week:
 
@@ -27,7 +26,25 @@ pre: " <b> 1.3. </b> "
 
 ### Week 3 Achievements:
 
-* Automated AWS resource provisioning using CLI scripting on Linux and Windows
-* Built full-stack infrastructure observability with CloudWatch metrics and alerts
-* Connected hybrid cloud DNS resolution using Amazon Route 53 Resolvers
-* Validated server migration with VM Import/Export and established automated AWS Backup plans
+* Automated EC2 and S3 management using AWS CLI scripts
+* Built CloudWatch dashboards and metric alarm notifications
+* Configured Route 53 Resolver endpoints for Hybrid DNS resolution
+* Tested VM disk migration and planned database migration with DMS
+* Implemented automated backup plans and restore tests with AWS Backup
+
+AWS services used:
+
+* AWS CLI
+* Amazon CloudWatch
+* Amazon Route 53
+* AWS VM Import/Export
+* AWS Database Migration Service (DMS)
+* AWS Backup
+
+Skills gained:
+
+* AWS CLI automation and scripting
+* Full-stack operational monitoring and alert configuration
+* Hybrid cloud DNS resolution architecture
+* Server and database migration strategies
+* Automated backup policies and disaster recovery testing

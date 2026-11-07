@@ -8,12 +8,11 @@ pre: " <b> 1.7. </b> "
 
 ### Week 7 Objectives:
 
-* Deploy shared Windows file storage using Amazon FSx for Windows File Server
-* Build scalable Data Lake storage foundation on Amazon S3 with lifecycle tiers
-* Architect high-performance NoSQL databases using Amazon DynamoDB
-* Optimize enterprise cloud spending with Savings Plans and Reserved Instances
-* Right-size Amazon EC2 workloads with AWS Compute Optimizer
-* Complete FCAJ YouTube Lessons 161 - 185
+* Set up shared Windows file storage with Amazon FSx
+* Build multi-tier S3 Data Lake with automated lifecycle policies
+* Design NoSQL database tables and indexes in Amazon DynamoDB
+* Analyze cost optimization using Savings Plans and Reserved Instances
+* Right-size EC2 instances using AWS Compute Optimizer
 
 ### Tasks to be carried out this week:
 
@@ -27,7 +26,23 @@ pre: " <b> 1.7. </b> "
 
 ### Week 7 Achievements:
 
-* Provisioned enterprise-grade Windows storage with Amazon FSx
-* Established multi-tier S3 Data Lake with automated lifecycle archiving
-* Engineered optimized NoSQL schemas with DynamoDB GSIs and TTL expiration
-* Reduced operational spend with Savings Plans modeling and EC2 right-sizing
+* Provisioned Amazon FSx for Windows file shares with Active Directory
+* Created S3 Data Lake tiers with lifecycle rules and Glacier transitions
+* Designed DynamoDB tables with Global Secondary Indexes and TTL
+* Modeled cloud savings using Compute Savings Plans and Reserved Instances
+* Right-sized EC2 instances based on Compute Optimizer recommendations
+
+AWS services used:
+
+* Amazon FSx for Windows File Server
+* Amazon S3 (Data Lake)
+* Amazon DynamoDB
+* AWS Cost Explorer (Savings Plans / RIs)
+* AWS Compute Optimizer
+
+Skills gained:
+
+* Managed Windows network storage integration
+* S3 Data Lake tiered storage architecture
+* NoSQL data modeling with single-table design and GSIs
+* Financial cost optimization and instance right-sizing

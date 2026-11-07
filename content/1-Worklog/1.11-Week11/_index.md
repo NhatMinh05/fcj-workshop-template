@@ -8,12 +8,11 @@ pre: " <b> 1.11. </b> "
 
 ### Week 11 Objectives:
 
-* Build an enterprise Serverless Document Management System (DMS)
-* Implement real-time bi-directional communication using WebSocket APIs
-* Deploy scalable web applications with AWS Elastic Beanstalk and CDK
-* Host highly available WordPress CMS on Amazon EC2 with Aurora MySQL
-* Deploy public container images to lightweight container services
-* Complete FCAJ YouTube Lessons 261 - 280
+* Build Serverless Document Management System with S3 presigned URLs
+* Develop real-time chat application using API Gateway WebSocket APIs
+* Deploy Node.js applications using AWS Elastic Beanstalk PaaS
+* Host highly available WordPress CMS on EC2 with Amazon Aurora
+* Deploy public container images to Amazon ECS / Lightsail
 
 ### Tasks to be carried out this week:
 
@@ -27,7 +26,24 @@ pre: " <b> 1.11. </b> "
 
 ### Week 11 Achievements:
 
-* Built production-ready serverless document repository with presigned URLs
-* Developed real-time bi-directional chat application using WebSocket APIs
-* Streamlined application deployments with AWS Elastic Beanstalk PaaS
-* Architected decoupled, scalable WordPress CMS on EC2 and Amazon Aurora
+* Built serverless document management workflow with presigned URLs
+* Created real-time WebSocket chat app with DynamoDB connection tracking
+* Deployed web applications using Elastic Beanstalk with rolling updates
+* Configured WordPress on EC2 with decoupled S3 storage and Aurora MySQL
+* Deployed and monitored public container services on Amazon ECS
+
+AWS services used:
+
+* Amazon S3 & AWS Lambda
+* Amazon API Gateway (WebSocket API)
+* Amazon DynamoDB
+* AWS Elastic Beanstalk
+* Amazon EC2 & Amazon Aurora
+* Amazon Lightsail / ECS
+
+Skills gained:
+
+* Secure file upload pipelines with presigned URLs
+* Real-time bi-directional communication with WebSockets
+* Platform-as-a-Service (PaaS) deployment and environment scaling
+* Traditional decoupled web CMS architectures

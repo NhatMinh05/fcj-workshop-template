@@ -8,12 +8,11 @@ pre: " <b> 1.2. </b> "
 
 ### Week 2 Objectives:
 
-* Complete AWS Cloud Quest: Generative AI Practitioner (Labs 4 - 10)
-* Earn and verify official AWS Cloud Quest: Generative AI Practitioner badge on Credly
-* Master Amazon EC2 instances, custom AMIs, Key Pairs, and User Data
+* Complete AWS Cloud Quest: Generative AI Practitioner labs (Labs 4 - 10)
+* Earn and verify AWS Cloud Quest: Generative AI Practitioner badge on Credly
+* Learn EC2 instance types, AMIs, Key Pairs, and User Data automation
 * Set up cloud development environment with AWS Cloud9 IDE
-* Provision highly available relational databases with Amazon RDS Multi-AZ
-* Complete FCAJ YouTube Lessons 26 - 55
+* Provision and connect Amazon RDS Multi-AZ databases
 
 ### Tasks to be carried out this week:
 
@@ -27,7 +26,25 @@ pre: " <b> 1.2. </b> "
 
 ### Week 2 Achievements:
 
-* Earned international digital credential: AWS Cloud Quest - Generative AI Practitioner via Credly
-* Gained hands-on experience in Bedrock Prompt Engineering, RAG Knowledge Bases, and AI Agents
-* Mastered automated EC2 instance management and browser-based coding in AWS Cloud9
-* Provisioned and secured highly available Multi-AZ Amazon RDS databases
+* Completed Cloud Quest GenAI labs on Bedrock, RAG, and AI agents
+* Earned official AWS Cloud Quest: Generative AI Practitioner badge on Credly
+* Launched and automated EC2 instances on Linux and Windows
+* Set up cloud development environment in AWS Cloud9
+* Created and connected Amazon RDS Multi-AZ relational databases
+
+AWS services used:
+
+* Amazon Bedrock
+* Amazon EC2
+* Amazon EC2 Auto Scaling
+* AWS Cloud9
+* Amazon RDS
+* Amazon DynamoDB
+* AWS Lambda
+
+Skills gained:
+
+* Generative AI prompt engineering, guardrails, and RAG knowledge bases
+* Autonomous AI agents integration with Lambda
+* EC2 instance lifecycle, AMIs, and User Data automation
+* Relational database high availability with RDS Multi-AZ

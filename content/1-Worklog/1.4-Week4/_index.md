@@ -8,11 +8,10 @@ pre: " <b> 1.4. </b> "
 
 ### Week 4 Objectives:
 
-* Deploy hybrid file storage integration with AWS Storage Gateway
-* Distribute global web content with low latency using Amazon CloudFront CDN
-* Interconnect multi-VPC networks using VPC Peering and AWS Transit Gateway
-* Implement Attribute-Based Access Control (ABAC) and cost allocation tagging
-* Complete FCAJ YouTube Lessons 81 - 110
+* Connect local storage to Amazon S3 using AWS Storage Gateway
+* Distribute content with low latency using Amazon CloudFront CDN
+* Connect multiple VPCs with VPC Peering and AWS Transit Gateway
+* Manage resource permissions and costs with Resource Tags and Groups
 
 ### Tasks to be carried out this week:
 
@@ -26,7 +25,23 @@ pre: " <b> 1.4. </b> "
 
 ### Week 4 Achievements:
 
-* Integrated on-premises file shares with Amazon S3 via File Storage Gateway
-* Accelerated web assets with Amazon CloudFront CDN and Origin Access Control
-* Simplified multi-VPC networking with VPC Peering and AWS Transit Gateway
-* Enforced fine-grained access control and cost governance using Resource Tags
+* Mounted S3 file shares locally via File Storage Gateway
+* Deployed CloudFront CDN with SSL certificate and Origin Access Control
+* Linked VPCs using VPC Peering and centralized routing with Transit Gateway
+* Implemented tag-based access control and cost allocation tracking
+
+AWS services used:
+
+* AWS Storage Gateway
+* Amazon CloudFront
+* AWS Certificate Manager (ACM)
+* Amazon VPC (Peering)
+* AWS Transit Gateway
+* AWS Resource Groups & Tag Editor
+
+Skills gained:
+
+* Hybrid cloud file storage integration
+* Global content delivery and edge caching optimization
+* Multi-VPC routing topologies and hub-and-spoke networking
+* Attribute-Based Access Control (ABAC) and cost allocation

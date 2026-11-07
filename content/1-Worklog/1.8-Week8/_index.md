@@ -8,12 +8,11 @@ pre: " <b> 1.8. </b> "
 
 ### Week 8 Objectives:
 
-* Analyze AWS Cost and Usage Reports (CUR) using AWS Glue and Amazon Athena
-* Plan and execute application migration from monolith to microservices
-* Build automated canary and blue/green release pipelines
-* Develop and deploy independent decoupled microservices
-* Restructure database schemas and event-driven data workflows
-* Complete FCAJ YouTube Lessons 186 - 210
+* Analyze AWS Cost and Usage Reports (CUR) with AWS Glue and Amazon Athena
+* Plan application modernization from monolithic to microservices
+* Build zero-downtime Blue/Green deployments with AWS CodeDeploy
+* Create and run independent REST API microservices on Amazon ECS
+* Separate monolithic databases into database-per-service patterns
 
 ### Tasks to be carried out this week:
 
@@ -27,7 +26,23 @@ pre: " <b> 1.8. </b> "
 
 ### Week 8 Achievements:
 
-* Gained deep cost visibility querying AWS billing datasets with Athena SQL
-* Successfully decomposed monolithic application into independent services
-* Implemented zero-downtime Blue/Green deployments with automated rollback
-* Built containerized microservices with dedicated databases and path routing
+* Queried AWS billing and usage trends using Athena SQL and Glue catalog
+* Decomposed monolithic modules into independent services
+* Implemented Blue/Green deployment strategy with automated rollback
+* Deployed containerized REST microservices on ECS with path routing
+* Restructured application data into decoupled service databases
+
+AWS services used:
+
+* AWS Cost and Usage Reports (CUR)
+* AWS Glue
+* Amazon Athena
+* AWS CodeDeploy
+* Amazon ECS & Application Load Balancer
+
+Skills gained:
+
+* Serverless big data analytics on billing datasets
+* Monolith-to-microservices migration patterns (Strangler Fig)
+* Zero-downtime deployment strategies (Blue/Green)
+* Microservices architecture and database decomposition
