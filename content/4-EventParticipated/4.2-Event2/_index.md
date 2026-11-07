@@ -82,8 +82,6 @@ Attending the **“AWS Cloud & AI Day 2026 – HCMC Watch Party”** at the AWS 
 
 ### Some Event Photos
 
-![Official Banner - AWS Cloud & AI Day Vietnam 2026 HCMC Watch Party](https://nhatminh05.github.io/fcj-workshop-template/images/4-EventParticipated/4.2-Event2/event2_banner.jpg)
-
 ![Check-in with Attendee Badges at AWS Office with FPT University Peers](https://nhatminh05.github.io/fcj-workshop-template/images/4-EventParticipated/4.2-Event2/event2_group.jpg)
 
 > Overall, the AWS Cloud & AI Day 2026 Watch Party not only expanded my technical horizon across Cloud & AI but also fueled my drive to pursue a career as a cloud builder.
