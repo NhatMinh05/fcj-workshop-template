@@ -8,7 +8,6 @@ pre: " <b> 1.1. </b> "
 
 ### Week 1 Objectives:
 
-* Onboard with FCAJ mentors and bootcamp members; review internship guidelines and standard practices.
 * Create an AWS Free Tier account, establish strict zero-spend budget alerts, and complete system onboarding tasks to secure $200 in free AWS Credits.
 * Complete SheerID academic enrollment verification on AWS Builder Center to unlock 12 months of AWS Skill Builder Premium ($449 value).
 * Master core cloud fundamentals and global infrastructure via FCAJ YouTube video lessons (Lessons 01 - 25).
