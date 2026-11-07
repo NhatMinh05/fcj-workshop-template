@@ -1,122 +1,89 @@
 ---
 title: "Event 2"
-date: 2024-01-01
-weight: 1
+date: 2026-09-29
+weight: 2
 chapter: false
 pre: " <b> 4.2. </b> "
 ---
 
-# Summary Report: “GenAI-powered App-DB Modernization workshop”
+# Summary Report: “AWS Cloud & AI Day 2026 – HCMC Watch Party”
 
 ### Event Objectives
 
-- Share best practices in modern application design
-- Introduce Domain-Driven Design (DDD) and event-driven architecture
-- Provide guidance on selecting the right compute services
-- Present AI tools to support the development lifecycle
+- Stream live strategic Keynotes delivered by senior AWS leaders from Vietnam's premier tech event, AWS Cloud & AI Day 2026 (broadcast live from Hanoi).
+- Immerse in breakthrough technological waves: **Agentic AI**, enterprise **Data Foundation**, and comprehensive Cloud modernization strategies.
+- Gain deep technical insights and best practices from specialized sessions in the **“Builders x AI”** track.
+- Participate in on-site roundtable discussions with seasoned Solution Architects and software engineers in Ho Chi Minh City on taking AI Agents from experimentation to production.
+- Network and connect with more than 300 builders, developers, and tech enthusiasts across the AWS Study Group and FCAJ communities.
 
-### Speakers
+### Speakers & Key Guests
 
-- **Jignesh Shah** – Director, Open Source Databases
-- **Erica Liu** – Sr. GTM Specialist, AppMod
-- **Fabrianne Effendi** – Assc. Specialist SA, Serverless Amazon Web Services
+- **AWS Senior Leadership & Keynote Speakers** (Live broadcast from Hanoi): Global and regional AWS executives presenting the strategic vision for Cloud & AI.
+- **AWS Solution Architects & AI Specialists**: Speakers leading technical deep dives within the "Builders x AI" track.
+- **Enterprise Leaders & Key AWS Customers**: Sharing authentic case studies on digital transformation and Generative AI adoption.
+- **AWS Study Group Organizers & FCAJ Mentors**: Facilitating and moderating dynamic technical roundtables at the AWS HCMC office.
 
 ### Key Highlights
 
-#### Identifying the drawbacks of legacy application architecture
+#### Seamless Knowledge Connection from the Hanoi Keynote
+- Updated strategic directions from AWS on constructing modern, purpose-built cloud infrastructure tailored for the AI era.
+- The momentum of **Agentic AI**: How AWS agentic systems enable businesses to accelerate innovation and reinvent operational workflows.
+- Crucial importance of a robust **Data Foundation**: Data is the bedrock of AI; clean data storage, processing, and governance are prerequisites for trustworthy AI outcomes.
 
-- Long product release cycles → Lost revenue/missed opportunities  
-- Inefficient operations → Reduced productivity, higher costs  
-- Non-compliance with security regulations → Security breaches, loss of reputation  
+#### Technical Track: “Builders x AI”
+- In-depth architectural analysis of modern GenAI systems: from large-scale Retrieval-Augmented Generation (RAG) to Multi-Agent collaboration architectures powered by Amazon Bedrock.
+- Enterprise security frameworks, compliance controls, and hallucination prevention using Amazon Bedrock Guardrails.
+- Practical guidance on FinOps and performance optimization when scaling AI applications to enterprise volumes.
 
-#### Transitioning to modern application architecture – Microservices
+#### On-site Practical Roundtables (HCMC Discussions)
+- Highly energetic roundtable discussions among Solution Architects, developers, and cloud engineers during breaks.
+- Candid exploration of engineering hurdles encountered when transitioning AI Agents from Proof of Concept (PoC) to full production deployment.
+- Hands-on strategies for token cost optimization and selecting optimal Foundation Models tailored to specific business domains.
 
-Migrating to a modular system — each function is an **independent service** communicating via **events**, built on three core pillars:
-
-- **Queue Management**: Handle asynchronous tasks  
-- **Caching Strategy**: Optimize performance  
-- **Message Handling**: Flexible inter-service communication  
-
-#### Domain-Driven Design (DDD)
-
-- **Four-step method**: Identify domain events → arrange timeline → identify actors → define bounded contexts  
-- **Bookstore case study**: Demonstrates real-world DDD application  
-- **Context mapping**: 7 patterns for integrating bounded contexts  
-
-#### Event-Driven Architecture
-
-- **3 integration patterns**: Publish/Subscribe, Point-to-point, Streaming  
-- **Benefits**: Loose coupling, scalability, resilience  
-- **Sync vs async comparison**: Understanding the trade-offs  
-
-#### Compute Evolution
-
-- **Shared Responsibility Model**: EC2 → ECS → Fargate → Lambda  
-- **Serverless benefits**: No server management, auto-scaling, pay-for-value  
-- **Functions vs Containers**: Criteria for appropriate choice  
-
-#### Amazon Q Developer
-
-- **SDLC automation**: From planning to maintenance  
-- **Code transformation**: Java upgrade, .NET modernization  
-- **AWS Transform agents**: VMware, Mainframe, .NET migration  
+#### Community Spirit & Builder Networking
+- Over 300 passionate builders filled the AWS HCMC Office with palpable enthusiasm and positive energy.
+- Open, collaborative atmosphere that enabled students and junior engineers to engage directly with senior tech leaders.
 
 ### Key Takeaways
 
-#### Design Mindset
+#### Technological Vision & Systems Thinking
+- **Evolution toward Agentic Systems**: Realized that AI has advanced beyond basic prompt-and-response interactions to autonomous multi-agent networks that reason, plan, and take coordinated action.
+- **Data-First Paradigm**: An AI model is only as intelligent as the data feeding it; establishing solid cloud data pipelines and governance is non-negotiable.
 
-- **Business-first approach**: Always start from the business domain, not the technology  
-- **Ubiquitous language**: Importance of a shared vocabulary between business and tech teams  
-- **Bounded contexts**: Identifying and managing complexity in large systems  
+#### Technical Architecture & Operational Realities
+- Acquired reference architectural patterns for secure, fault-tolerant, and cost-controlled AI Agent deployments on AWS.
+- Understood fundamental trade-offs between precision, latency, and operational expense when integrating LLMs into production environments.
 
-#### Technical Architecture
+### Applying to Work & Study
 
-- **Event storming technique**: Practical method for modeling business processes  
-- Use **event-driven communication** instead of synchronous calls  
-- **Integration patterns**: When to use sync, async, pub/sub, streaming  
-- **Compute spectrum**: Criteria for choosing between VM, containers, and serverless  
-
-#### Modernization Strategy
-
-- **Phased approach**: No rushing — follow a clear roadmap  
-- **7Rs framework**: Multiple modernization paths depending on the application  
-- **ROI measurement**: Cost reduction + business agility  
-
-### Applying to Work
-
-- **Apply DDD** to current projects: Event storming sessions with business teams  
-- **Refactor microservices**: Use bounded contexts to define service boundaries  
-- **Implement event-driven patterns**: Replace some sync calls with async messaging  
-- **Adopt serverless**: Pilot AWS Lambda for suitable use cases  
-- **Try Amazon Q Developer**: Integrate into the dev workflow to boost productivity  
+- **Guiding Academic & Project Research**: Integrate Agentic AI patterns and Data Foundation principles into capstone and AI coursework at FPT University.
+- **Applying Cost-Optimization Best Practices**: Design lean, cost-efficient cloud architectures during hands-on AWS lab exercises.
+- **Staying Actively Engaged in Community**: Regularly participate in AWS Study Group activities to keep pace with rapid cloud advancements.
 
 ### Event Experience
 
-Attending the **“GenAI-powered App-DB Modernization”** workshop was extremely valuable, giving me a comprehensive view of modernizing applications and databases using advanced methods and tools. Key experiences included:
+Attending the **“AWS Cloud & AI Day 2026 – HCMC Watch Party”** at the AWS HCMC Office was an exhilarating and unforgettable tech experience:
 
-#### Learning from highly skilled speakers
-- Experts from AWS and major tech organizations shared **best practices** in modern application design.  
-- Through real-world case studies, I gained a deeper understanding of applying **DDD** and **Event-Driven Architecture** to large projects.  
+#### Vibrant Energy at the AWS Office
+- The AWS office on the 26th floor of Bitexco provided an inspiring environment adorned with the iconic *“Invent and Simplify”* wall.
+- Witnessing more than 300 builders collectively absorb high-impact keynote insights generated immense enthusiasm throughout the day.
 
-#### Hands-on technical exposure
-- Participating in **event storming** sessions helped me visualize how to **model business processes** into domain events.  
-- Learned how to **split microservices** and define **bounded contexts** to manage large-system complexity.  
-- Understood trade-offs between **synchronous and asynchronous communication** and integration patterns like **pub/sub, point-to-point, streaming**.  
+#### High Value from Pragmatic Roundtable Exchanges
+- The defining highlight was the spontaneous on-site roundtable discussions where practicing Solution Architects shared battle-tested lessons and real-world hurdles.
+- Had the opportunity to ask questions and receive candid, constructive advice from seasoned industry mentors.
 
-#### Leveraging modern tools
-- Explored **Amazon Q Developer**, an AI tool for SDLC support from planning to maintenance.  
-- Learned to **automate code transformation** and pilot serverless with **AWS Lambda** to improve productivity.  
+#### Peer Camaraderie & Student Representation
+- Felt immense pride wearing the attendee badge alongside fellow FPT University classmates, capturing memorable moments at the AWS venue.
+- Experienced the genuine spirit of open knowledge-sharing that defines the AWS builder community.
 
-#### Networking and discussions
-- The workshop offered opportunities to exchange ideas with experts, peers, and business teams, enhancing the **ubiquitous language** between business and tech.  
-- Real-world examples reinforced the importance of the **business-first approach** rather than focusing solely on technology.  
+#### Lessons Learned
+- Cloud technology evolves continuously; proactive participation in community forums is the fastest path to staying ahead.
+- The true spirit of a builder lies in daring to experiment, learning iteratively, and simplifying complex challenges into real-world value.
 
-#### Lessons learned
-- Applying DDD and event-driven patterns reduces **coupling** while improving **scalability** and **resilience**.  
-- Modernization requires a **phased approach** with **ROI measurement**; rushing the process can be risky.  
-- AI tools like Amazon Q Developer can significantly **boost productivity** when integrated into the current workflow.  
+### Some Event Photos
 
-#### Some event photos
-*Add your event photos here*  
+![Official Banner - AWS Cloud & AI Day Vietnam 2026 HCMC Watch Party](https://nhatminh05.github.io/fcj-workshop-template/images/4-EventParticipated/4.2-Event2/event2_banner.jpg)
 
-> Overall, the event not only provided technical knowledge but also helped me reshape my thinking about application design, system modernization, and cross-team collaboration.
+![Check-in with Attendee Badges at AWS Office with FPT University Peers](https://nhatminh05.github.io/fcj-workshop-template/images/4-EventParticipated/4.2-Event2/event2_group.jpg)
+
+> Overall, the AWS Cloud & AI Day 2026 Watch Party not only expanded my technical horizon across Cloud & AI but also fueled my drive to pursue a career as a cloud builder.

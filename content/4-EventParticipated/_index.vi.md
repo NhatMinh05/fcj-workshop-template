@@ -20,10 +20,10 @@ Trong quá trình thực tập, em đã tham gia các sự kiện công nghệ c
 ---
 
 ### [Event 2](4.2-Event2/)
-&emsp;**Tên sự kiện:** GenAI-powered App-DB Modernization workshop
+&emsp;**Tên sự kiện:** AWS Cloud & AI Day 2026 – HCMC Watch Party
 
-&emsp;**Thời gian:** 09:00, Ngày 13/08/2025
+&emsp;**Thời gian:** Thứ Ba, Ngày 29/09/2026
 
-&emsp;**Địa điểm:** Tầng 26, tòa nhà Bitexco, số 02 đường Hải Triều, phường Bến Nghé, TP. Hồ Chí Minh
+&emsp;**Địa điểm:** Văn phòng AWS TP.HCM, Tầng 26 Bitexco, số 02 đường Hải Triều, phường Bến Nghé, Quận 1, TP. Hồ Chí Minh
 
 &emsp;**Vai trò trong sự kiện:** Người tham dự

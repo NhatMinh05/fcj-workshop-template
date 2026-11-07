@@ -1,121 +1,89 @@
 ---
 title: "Event 2"
-date: 2024-01-01
-weight: 1
+date: 2026-09-29
+weight: 2
 chapter: false
 pre: " <b> 4.2. </b> "
 ---
 
-# Bài thu hoạch “GenAI-powered App-DB Modernization workshop”
+# Bài thu hoạch: “AWS Cloud & AI Day 2026 – HCMC Watch Party”
 
 ### Mục Đích Của Sự Kiện
 
-- Chia sẻ best practices trong thiết kế ứng dụng hiện đại
-- Giới thiệu phương pháp DDD và event-driven architecture
-- Hướng dẫn lựa chọn compute services phù hợp
-- Giới thiệu công cụ AI hỗ trợ development lifecycle
+- Theo dõi trực tiếp phiên Keynote chiến lược từ các lãnh đạo cấp cao của AWS tại sự kiện công nghệ lớn nhất năm AWS Cloud & AI Day 2026 (điểm cầu Hà Nội).
+- Tiếp cận làn sóng công nghệ đột phá: **Agentic AI**, xây dựng nền tảng dữ liệu vững chắc (**Data Foundation**) và chiến lược hiện đại hóa Cloud toàn diện cho doanh nghiệp.
+- Học hỏi các bài học thực chiến chuyên sâu từ track kỹ thuật **“Builders x AI”**.
+- Tham gia các phiên thảo luận bàn tròn tại chỗ cùng các Solution Architect và kỹ sư kỳ cựu tại TP.HCM về cách đưa AI Agent từ thử nghiệm vào môi trường sản xuất thực tế.
+- Giao lưu, kết nối (Networking) với hơn 300 kỹ sư, lập trình viên và những người đam mê công nghệ trong cộng đồng AWS Study Group và FCAJ.
 
-### Danh Sách Diễn Giả
+### Danh Sách Diễn Giả & Khách Mời
 
-- **Jignesh Shah** - Director, Open Source Databases
-- **Erica Liu** - Sr. GTM Specialist, AppMod
-- **Fabrianne Effendi** - Assc. Specialist SA, Serverless Amazon Web Services
+- **AWS Senior Leadership & Keynote Speakers** (Livestream trực tiếp từ Hà Nội): Các lãnh đạo cấp cao của AWS chia sẻ về tầm nhìn và chiến lược Cloud & AI.
+- **AWS Solution Architects & AI Specialists**: Diễn giả tại các phiên chuyên sâu thuộc track "Builders x AI".
+- **Đại diện doanh nghiệp & khách hàng tiêu biểu của AWS**: Chia sẻ các câu chuyện thực tế về hành trình chuyển đổi số và ứng dụng GenAI.
+- **Ban điều hành AWS Study Group & FCAJ Mentors**: Điều phối và dẫn dắt các phiên thảo luận chuyên môn tại văn phòng AWS TP.HCM.
 
 ### Nội Dung Nổi Bật
 
-#### Đưa ra các ảnh hưởng tiêu cực của kiến trúc ứng dụng cũ
+#### Kết nối tri thức liền mạch từ Keynote Hà Nội
+- Cập nhật định hướng chiến lược của AWS trong việc xây dựng hạ tầng đám mây tối ưu cho kỷ nguyên trí tuệ nhân tạo.
+- Làn sóng **Agentic AI**: Cách các hệ thống tác tử thông minh (agentic systems) của AWS đang giúp doanh nghiệp bứt phá năng suất và tái định hình quy trình vận hành.
+- Tầm quan trọng của **Data Foundation**: Dữ liệu là nền móng cốt lõi; muốn AI hoạt động chính xác thì hạ tầng lưu trữ, xử lý và quản trị dữ liệu phải thực sự chuẩn mực.
 
-- Thời gian release sản phẩm lâu → Mất doanh thu/bỏ lỡ cơ hội
-- Hoạt động kém hiệu quả → Mất năng suất, tốn kém chi phí
-- Không tuân thủ các quy định về bảo mật → Mất an ninh, uy tín
+#### Track kỹ thuật thực chiến “Builders x AI”
+- Phân tích sâu các kiến trúc Generative AI hiện đại: từ RAG (Retrieval-Augmented Generation) quy mô lớn đến hệ thống Multi-Agent trên nền tảng Amazon Bedrock.
+- Các giải pháp kiểm soát an toàn, bảo mật dữ liệu doanh nghiệp và ngăn ngừa rủi ro hallucination thông qua Bedrock Guardrails.
+- Hướng dẫn tối ưu hóa hiệu năng và chi phí vận hành (FinOps) khi mở rộng các ứng dụng AI cho lượng người dùng lớn.
 
-#### Chuyển đổi sang kiến trúc ứng dụng mới - Microservice Architecture
+#### Thảo luận & "Mổ xẻ" thực chiến tại chỗ (HCMC Roundtables)
+- Không khí trao đổi sôi nổi tại các bàn tròn thảo luận giữa giờ của các kỹ sư, Solution Architect và Developer tại TP.HCM.
+- Phân tích thẳng thắn các thách thức thực tế khi chuyển giao AI Agent từ môi trường thử nghiệm (PoC) sang môi trường vận hành (Production).
+- Chia sẻ kinh nghiệm tối ưu hóa chi phí token, lựa chọn Foundation Models phù hợp với từng bài toán kinh doanh cụ thể.
 
-Chuyển đổi thành hệ thống modular – từng chức năng là một **dịch vụ độc lập** giao tiếp với nhau qua **sự kiện** với 3 trụ cột cốt lõi:
-
-- **Queue Management**: Xử lý tác vụ bất đồng bộ
-- **Caching Strategy:** Tối ưu performance
-- **Message Handling:** Giao tiếp linh hoạt giữa services
-
-#### Domain-Driven Design (DDD)
-
-- **Phương pháp 4 bước**: Xác định domain events → sắp xếp timeline → identify actors → xác định bounded contexts
-- **Case study bookstore**: Minh họa cách áp dụng DDD thực tế
-- **Context mapping**: 7 patterns tích hợp bounded contexts
-
-#### Event-Driven Architecture
-
-- **3 patterns tích hợp**: Publish/Subscribe, Point-to-point, Streaming
-- **Lợi ích**: Loose coupling, scalability, resilience
-- **So sánh sync vs async**: Hiểu rõ trade-offs (sự đánh đổi)
-
-#### Compute Evolution
-
-- **Shared Responsibility Model**: Từ EC2 → ECS → Fargate → Lambda
-- **Serverless benefits**: No server management, auto-scaling, pay-for-value
-- **Functions vs Containers**: Criteria lựa chọn phù hợp
-
-#### Amazon Q Developer
-
-- **SDLC automation**: Từ planning đến maintenance
-- **Code transformation**: Java upgrade, .NET modernization
-- **AWS Transform agents**: VMware, Mainframe, .NET migration
+#### Không gian giao lưu & Lan tỏa tinh thần Builders
+- Quy tụ hơn 300 builder nhiệt huyết phủ kín khán phòng Văn phòng AWS TP.HCM với nguồn năng lượng tích cực.
+- Không gian giao lưu mở giúp các bạn trẻ dễ dàng tiếp cận, đặt câu hỏi và lắng nghe kinh nghiệm quý báu từ các chuyên gia trong ngành.
 
 ### Những Gì Học Được
 
-#### Tư Duy Thiết Kế
+#### Tầm Nhìn Công Nghệ & Tư Duy Hệ Thống
+- **Bước chuyển dịch sang Agentic Systems**: Hiểu rõ AI hiện nay không chỉ dừng lại ở việc phản hồi câu hỏi (prompt - response) mà đã tiến hóa thành các hệ thống tác tử có khả năng tự lập luận, phối hợp đa nhiệm và hành động thay con người.
+- **Tư duy Data-First**: AI chỉ thông minh khi nguồn dữ liệu cấp cho nó chuẩn xác và sạch; việc đầu tư cho Data Pipeline và hạ tầng dữ liệu trên Cloud là điều kiện tiên quyết.
 
-- **Business-first approach**: Luôn bắt đầu từ business domain, không phải technology
-- **Ubiquitous language**: Importance của common vocabulary giữa business và tech teams
-- **Bounded contexts**: Cách identify và manage complexity trong large systems
+#### Kiến Trúc Kỹ Thuật & Tối Ưu Thực Tế
+- Nắm bắt mô hình kiến trúc chuẩn để triển khai AI Agent an toàn và kiểm soát chi phí hiệu quả trên AWS.
+- Hiểu rõ sự đánh đổi (trade-offs) giữa độ chính xác, độ trễ (latency) và chi phí khi tích hợp LLM vào ứng dụng thực tế.
 
-#### Kiến Trúc Kỹ Thuật
+### Ứng Dụng Vào Công Việc & Học Tập
 
-- **Event storming technique**: Phương pháp thực tế để mô hình hóa quy trình kinh doanh
-- Sử dụng **Event-driven communication** thay vì synchronous calls
-- **Integration patterns**: Hiểu khi nào dùng sync, async, pub/sub, streaming
-- **Compute spectrum**: Criteria chọn từ VM → containers → serverless
+- **Định hình hướng làm đồ án và nghiên cứu**: Áp dụng tư duy Agentic AI và Data Foundation vào các dự án cá nhân và đồ án chuyên ngành AI tại FPT University.
+- **Áp dụng kinh nghiệm tối ưu hóa chi phí**: Chú trọng thiết kế kiến trúc tiết kiệm tài nguyên khi thực hành các bài lab trên AWS.
+- **Duy trì kết nối cộng đồng**: Tích cực tham gia các buổi sinh hoạt chuyên môn của AWS Study Group để mở rộng kiến thức và mạng lưới quan hệ nghề nghiệp.
 
-#### Chiến Lược Hiện Đại Hóa
+### Trải Nghiệm Trong Event
 
-- **Phased approach**: Không rush, phải có roadmap rõ ràng
-- **7Rs framework**: Nhiều con đường khác nhau tùy thuộc vào đặc điểm của mỗi ứng dụng
-- **ROI measurement**: Cost reduction + business agility
+Tham gia **“AWS Cloud & AI Day 2026 – HCMC Watch Party”** trực tiếp tại Văn phòng AWS TP.HCM là một trải nghiệm công nghệ bùng nổ và khó quên:
 
-### Ứng Dụng Vào Công Việc
+#### Không khí công nghệ cuồng nhiệt tại AWS Office
+- Văn phòng AWS tại Tầng 26 Bitexco mang lại cảm giác cực kỳ chuyên nghiệp và truyền cảm hứng với khẩu hiệu *“Invent and Simplify”*.
+- Hơn 300 anh em builder cùng hòa nhịp, chăm chú theo dõi từng slide chia sẻ từ điểm cầu Hà Nội và cùng nhau ồ lên thích thú trước những tính năng công nghệ mới.
 
-- **Áp dụng DDD** cho project hiện tại: Event storming sessions với business team
-- **Refactor microservices**: Sử dụng bounded contexts để identify service boundaries
-- **Implement event-driven patterns**: Thay thế một số sync calls bằng async messaging
-- **Serverless adoption**: Pilot AWS Lambda cho một số use cases phù hợp
-- **Try Amazon Q Developer**: Integrate vào development workflow để boost productivity
+#### Giá trị vượt trội từ những phiên thảo luận thực chiến
+- Khác biệt lớn nhất của buổi Watch Party là các phiên "bàn tròn" thảo luận tại chỗ; được trực tiếp nghe các anh Solution Architect chia sẻ những "nỗi đau" và kinh nghiệm xương máu khi làm dự án thực tế.
+- Tự tin đặt câu hỏi và nhận được những giải đáp cặn kẽ, thực tế từ các chuyên gia kỳ cựu.
 
-### Trải nghiệm trong event
-
-Tham gia workshop **“GenAI-powered App-DB Modernization”** là một trải nghiệm rất bổ ích, giúp tôi có cái nhìn toàn diện về cách hiện đại hóa ứng dụng và cơ sở dữ liệu bằng các phương pháp và công cụ hiện đại. Một số trải nghiệm nổi bật:
-
-#### Học hỏi từ các diễn giả có chuyên môn cao
-- Các diễn giả đến từ AWS và các tổ chức công nghệ lớn đã chia sẻ **best practices** trong thiết kế ứng dụng hiện đại.
-- Qua các case study thực tế, tôi hiểu rõ hơn cách áp dụng **Domain-Driven Design (DDD)** và **Event-Driven Architecture** vào các project lớn.
-
-#### Trải nghiệm kỹ thuật thực tế
-- Tham gia các phiên trình bày về **event storming** giúp tôi hình dung cách **mô hình hóa quy trình kinh doanh** thành các domain events.
-- Học cách **phân tách microservices** và xác định **bounded contexts** để quản lý sự phức tạp của hệ thống lớn.
-- Hiểu rõ trade-offs giữa **synchronous và asynchronous communication** cũng như các pattern tích hợp như **pub/sub, point-to-point, streaming**.
-
-#### Ứng dụng công cụ hiện đại
-- Trực tiếp tìm hiểu về **Amazon Q Developer**, công cụ AI hỗ trợ SDLC từ lập kế hoạch đến maintenance.
-- Học cách **tự động hóa code transformation** và pilot serverless với **AWS Lambda**, từ đó nâng cao năng suất phát triển.
-
-#### Kết nối và trao đổi
-- Workshop tạo cơ hội trao đổi trực tiếp với các chuyên gia, đồng nghiệp và team business, giúp **nâng cao ngôn ngữ chung (ubiquitous language)** giữa business và tech.
-- Qua các ví dụ thực tế, tôi nhận ra tầm quan trọng của **business-first approach**, luôn bắt đầu từ nhu cầu kinh doanh thay vì chỉ tập trung vào công nghệ.
+#### Tinh thần đồng đội và kết nối thế hệ trẻ
+- Rất tự hào khi cùng nhóm bạn sinh viên FPT University đeo thẻ tham dự, cùng nhau học hỏi và lưu lại những khoảnh khắc đẹp tại văn phòng AWS.
+- Cảm nhận sâu sắc tinh thần sẻ chia tri thức không khoảng cách của cộng đồng AWS Study Group.
 
 #### Bài học rút ra
-- Việc áp dụng DDD và event-driven patterns giúp giảm **coupling**, tăng **scalability** và **resilience** cho hệ thống.
-- Chiến lược hiện đại hóa cần **phased approach** và đo lường **ROI**, không nên vội vàng chuyển đổi toàn bộ hệ thống.
-- Các công cụ AI như Amazon Q Developer có thể **boost productivity** nếu được tích hợp vào workflow phát triển hiện tại.
+- Công nghệ thay đổi từng ngày; sự chủ động tham gia các sự kiện chuyên ngành chính là cách nhanh nhất để không bị tụt lại phía sau.
+- Tinh thần "Builders" thực thụ là không ngại thử nghiệm, không sợ thất bại và luôn tìm cách đơn giản hóa bài toán phức tạp để tạo ra giá trị thiết thực.
 
-#### Một số hình ảnh khi tham gia sự kiện
-* Thêm các hình ảnh của các bạn tại đây
-> Tổng thể, sự kiện không chỉ cung cấp kiến thức kỹ thuật mà còn giúp tôi thay đổi cách tư duy về thiết kế ứng dụng, hiện đại hóa hệ thống và phối hợp hiệu quả hơn giữa các team.
+### Một Số Hình Ảnh Khi Tham Gia Sự Kiện
+
+![Banner chính thức - AWS Cloud & AI Day Vietnam 2026 HCMC Watch Party](https://nhatminh05.github.io/fcj-workshop-template/images/4-EventParticipated/4.2-Event2/event2_banner.jpg)
+
+![Check-in thẻ tham dự tại Văn phòng AWS cùng nhóm bạn FPT University](https://nhatminh05.github.io/fcj-workshop-template/images/4-EventParticipated/4.2-Event2/event2_group.jpg)
+
+> Nhìn chung, AWS Cloud & AI Day 2026 Watch Party không chỉ mang đến cho tôi một khối lượng kiến thức khổng lồ về Cloud & AI mà còn tiếp thêm ngọn lửa nhiệt huyết để tôi kiên định theo đuổi đam mê công nghệ.
