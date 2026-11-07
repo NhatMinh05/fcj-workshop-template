@@ -27,3 +27,14 @@ During my internship, I participated in community tech events. Each one was a me
 &emsp;**Location:** AWS HCMC Office, 26th Floor, Bitexco Financial Tower, 02 Hai Trieu Street, Ben Nghe Ward, District 1, Ho Chi Minh City  
 
 &emsp;**Role:** Attendee  
+
+---
+
+### [Event 3](4.3-Event3/)  
+&emsp;**Event Name:** First Cloud AI Journey Meetup – October 24, 2026  
+
+&emsp;**Date & Time:** 09:00 - 12:00, Saturday, October 24, 2026  
+
+&emsp;**Location:** 26th Floor, Bitexco Financial Tower, 02 Hai Trieu Street, Ben Nghe Ward, District 1, Ho Chi Minh City  
+
+&emsp;**Role:** Attendee  

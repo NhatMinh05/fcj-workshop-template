@@ -27,3 +27,14 @@ Trong quá trình thực tập, em đã tham gia các sự kiện công nghệ c
 &emsp;**Địa điểm:** Văn phòng AWS TP.HCM, Tầng 26 Bitexco, số 02 đường Hải Triều, phường Bến Nghé, Quận 1, TP. Hồ Chí Minh
 
 &emsp;**Vai trò trong sự kiện:** Người tham dự
+
+---
+
+### [Event 3](4.3-Event3/)
+&emsp;**Tên sự kiện:** First Cloud AI Journey Meetup – 24/10/2026
+
+&emsp;**Thời gian:** 09:00 - 12:00, Thứ Bảy, Ngày 24/10/2026
+
+&emsp;**Địa điểm:** Tầng 26, Bitexco Financial Tower, số 02 đường Hải Triều, phường Bến Nghé, Quận 1, TP. Hồ Chí Minh
+
+&emsp;**Vai trò trong sự kiện:** Người tham dự
