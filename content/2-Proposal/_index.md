@@ -26,7 +26,7 @@ The Solution
 A serverless, pay-per-request, auto-scaling architecture: Python Core Engine runs on Lambda + API Gateway (HTTP API), Next.js SSR is hosted on AWS Amplify, and CloudFront (with an edge-attached WAF Web ACL) distributes assets and routes API requests. The RAG architecture in Bedrock Knowledge Base (Titan Text Embeddings V2 + Vector DB) anchors reasoning strictly to the CIS AWS Foundations Benchmark v3.0, eliminating hallucinations. Bedrock Agent (Claude 3.5 Sonnet) evaluates contextual risk, computes scores, and generates compliant remediation snippets. CloudWatch Logs/Metrics + Alarm + SNS provide centralized observability and instant admin escalation; WAF, IAM least-privilege, Cognito, and SSM Parameter Store enforce security; EventBridge Scheduler + Lambda handles daily automated posture scans.
 
 Benefits and Return on Investment
-The platform auto-scales on demand at a monthly operating cost of only ~$1–2/month — the serverless design eliminates 100% of idle costs (Zero Idle Cost), avoiding dedicated EC2/GPU instances and saving >95% compared to static infrastructure. It accelerates review cycles by 90% (from 2–3 days to <10 seconds), eliminates 100% of baseline misconfigurations pre-deployment, and the bilingual step-by-step workshop produced at the end serves as an enduring educational asset for the cloud engineering community.
+The platform auto-scales on demand at a monthly operating cost of only ~$11–15/month — the serverless design eliminates 100% of idle costs (Zero Idle Cost), avoiding dedicated EC2/GPU instances and saving >95% compared to static infrastructure. It accelerates review cycles by 90% (from 2–3 days to <10 seconds), eliminates 100% of baseline misconfigurations pre-deployment, and the bilingual step-by-step workshop produced at the end serves as an enduring educational asset for the cloud engineering community.
 
 ### 3. Solution Architecture
 User requests flow through CloudFront (WAF Web ACL attached at the edge) to two origins: Amplify (Next.js SSR frontend, Static/SSR flow) and API Gateway (HTTP API) → Lambda (Python Core Audit Engine, API Calls flow); Amplify also performs “SSR fetch” calls back to the API during server rendering. DevOps engineers authenticate via Amazon Cognito (JWT Auth). External CI/CD pipelines (GitHub/GitLab PR) dispatch automated webhook scan payloads to API Gateway. Lambda parses Terraform AST, queries CIS Benchmark v3.0 rules via Bedrock Knowledge Bases (RAG), prompts Claude 3.5 Sonnet, reads configuration from SSM Parameter Store, saves PDF summaries in S3 via Pre-signed URLs, writes audit records to DynamoDB, and dispatches email via SES. EventBridge Scheduler triggers a daily Lambda scan. CloudWatch aggregates logs/metrics; on threshold breach or CRITICAL finding, an Alarm publishes to SNS, alerting administrators via email. The architecture is detailed below:
@@ -86,19 +86,20 @@ Project Timeline (12 weeks)
 
 ### 6. Budget Estimation
 Infrastructure Costs
-AWS Services:
-- AWS Lambda: ~$0/month (free tier 1M requests/month, 512 MB memory).
-- Amazon Bedrock (Claude 3.5 Sonnet + Titan Embeddings V2): ~$0.5 - $1/month (~500 IaC audit requests).
-- API Gateway (HTTP API): ~$0.01/month ($1/million requests).
-- AWS Amplify: ~$0.5/month (build minutes + SSR hosting).
-- Amazon S3: ~$0.02/month (storing tf templates and CIS rules).
-- Amazon DynamoDB: ~$0/month (On-demand pay-per-request within free tier).
-- AWS WAF: ~$0 - $1/month (basic Web ACL rules).
-- CloudFront CDN: ~$0.1/month.
-- CloudWatch + SNS + EventBridge: ~$0/month (within free tier allocations).
-- SSM Parameter Store: ~$0/month (standard parameters are free).
+- AWS Services:
+  - AWS Lambda: ~$0/month (within free tier 1M requests/month, 512 MB memory).
+  - Amazon Bedrock (Claude 3.5 Sonnet + Titan Embeddings V2): ~$2–3/month (~1,000–1,500 IaC audit requests, pay-per-token).
+  - API Gateway (HTTP API): ~$1/month (~$1/million requests).
+  - AWS Amplify: ~$1/month (build minutes + Next.js SSR hosting).
+  - Amazon S3: ~$0.05/month (storing Terraform templates, CIS rules, and compiled PDF reports).
+  - Amazon DynamoDB: ~$0.50/month (audit session history and compliance scores, On-Demand mode).
+  - Amazon SES: ~$0.10 per 1,000 emails (scheduled audit summaries and alerts).
+  - AWS WAF: ~$6/month (Web ACL attached at CloudFront edge + managed rule sets).
+  - CloudFront CDN: ~$1–2/month (static assets/SSR distribution and global API caching).
+  - CloudWatch + SNS + EventBridge: ~$0–1/month (centralized logging, critical alerts, and daily cron triggers).
+  - SSM Parameter Store: ~$0/month (standard parameters are free).
 
-Total: ~$1–2/month
+Total: ~$11–15/month
 
 Cost-saving architecture choice: The platform leverages 100% serverless compute and Bedrock On-Demand pricing rather than provisioning dedicated EC2/GPU instances (saving $100–$200/month). It eliminates the NAT Gateway (~$32/month) by connecting Lambda directly to internal AWS service endpoints over TLS, keeping total idle operating costs at $0.
 
@@ -124,4 +125,4 @@ Contingency Plans
 
 ### 8. Expected Outcomes
 Technical Improvements: The entire platform operates serverless on AWS — auto-scaling with traffic, HTTPS-only, WAF and Cognito protected, executing AI and RAG compliance analysis in under 10 seconds. Automated code remediation with CloudWatch monitoring and SNS alerting replaces manual reviews.
-Long-term Value: A production-grade reference architecture for enterprise GenAI & RAG DevSecOps on AWS, a reusable bilingual step-by-step workshop for the cloud community, and a cost-optimized model (~$1–2/month) validated against real-world infrastructure code.
+Long-term Value: A production-grade reference architecture for enterprise GenAI & RAG DevSecOps on AWS, a reusable bilingual step-by-step workshop for the cloud community, and a cost-optimized model (~$11–15/month) validated against real-world infrastructure code.

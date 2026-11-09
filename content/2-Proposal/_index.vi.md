@@ -26,7 +26,7 @@ Giải pháp
 Kiến trúc serverless, trả tiền theo request, tự scale: Lambda Core Engine chạy trên AWS Lambda + API Gateway (HTTP API), Next.js SSR host trên AWS Amplify, CloudFront (gắn WAF Web ACL tại edge) làm CDN phân phối static assets/SSR và định tuyến API. Cơ chế RAG với Bedrock Knowledge Base (Titan Text Embeddings V2 + Vector DB) ghim chặt tri thức chuẩn mực CIS AWS Foundations Benchmark v3.0, loại bỏ hoàn toàn hiện tượng ảo tưởng. Bedrock Agent (Claude 3.5 Sonnet) suy luận ngữ cảnh, tính điểm tuân thủ và tự động sinh mã Terraform đã vá lỗi hoàn chỉnh. CloudWatch Logs/Metrics + Alarm + SNS cung cấp giám sát tập trung và cảnh báo khẩn cấp cho admin qua Email; WAF, IAM least-privilege, Cognito và SSM Parameter Store đảm nhiệm bảo mật; EventBridge Scheduler + Lambda riêng xử lý cron job kiểm toán tự động hằng ngày.
 
 Lợi ích và hoàn vốn đầu tư (ROI)
-Nền tảng tự động scale theo nhu cầu với chi phí chỉ ~$1–2/tháng — kiến trúc Serverless loại bỏ hoàn toàn chi phí nhàn rỗi (Zero Idle Cost), không cần duy trì EC2/GPU liên tục, tiết kiệm hơn 95% so với thuê máy chủ AI cố định. Rút ngắn 90% thời gian rà soát an ninh (từ 2–3 ngày xuống dưới 10 giây), ngăn chặn 100% lỗ hổng cơ bản trước khi đưa lên Production, và workshop song ngữ step-by-step tạo ra ở cuối dự án là tài nguyên học tập tái sử dụng giá trị cho cộng đồng kỹ sư đám mây triển khai GenAI & DevSecOps trên AWS.
+Nền tảng tự động scale theo nhu cầu với chi phí chỉ ~$11–15/tháng — kiến trúc Serverless loại bỏ hoàn toàn chi phí nhàn rỗi (Zero Idle Cost), không cần duy trì EC2/GPU liên tục, tiết kiệm hơn 95% so với thuê máy chủ AI cố định. Rút ngắn 90% thời gian rà soát an ninh (từ 2–3 ngày xuống dưới 10 giây), ngăn chặn 100% lỗ hổng cơ bản trước khi đưa lên Production, và workshop song ngữ step-by-step tạo ra ở cuối dự án là tài nguyên học tập tái sử dụng giá trị cho cộng đồng kỹ sư đám mây triển khai GenAI & DevSecOps trên AWS.
 
 ### 3. Kiến trúc giải pháp
 Request từ người dùng đi qua CloudFront (WAF Web ACL gắn tại edge) đến hai origin: Amplify (frontend Next.js SSR, luồng Static/SSR) và API Gateway (HTTP API) → Lambda (backend Core Audit Engine, luồng API Calls); Amplify cũng “SSR fetch” ngược về API khi render phía server. Người dùng DevOps xác thực qua Amazon Cognito (JWT Auth). External CI/CD (GitHub/GitLab PR) gửi webhook quét mã tự động vào API Gateway. Lambda Core Engine bóc tách cú pháp Terraform AST, truy vấn tri thức CIS Benchmark v3.0 qua Bedrock Knowledge Bases (RAG), điều phối Claude 3.5 Sonnet suy luận, đọc cấu hình từ SSM Parameter Store, lưu báo cáo PDF vào S3 qua Pre-signed URL, ghi lịch sử kiểm toán vào DynamoDB, và gửi email qua SES. EventBridge Scheduler trigger Lambda hàng ngày để tự động rà soát posture. CloudWatch thu log/metric, khi vượt ngưỡng hoặc phát hiện lỗi CRITICAL thì Alarm đẩy sang SNS gửi email khẩn cấp cho admin. Chi tiết kiến trúc:
@@ -86,19 +86,20 @@ Lộ trình dự án (12 tuần)
 
 ### 6. Ước tính ngân sách
 Chi phí hạ tầng
-Dịch vụ AWS:
-- AWS Lambda: ~$0/tháng (free tier 1M request/tháng, 512 MB memory).
-- Amazon Bedrock (Claude 3.5 Sonnet + Titan Embeddings V2): ~$0.5 - $1/tháng (~500 requests phân tích IaC).
-- Amazon API Gateway (HTTP API): ~$0.01/tháng ($1/triệu request).
-- AWS Amplify: ~$0.5/tháng (build minutes + hosting SSR).
-- Amazon S3: ~$0.02/tháng (lưu file tf và tài liệu quy tắc CIS).
-- Amazon DynamoDB: ~$0/tháng (chế độ On-demand pay-per-request trong Free Tier).
-- AWS WAF: ~$0 - $1/tháng (Web ACL cơ bản).
-- Amazon CloudFront CDN: ~$0.1/tháng.
-- CloudWatch + SNS + EventBridge: ~$0/tháng (trong hạn mức Free Tier).
-- SSM Parameter Store: ~$0/tháng (standard parameters miễn phí).
+- Dịch vụ AWS:
+  - AWS Lambda: ~$0/tháng (nằm trong free tier 1M request/tháng, 512 MB memory).
+  - Amazon Bedrock (Claude 3.5 Sonnet + Titan Embeddings V2): ~$2–3/tháng (~1.000–1.500 lượt kiểm toán IaC, tính theo token thực tế).
+  - Amazon API Gateway (HTTP API): ~$1/tháng (~$1/triệu request).
+  - AWS Amplify: ~$1/tháng (build minutes + hosting Next.js SSR).
+  - Amazon S3: ~$0.05/tháng (lưu trữ file mã nguồn Terraform, tài liệu CIS và báo cáo kiểm toán PDF).
+  - Amazon DynamoDB: ~$0.50/tháng (lưu lịch sử quét và bảng điểm tuân thủ, chế độ On-Demand).
+  - Amazon SES: ~$0.10/1.000 email (gửi báo cáo định kỳ và tóm tắt kiểm toán).
+  - AWS WAF: ~$6/tháng (Web ACL gắn tại CloudFront edge + các bộ quy tắc bảo vệ).
+  - Amazon CloudFront CDN: ~$1–2/tháng (phân phối static assets/SSR và API caching toàn cầu).
+  - CloudWatch + SNS + EventBridge: ~$0–1/tháng (thu thập logs, bắn alert khẩn và trigger cron hằng ngày).
+  - SSM Parameter Store: ~$0/tháng (standard parameters hoàn toàn miễn phí).
 
-Tổng: ~$1–2/tháng
+Tổng: ~$11–15/tháng
 
 Lựa chọn kiến trúc tiết kiệm chi phí: Hệ thống ứng dụng 100% Serverless kết hợp mô hình On-Demand của Amazon Bedrock thay vì thuê GPU/EC2 chuyên dụng (tiết kiệm hơn $100–$200/tháng chi phí thuê máy chủ AI cố định). Kiến trúc không dùng NAT Gateway (~$32/tháng), Lambda kết nối Bedrock trực tiếp qua mạng nội bộ AWS, giúp đưa chi phí vận hành tiệm cận 0 VNĐ khi không có lượt quét.
 
@@ -124,4 +125,4 @@ Kế hoạch dự phòng
 
 ### 8. Kết quả kỳ vọng
 Cải tiến kỹ thuật: Toàn bộ nền tảng chạy serverless trên AWS — tự scale theo traffic, HTTPS-only, được WAF & Cognito bảo vệ, phân tích an ninh dựa trên AI và RAG trong vòng dưới 10 giây thay cho kiểm toán thủ công hàng ngày. Tự động sinh mã khắc phục chuẩn xác, kèm giám sát CloudWatch và cảnh báo tức thời qua SNS.
-Giá trị dài hạn: Kiến trúc tham chiếu production-grade cho việc ứng dụng GenAI & RAG vào quy trình DevSecOps / FinOps trên AWS, workshop song ngữ step-by-step tái sử dụng được cho cộng đồng kỹ sư đám mây, và mô hình chi phí siêu tiết kiệm (~$1–2/tháng) đã được kiểm chứng thực tế.
+Giá trị dài hạn: Kiến trúc tham chiếu production-grade cho việc ứng dụng GenAI & RAG vào quy trình DevSecOps / FinOps trên AWS, workshop song ngữ step-by-step tái sử dụng được cho cộng đồng kỹ sư đám mây, và mô hình chi phí siêu tiết kiệm (~$11–15/tháng) đã được kiểm chứng thực tế.
