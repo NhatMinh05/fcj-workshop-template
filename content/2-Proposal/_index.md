@@ -1,176 +1,127 @@
 ---
 title: "Proposal"
-date: 2026-09-14
+date: 2024-01-01
 weight: 2
 chapter: false
 pre: " <b> 2. </b> "
 ---
 
-# CloudGuard AI: GenAI & RAG-Powered Automated Cloud Infrastructure Security & Cost Optimization Auditor
-
-## An Intelligent Serverless Infrastructure as Code (IaC) Auditing Platform Based on CIS AWS Foundations Benchmark v3.0
-
----
+# CloudGuard AI: Automated AWS Infrastructure Security & Cost Auditor
+## GenAI & RAG-Powered Automated Security Compliance (CIS Benchmark v3.0) and Cloud Cost Optimization
 
 ### 1. Executive Summary
+This project builds a complete cloud infrastructure security auditing and cost optimization platform (**DevSecOps & FinOps**), consisting of two decoupled applications: **Backend** — a serverless REST API built with Python 3.12 on AWS Lambda + API Gateway, orchestrating **Anthropic Claude 3.5 Sonnet** and **Retrieval-Augmented Generation (RAG)** via **Amazon Titan Text Embeddings V2** to parse Terraform HCL Abstract Syntax Trees (AST), cross-reference the **CIS AWS Foundations Benchmark v3.0**, calculate compliance posture scores (0–100), and generate automated remediation code — and **Frontend** — a Next.js SSR application built on React, featuring a bilingual vi/en UI, dark/light themes, a visual Security Gauge, severity-tagged finding accordions, and a side-by-side diff viewer with a one-click code copy action.
 
-As organizations accelerate their digital transformation and cloud migration, **Infrastructure as Code (IaC)** — particularly Terraform — has become the industry standard for provisioning and managing AWS cloud resources. However, according to recent cloud security research from Gartner and Palo Alto Networks, over **80% of cloud security breaches and data exposures stem from human-induced misconfigurations** within IaC templates. Common oversights include exposing SSH port 22 or RDP port 3389 to `0.0.0.0/0`, granting excessive IAM permissions (`AdministratorAccess`), leaving S3 buckets unencrypted without SSE-KMS, or provisioning oversized and idle cloud resources that waste thousands of dollars each month.
-
-**CloudGuard AI** is engineered as a next-generation DevSecOps solution combining the capabilities of **Generative AI** and **Retrieval-Augmented Generation (RAG)** on **Amazon Bedrock** to automate cloud infrastructure security audits, compliance evaluations, and cost optimization. Powered by **Anthropic Claude 3.5 Sonnet** and integrated with an authoritative vector knowledge base derived from the **CIS AWS Foundations Benchmark v3.0** and the **AWS Well-Architected Framework**, the platform provides accurate, context-aware architectural evaluations without hallucination.
-
-Designed with a **100% Serverless & Event-Driven Architecture** (AWS Lambda, Amazon API Gateway, Amazon DynamoDB, Amazon S3, and AWS Amplify), CloudGuard AI delivers real-time IaC parsing, calculates an objective **Security Posture Score (0–100)**, identifies non-compliant resources, and **automatically generates production-ready remediation code (Terraform diffs)** with a single click. The entire system operates at minimal overhead (**~$1.00 – $2.00/month**, fully compliant with the AWS Free Tier and incurring zero idle server costs), providing an enterprise-grade DevSecOps auditing mechanism accessible to startups, research labs, and academic institutions.
-
----
+The goal of this workshop is to deploy the entire system onto AWS Serverless infrastructure (region ap-southeast-1): the Next.js SSR frontend runs on AWS Amplify, the Python core engine runs on Lambda + API Gateway, all behind CloudFront and secured by AWS WAF and Amazon Cognito — demonstrating the ability to apply AWS services to a real, end-to-end use case. Target customers are DevOps/Cloud Engineers requiring automated pre-merge security verification (Shift-Left Security), SecOps compliance officers auditing cloud postures, and FinOps administrators seeking cloud waste reduction.
 
 ### 2. Problem Statement
+What’s the Problem?
+- Infrastructure misconfigurations causing widespread data exposure: over 80% of cloud security incidents stem from human configuration errors (SSH port 22 open to `0.0.0.0/0`, unencrypted S3 storage, overly permissive wildcard IAM policies).
+- Manual code reviews create release bottlenecks: manual line-by-line inspection takes 2–3 days, delaying sprint delivery.
+- Traditional static analysis linters lack architectural context: regex-based linters (Checkov, tfsec) suffer from high false-positive rates, cannot interpret inter-resource relationships, and cannot rewrite compliant code.
+- Generative AI hallucination risks: general-purpose LLMs hallucinate non-existent compliance clauses or produce deprecated Terraform syntax without grounding.
+- Idle server costs: provisioning dedicated GPU-enabled EC2 instances wastes hundreds of dollars per month during inactive scanning windows.
 
-#### Industry Context & Existing Bottlenecks
-1. **Slow and Error-Prone Manual Security Reviews**: Auditing infrastructure configurations manually prior to production deployment is labor-intensive and bottlenecked by limited security personnel. As cloud deployment frequency increases, manual reviews either delay release cycles or inadvertently miss critical vulnerabilities.
-2. **Static Code Analysis Tools Lack Contextual Understanding**: Conventional open-source scanners (such as tfsec and Checkov) rely on rigid regular expressions and static rule sets. They frequently generate high volumes of false positives, fail to comprehend resource relationships (e.g., an EC2 instance residing in a private subnet cannot be directly exploited via an open security group), and **cannot explain or auto-remediate identified issues**.
-3. **Hallucination Risks in Generic Large Language Models**: When engineers query generic LLMs (such as base ChatGPT or Claude without external grounding) for security advice, the models often experience **hallucinations**, referencing deprecated Terraform syntax, incorrect resource arguments, or inaccurate compliance clause numbers.
+The Solution
+A serverless, pay-per-request, auto-scaling architecture: Python Core Engine runs on Lambda + API Gateway (HTTP API), Next.js SSR is hosted on AWS Amplify, and CloudFront (with an edge-attached WAF Web ACL) distributes assets and routes API requests. The RAG architecture in Bedrock Knowledge Base (Titan Text Embeddings V2 + Vector DB) anchors reasoning strictly to the CIS AWS Foundations Benchmark v3.0, eliminating hallucinations. Bedrock Agent (Claude 3.5 Sonnet) evaluates contextual risk, computes scores, and generates compliant remediation snippets. CloudWatch Logs/Metrics + Alarm + SNS provide centralized observability and instant admin escalation; WAF, IAM least-privilege, Cognito, and SSM Parameter Store enforce security; EventBridge Scheduler + Lambda handles daily automated posture scans.
 
-#### The CloudGuard AI Solution
-CloudGuard AI systematically overcomes these challenges through an integrated architectural approach:
-- **Hallucination-Free Auditing via Bedrock Knowledge Bases (RAG)**: The platform indexes the official CIS AWS Foundations Benchmark v3.0 specifications and AWS Best Practice whitepapers into **Amazon Bedrock Knowledge Bases**, utilizing **Amazon Titan Text Embeddings V2** and an optimized vector index. Every finding is anchored directly to official benchmark guidelines.
-- **Agentic Multi-Step Reasoning & Auto-Remediation**: An **Amazon Bedrock Agent** functions as a virtual DevSecOps engineer. It parses the Abstract Syntax Tree (AST) of the submitted Terraform files, retrieves pertinent compliance guidelines, reasons through resource dependencies, and generates validated, ready-to-merge remediation code.
-- **Seamless Shift-Left CI/CD Pipeline Integration**: The solution supports both a modern web dashboard (hosted on AWS Amplify) for interactive testing and automated webhook triggers via GitHub Actions / GitLab CI for pull request validation before any resource is provisioned.
-
-#### Benefits & Return on Investment (ROI)
-- **90% Reduction in Infrastructure Audit Latency**: Reduces code review cycles from multiple business days to under 10 seconds per scan.
-- **100% Prevention of Critical Misconfigurations in Staging**: Ensures all persistent storage volumes (S3, EBS, RDS) are encrypted, administrative ports are closed to the public Internet, and IAM policies adhere strictly to the principle of least privilege.
-- **Superior Cost Efficiency & Rapid Payback**: The serverless event-driven architecture eliminates 100% of idle infrastructure costs. Average audit operational costs average approximately $0.001 per file scan. Break-even ROI is realized within the first month of deployment.
-
----
+Benefits and Return on Investment
+The platform auto-scales on demand at a monthly operating cost of only ~$1–2/month — the serverless design eliminates 100% of idle costs (Zero Idle Cost), avoiding dedicated EC2/GPU instances and saving >95% compared to static infrastructure. It accelerates review cycles by 90% (from 2–3 days to <10 seconds), eliminates 100% of baseline misconfigurations pre-deployment, and the bilingual step-by-step workshop produced at the end serves as an enduring educational asset for the cloud engineering community.
 
 ### 3. Solution Architecture
-
-CloudGuard AI is built in strict adherence to the **AWS Well-Architected Framework**, balancing Security, Reliability, Performance Efficiency, Cost Optimization, Operational Excellence, and Sustainability.
-
-The official architecture diagram of the system is illustrated below:
+User requests flow through CloudFront (WAF Web ACL attached at the edge) to two origins: Amplify (Next.js SSR frontend, Static/SSR flow) and API Gateway (HTTP API) → Lambda (Python Core Audit Engine, API Calls flow); Amplify also performs “SSR fetch” calls back to the API during server rendering. DevOps engineers authenticate via Amazon Cognito (JWT Auth). External CI/CD pipelines (GitHub/GitLab PR) dispatch automated webhook scan payloads to API Gateway. Lambda parses Terraform AST, queries CIS Benchmark v3.0 rules via Bedrock Knowledge Bases (RAG), prompts Claude 3.5 Sonnet, reads configuration from SSM Parameter Store, saves PDF summaries in S3 via Pre-signed URLs, writes audit records to DynamoDB, and dispatches email via SES. EventBridge Scheduler triggers a daily Lambda scan. CloudWatch aggregates logs/metrics; on threshold breach or CRITICAL finding, an Alarm publishes to SNS, alerting administrators via email. The architecture is detailed below:
 
 ![CloudGuard AI Official Architecture Diagram](https://nhatminh05.github.io/fcj-workshop-template/images/2-Proposal/cloudguard_architecture.jpg)
 
-#### AWS Services Utilized
-- **AWS WAF (Web Application Firewall)**: Deploys managed Web ACL rule sets protecting CloudFront distributions and API Gateway endpoints against distributed denial-of-service (DDoS), SQL injection (SQLi), cross-site scripting (XSS), and malicious automated scanners.
-- **AWS IAM (Identity and Access Management)**: Enforces granular role-based access control (RBAC) and least-privilege execution roles for AWS Lambda and the Bedrock Agent.
-- **Amazon CloudFront**: Global content delivery network (CDN) providing low-latency edge distribution, static asset caching, and global SSL/TLS termination.
-- **Amazon Cognito**: Provides user directory management (User Pools) for DevOps engineers, securing all system interactions through cryptographically signed JSON Web Tokens (JWT).
-- **AWS Certificate Manager (ACM)**: Manages and automatically renews public SSL/TLS certificates for custom domain bindings in both `us-east-1` (CloudFront) and `ap-southeast-1` (API Gateway).
-- **Amazon API Gateway (HTTP API)**: High-throughput, low-latency RESTful API gateway exposing endpoints (`POST /scan`, `GET /history`, `GET /report/{id}`) with built-in rate-limiting and throttling controls.
-- **AWS Systems Manager (SSM) Parameter Store**: Securely stores encrypted application environment parameters, Bedrock Agent IDs, and webhook notification URLs.
-- **AWS Lambda (Core Audit Engine)**: The primary serverless computing unit running Python 3.12, responsible for parsing Terraform HCL syntax, orchestrating Bedrock Agent interactions, computing compliance scores, and compiling PDF audit summaries.
-- **AWS Amplify**: Full-stack hosting and CI/CD platform delivering the modern Next.js/React dashboard for code submission, interactive visualizations, and diff reviews.
-- **Amazon EventBridge Scheduler**: Serverless cron scheduler executing automated daily infrastructure security posture scans.
-- **Amazon Bedrock Agent**: An intelligent agent powered by Anthropic Claude 3.5 Sonnet, capable of multi-step logical reasoning, policy correlation, and automated Terraform code remediation.
-- **Amazon Bedrock Knowledge Bases (RAG)**: Retrieval-augmented generation engine indexing CIS benchmark guidelines and AWS pricing tables using Amazon Titan Text Embeddings V2 and a vector database.
-- **Amazon Bedrock Guardrails**: Comprehensive safety guardrails preventing prompt injection attacks, enforcing responsible AI boundaries, and masking sensitive secrets (API keys, AWS credentials) and Personally Identifiable Information (PII).
-- **Amazon S3 (Simple Storage Service)**: Multi-purpose object storage maintaining CIS compliance standards, raw uploaded IaC files, and compiled PDF audit reports.
-- **Amazon DynamoDB**: Low-latency NoSQL database recording scan histories, compliance scores, finding severities, and execution timestamps.
-- **Amazon SES (Simple Email Service)**: Automated transactional email engine delivering executive security summaries and scheduled audit reports to DevSecOps teams.
-- **Amazon CloudWatch**: Centralized observability platform collecting Lambda execution logs, Bedrock token consumption metrics, API latencies, and error alarms.
-- **Amazon SNS (Simple Notification Service)**: Multi-channel pub/sub messaging service broadcasting high-priority alerts to administrator channels (Slack, SMS, Email) upon detecting CRITICAL severity misconfigurations.
+Note on WAF: WAF is not a standalone hop on the network path — the Web ACL is attached directly to the CloudFront distribution and evaluates requests at the edge location before CloudFront processes them. A Web ACL used with CloudFront must be created in the Global scope (us-east-1).
 
-#### Detailed Component Design
-1. **Edge Security & Ingress Layer**:
-   - All inbound traffic from developers or external CI/CD systems enters through AWS WAF and Amazon CloudFront. Authentication is verified through Amazon Cognito, issuing short-lived JWT tokens that authorize subsequent API requests.
-2. **API & Request Routing Layer**:
-   - Amazon API Gateway inspects incoming JWT tokens via a Cognito Authorizer. Upon successful authentication, the request payload is validated against JSON schemas and proxied to the backend Lambda service under configured rate limits.
-3. **Core Serverless Audit Engine (Lambda)**:
-   - The Lambda function ingests the Terraform payload, converts the HCL configuration into an Abstract Syntax Tree (AST), and extracts declared cloud resources. Secret keys and environment configurations are retrieved dynamically from SSM Parameter Store.
-4. **GenAI & RAG Brain Layer**:
-   - The Bedrock Agent receives the sanitized infrastructure context and executes vector similarity queries against Bedrock Knowledge Bases to retrieve corresponding CIS benchmark rules.
-   - Guardrails sanitize inputs and outputs against credential leaks and prompt injection. Claude 3.5 Sonnet evaluates resource configurations, computes an overall Security Posture Score (0–100), classifies findings by severity (CRITICAL, HIGH, MEDIUM, LOW), and produces clean, remediation Terraform blocks.
-5. **Data Persistence & Alerting Layer**:
-   - Audit metadata and scores are committed to Amazon DynamoDB, while generated PDF audit reports are written to Amazon S3.
-   - In the event of CRITICAL vulnerabilities (such as unrestricted administrative ports or unencrypted storage buckets), CloudWatch metric alarms trigger Amazon SNS topics to deliver real-time push alerts to engineers.
+AWS Services Used
+- AWS Lambda: Runs the Python 3.12 Core Audit Engine + cron jobs — serverless, 1M free requests/month, cold-start optimized.
+- Amazon API Gateway (HTTP API): REST API front door — ~70% cheaper than REST API Gateway, native Lambda integration.
+- AWS Amplify: Next.js SSR hosting with automated Git CI/CD.
+- Amazon CloudFront: CDN serving static assets/SSR and API — global edge locations cut latency, attachment point for WAF Web ACL.
+- Amazon Cognito: User directory management (User Pools) issuing cryptographically signed JWT tokens for DevOps access.
+- Amazon Bedrock Agent: Intelligent reasoning agent powered by Anthropic Claude 3.5 Sonnet for multi-step policy deduction and code remediation.
+- Amazon Bedrock Knowledge Bases (RAG): Semantic vector search engine indexing CIS Benchmark v3.0 using Amazon Titan Text Embeddings V2.
+- Amazon Bedrock Guardrails: Enforces safety guardrails, blocking prompt injections and masking secrets (AWS keys, credentials, PII).
+- Amazon S3: Object storage for CIS Benchmark standards, raw IaC templates, and compiled PDF reports via Pre-signed URLs; public access blocked.
+- Amazon DynamoDB: Low-latency NoSQL database recording scan histories, compliance scores, and granular finding records.
+- Amazon SES: Transactional email engine delivering audit summaries and executive posture reports.
+- Amazon CloudWatch: Logs, metrics, and alarms integrated natively with Lambda and API Gateway.
+- Amazon SNS: Real-time administrative alerting via direct email subscription upon CRITICAL findings.
+- Amazon EventBridge Scheduler: Serverless cron trigger executing daily automated infrastructure compliance scans.
+- AWS Systems Manager Parameter Store: Encrypted centralized store for application parameters and webhook secrets.
+- IAM + ACM + WAF: Least-privilege roles; free SSL/TLS certificates (ACM in us-east-1 for CloudFront, ACM in ap-southeast-1 for API Gateway); layer-7 attack protection.
 
----
+Component Design
+- Content delivery & Edge: CloudFront serves static assets/SSR and API at global edge locations; WAF Web ACL filters requests at the edge; Cognito handles JWT authentication.
+- Frontend: AWS Amplify hosts the Next.js 15 SSR application, deployed automatically from Git.
+- Core Audit Processing: AWS Lambda wraps Terraform HCL AST parsing behind API Gateway HTTP API.
+- Generative AI & RAG: Bedrock Knowledge Base vector store + Claude 3.5 Sonnet agent for multi-step reasoning and automated remediation.
+- Data layer: DynamoDB persists audit session records; S3 stores regulatory standards and PDF reports via Pre-signed URLs.
+- Automation & Alerting: EventBridge Scheduler invokes Lambda daily; CloudWatch + SNS broadcast instant critical alerts.
+- Security & Certificates: Lambda Execution Role scoped to Least Privilege; HTTPS-only with ACM certificates; secrets stored in SSM Parameter Store.
 
 ### 4. Technical Implementation
+Implementation Phases
+- Research & design: learn AWS fundamentals (IAM, Lambda, Bedrock, S3, API Gateway); study serverless RAG patterns for IaC (Weeks 1–2).
+- Application development & RAG: standardize CIS Benchmark v3.0 rules, build Terraform AST parser, integrate Bedrock RAG (Weeks 3–5).
+- AWS infrastructure deployment: create IAM roles; deploy core engine to Lambda + API Gateway; deploy FE to Amplify; configure S3, DynamoDB, Bedrock Knowledge Base, CloudFront, WAF, SSM Parameter Store (Weeks 6–8).
+- Monitoring & optimization: configure CloudWatch Logs/Metrics, Alarm → SNS, EventBridge cron; optimize Bedrock token consumption (Weeks 9–10).
+- Testing & documentation: end-to-end testing with benchmark violation test suites; write bilingual step-by-step workshop and clean-up guide (Weeks 11–12).
 
-#### Implementation Phases
-The project is executed systematically across four distinct technical phases:
+Technical Requirements
+- Backend: Python 3.12 (boto3, bedrock-agent-runtime, regex HCL parser), cold-start optimized, deployed behind API Gateway HTTP API.
+- AI & RAG: Amazon Titan Text Embeddings V2 (1,024 dimensions), OpenSearch Serverless vector collection, Anthropic Claude 3.5 Sonnet.
+- Frontend: Next.js (TypeScript, TailwindCSS) built and hosted on AWS Amplify with SSR support.
+- Networking & security: WAF Web ACL in Global scope (us-east-1) attached to CloudFront; ACM certificates in us-east-1 (CloudFront) and ap-southeast-1 (API Gateway); secrets managed in SSM Parameter Store; Cognito JWT auth.
 
-1. **Phase 1: Knowledge Base Engineering & Compliance Grounding (Month 1)**:
-   - Compile, clean, and standardize the CIS AWS Foundations Benchmark v3.0 and AWS Well-Architected Framework documentation into modular Markdown files.
-   - Configure an Amazon S3 knowledge repository and establish an **Amazon Bedrock Knowledge Base** with a chunking strategy of 512 tokens with a 20% overlap.
-   - Generate embeddings using **Amazon Titan Text Embeddings V2** and link the collection to a high-performance vector index.
-   - Define custom prompt templates and configure safety guardrails in **Amazon Bedrock Guardrails**.
+### 5. Timeline & Milestones
+Project Timeline (12 weeks)
+- Phase 1 — Research & design (Weeks 1–2): AWS fundamentals, serverless GenAI & RAG architecture study → deliverable: this proposal + draw.io architecture diagram.
+- Phase 2 — Core Engine & RAG development (Weeks 3–5): CIS Benchmark dataset preparation, Terraform HCL parser, Bedrock RAG integration → deliverable: local prototype running end-to-end.
+- Phase 3 — AWS infrastructure deployment (Weeks 6–8): IAM, Lambda + API Gateway, Amplify, S3, DynamoDB, Bedrock Knowledge Base, CloudFront, WAF, Cognito, SSM Parameter Store → deliverable: live system publicly accessible on AWS.
+- Phase 4 — Monitoring & optimization (Weeks 9–10): CloudWatch, Alarm → SNS, EventBridge cron, cost optimization → deliverable: active monitoring dashboard + alerting pipeline.
+- Phase 5 — Testing & documentation (Weeks 11–12): end-to-end validation, bilingual workshop, clean-up guide → deliverable: workshop website + final internship report.
 
-2. **Phase 2: Serverless Core Engine & Orchestration Backend (Month 2)**:
-   - Provision an Amazon DynamoDB table (`CloudGuard_ScanHistory`) structured with `ScanId` (Partition Key) and `Timestamp` (Sort Key).
-   - Implement the core AWS Lambda handler in Python 3.12 utilizing the AWS SDK (`boto3`) to interface with Bedrock Runtime, DynamoDB, S3, and SES.
-   - Develop custom HCL parsing logic to validate syntax, detect structural dependencies, and extract cloud resource attributes.
-   - Configure Amazon API Gateway (HTTP API) routes and attach Cognito JWT Authorizers.
+### 6. Budget Estimation
+Infrastructure Costs
+AWS Services:
+- AWS Lambda: ~$0/month (free tier 1M requests/month, 512 MB memory).
+- Amazon Bedrock (Claude 3.5 Sonnet + Titan Embeddings V2): ~$0.5 - $1/month (~500 IaC audit requests).
+- API Gateway (HTTP API): ~$0.01/month ($1/million requests).
+- AWS Amplify: ~$0.5/month (build minutes + SSR hosting).
+- Amazon S3: ~$0.02/month (storing tf templates and CIS rules).
+- Amazon DynamoDB: ~$0/month (On-demand pay-per-request within free tier).
+- AWS WAF: ~$0 - $1/month (basic Web ACL rules).
+- CloudFront CDN: ~$0.1/month.
+- CloudWatch + SNS + EventBridge: ~$0/month (within free tier allocations).
+- SSM Parameter Store: ~$0/month (standard parameters are free).
 
-3. **Phase 3: Web Dashboard Development & CI/CD Automation (Month 2 – Month 3)**:
-   - Build a responsive web application using **Next.js (App Router)** and **Tailwind CSS**, integrating the Monaco Code Editor for in-browser Terraform editing.
-   - Design dynamic visualization components: an overall Security Posture radar chart, color-coded finding breakdowns, and a side-by-side Diff Viewer highlighting original vs. remediated code.
-   - Deploy the web interface to **AWS Amplify** backed by CloudFront and ACM SSL certificates.
-   - Configure **Amazon EventBridge Scheduler** to execute automated daily infrastructure posture audits at 00:00 UTC.
-   - Author reference GitHub Actions workflows demonstrating automated pull request security scanning via webhooks.
+Total: ~$1–2/month
 
-4. **Phase 4: Comprehensive Verification, Performance Tuning & Workshop Authoring (Month 3)**:
-   - Execute test suites against 50 diverse Terraform configurations featuring typical security misconfigurations and anti-patterns.
-   - Benchmark RAG retrieval accuracy (demonstrating over 96% precision with 0% hallucination rates).
-   - Optimize Lambda memory allocations and cold-start latencies to achieve sub-8-second execution times for 500-line configurations.
-   - Complete the hands-on lab tutorial documentation (Section 5) for the final project submission.
+Cost-saving architecture choice: The platform leverages 100% serverless compute and Bedrock On-Demand pricing rather than provisioning dedicated EC2/GPU instances (saving $100–$200/month). It eliminates the NAT Gateway (~$32/month) by connecting Lambda directly to internal AWS service endpoints over TLS, keeping total idle operating costs at $0.
 
----
+### 7. Risk Assessment
+Risk Matrix
+- LLM Hallucination: high severity.
+- Bedrock Model Quota / Rate Limiting: medium severity.
+- Sensitive credential leakage (AWS Keys, API Tokens, PII) in uploaded code: high severity.
+- Lambda cold-start latency: low severity.
+- Unexpected billing beyond free tier: low severity.
 
-### 5. Roadmap & Milestones
+Mitigation Strategies
+- Hallucination: Anchor retrieval to CIS Benchmark v3.0 via RAG, set temperature = 0.1 for deterministic scoring, mandate explicit rule citation.
+- Rate limiting: Implement exponential backoff retry in Lambda; cache audit results for identical code hashes in DynamoDB.
+- Sensitive data protection: Activate Bedrock Guardrails to automatically detect and redact secrets, credentials, and PII prior to model invocation.
+- Cost control: Configure AWS Budgets and CloudWatch Billing Alarms at a $5/month threshold; tear down resources post-demo.
+- Credentials: Store all secrets in SSM Parameter Store; git-ignore `.env`; rotate IAM keys periodically.
 
-| Timeline | Project Phase | Core Objectives & Deliverables | Status |
-| :--- | :--- | :--- | :---: |
-| **Month 1 (Weeks 1–4)** | Research & Architecture | • Analyze CIS AWS Foundations Benchmark v3.0 specifications.<br>• Author comprehensive project proposal documentation.<br>• Prototype Bedrock RAG vector indexing pipeline. | **Completed 100%** |
-| **Month 2 (Weeks 5–8)** | Backend & AI Engineering | • Implement Serverless Core backend (Lambda, API Gateway, DynamoDB).<br>• Integrate Bedrock Agent with Claude 3.5 Sonnet and Knowledge Bases.<br>• Implement automated scoring algorithms and remediation generators. | **In Progress** |
-| **Month 3 (Weeks 9–11)**| Frontend & Automation | • Finalize Next.js Dashboard deployed on AWS Amplify.<br>• Configure EventBridge scheduled triggers and SNS/SES notifications.<br>• Implement GitHub Actions pull request audit workflows. | **Ready** |
-| **Month 3 (Week 12)**  | Verification & Defense | • Validate end-to-end against 50 representative benchmark cases.<br>• Complete 5-chapter hands-on Workshop documentation.<br>• Prepare final presentation deck and defense Q&A script. | **Planned** |
+Contingency Plans
+- If Claude 3.5 Sonnet experiences regional service throttling, failover dynamically to Claude 3 Haiku via SSM configuration.
+- Local regex-based fallback scanner for foundational rules (port 22, port 3389) during AI network degradation.
+- Complete clean-up guide ensures immediate teardown of all provisioned cloud resources post-presentation to halt all costs.
 
----
-
-### 6. Cost Estimation & Return on Investment (ROI)
-
-CloudGuard AI is built from the ground up on FinOps best practices, eliminating fixed infrastructure overhead and leveraging the **AWS Free Tier**.
-
-The projected monthly operating expenses (based on a workload of 1,000 infrastructure code scans per month) are detailed below:
-
-| AWS Service | Estimated Monthly Capacity / Configuration | Free Tier Coverage | Actual Monthly Cost |
-| :--- | :--- | :---: | :---: |
-| **AWS Lambda** | 1,000 invocations/month, 5s average duration, 512 MB memory | Fully covered (1,000,000 free requests/month) | **$0.00 USD** |
-| **Amazon API Gateway** | 2,000 HTTP API calls/month | Fully covered (1,000,000 free calls for first 12 months) | **$0.00 USD** |
-| **Amazon S3 Standard** | 2 GB document & report storage, 3,000 PUT/GET requests | Fully covered (5 GB standard storage free) | **$0.00 USD** |
-| **Amazon DynamoDB** | 1 table, 500 MB storage, on-demand read/write mode | Fully covered (25 GB free permanent NoSQL storage) | **$0.00 USD** |
-| **AWS Amplify** | Static web hosting, 5 GB bandwidth/month | Fully covered (15 GB bandwidth free) | **$0.00 USD** |
-| **Amazon Bedrock (Claude 3.5)**| ~1,000 AI invocations, avg 1,500 input / 800 output tokens | Billed strictly per consumed token | **~$1.20 USD** |
-| **Amazon Bedrock (Titan V2)** | Vector embedding storage & queries (500,000 tokens) | Billed per token query and storage | **~$0.15 USD** |
-| **Amazon SES & SNS** | 200 report emails/month, 50 SMS/SNS notifications | Fully covered (62,000 free emails/month from Lambda) | **$0.00 USD** |
-| **CloudWatch & WAF** | 1 GB log ingestion, basic Web ACL inspection | Within standard baseline monitoring allocations | **~$0.25 USD** |
-| **ESTIMATED MONTHLY TOTAL** | **Full Serverless DevSecOps Security Auditing Platform** | **Over 95% Cost Reduction** | **~$1.60 USD / month** |
-
-> **Total annualized operational expenditure is approximately ~$19.20 USD**. Compared to legacy architectures requiring dedicated EC2 instances (minimum $15–$20/month for small instances running 24/7) or commercial proprietary scanners (costing thousands of dollars annually), CloudGuard AI achieves unprecedented cost efficiency with an ROI exceeding 98%.
-
----
-
-### 7. Risk Assessment & Mitigation Strategies
-
-| Identified Risk | Severity | Likelihood | Proactive Mitigation Strategy |
-| :--- | :---: | :---: | :--- |
-| **AI Model Hallucinations** | High | Low | Implement **Bedrock Knowledge Bases (RAG)** to strictly constrain Claude 3.5 Sonnet to cite verified clauses directly from indexed CIS Benchmark documents. |
-| **Prompt Injection Attacks** | High | Medium | Configure **Amazon Bedrock Guardrails** with strict content filters and input sanitization rules that reject jailbreak attempts and instruction overrides. |
-| **Accidental Secret Leaks in IaC Code** | Critical | Medium | Execute client-side and Lambda-side regular expression pattern scanning to redact AWS access keys and passwords before dispatching payloads to Bedrock. |
-| **Unexpected Budget Overruns via API Abuse** | Medium | Low | Enforce strict rate limits on Amazon API Gateway (10 requests/minute per client IP) and configure automated **AWS Budgets** alerts triggered at a $5.00 threshold. |
-| **Lambda Invocation Timeouts on Large Files** | Medium | Medium | Set a generous 60-second Lambda timeout window, implement code modularization, and introduce asynchronous processing with webhook/email callbacks for large templates. |
-
----
-
-### 8. Expected Outcomes & Project Value
-
-#### Technical Achievements
-- **Fully Functional, Production-Ready Platform**: Delivers an end-to-end DevSecOps cloud auditor featuring a modern web UI, automated CI/CD webhooks, and verified AWS serverless backends.
-- **Mastery of Frontier Cloud & AI Technologies**: Demonstrates deep practical expertise with advanced AWS services: **Amazon Bedrock Agents**, **Knowledge Bases (RAG)**, **Guardrails**, and **Event-Driven Serverless Architecture**.
-- **High-Quality Open-Source Artifacts**: Publishes clean, modular, and maintainable source code accompanied by infrastructure provisioning scripts (Terraform) and comprehensive documentation.
-
-#### Academic & Industry Impact
-- **Fulfillment of Internship & Graduation Objectives**: Serves as a capstone internship project for an Artificial Intelligence major at FPT University, demonstrating strong architectural independence, engineering rigor, and real-world problem-solving skills.
-- **Contribution to the AWS First Cloud AI Journey (FCAJ)**: Provides a comprehensive, production-grade workshop tutorial (Section 5) that enables fellow students and junior cloud engineers to build secure, generative AI-powered automation on AWS.
+### 8. Expected Outcomes
+Technical Improvements: The entire platform operates serverless on AWS — auto-scaling with traffic, HTTPS-only, WAF and Cognito protected, executing AI and RAG compliance analysis in under 10 seconds. Automated code remediation with CloudWatch monitoring and SNS alerting replaces manual reviews.
+Long-term Value: A production-grade reference architecture for enterprise GenAI & RAG DevSecOps on AWS, a reusable bilingual step-by-step workshop for the cloud community, and a cost-optimized model (~$1–2/month) validated against real-world infrastructure code.

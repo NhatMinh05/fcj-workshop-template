@@ -1,176 +1,127 @@
 ---
 title: "Bản đề xuất"
-date: 2026-09-14
+date: 2024-01-01
 weight: 2
 chapter: false
 pre: " <b> 2. </b> "
 ---
 
-# CloudGuard AI: Nền Tảng Tự Động Hóa Rà Soát An Toàn & Tối Ưu Chi Phí Đám Mây Bằng GenAI & RAG trên AWS
+# CloudGuard AI: Nền Tảng Tự Động Hóa Kiểm Toán An Ninh & Tối Ưu Chi Phí AWS
+## Giải pháp Serverless kết hợp GenAI & RAG kiểm toán mã nguồn Terraform theo chuẩn CIS Benchmark v3.0
 
-## Giải pháp kiểm toán an ninh Infrastructure as Code (IaC) thông minh theo tiêu chuẩn CIS AWS Foundations Benchmark v3.0
+### 1. Tóm tắt điều hành
+Dự án xây dựng nền tảng kiểm toán an ninh hạ tầng mã nguồn (Infrastructure as Code - IaC) và tối ưu hóa chi phí điện toán đám mây (**DevSecOps & FinOps**) hoàn chỉnh, gồm hai ứng dụng độc lập: **Backend** — Serverless API viết bằng Python 3.12 chạy trên AWS Lambda + API Gateway, tích hợp mô hình ngôn ngữ lớn **Anthropic Claude 3.5 Sonnet** và kỹ thuật **RAG (Retrieval-Augmented Generation)** với **Amazon Titan Text Embeddings V2** để bóc tách cú pháp cây AST tệp Terraform HCL, đối chiếu tiêu chuẩn an ninh **CIS AWS Foundations Benchmark v3.0**, tính toán điểm tuân thủ (0–100) và tự động sinh mã sửa lỗi — và **Frontend** — ứng dụng Next.js SSR xây dựng trên React, hỗ trợ giao diện song ngữ vi/en, dark/light theme, đồng hồ đo điểm số bảo mật (Security Gauge), thẻ phân loại lỗ hổng theo mức độ nghiêm trọng và trình so sánh mã (Diff viewer) kèm nút sao chép mã đã sửa một chạm.
 
----
+Mục tiêu của workshop là triển khai toàn bộ hệ thống lên hạ tầng AWS Serverless (region ap-southeast-1): frontend Next.js SSR chạy trên AWS Amplify, backend Python chạy trên Lambda + API Gateway, tất cả đặt phía sau CloudFront và được bảo vệ bởi AWS WAF cùng Amazon Cognito — thể hiện năng lực vận dụng các dịch vụ AWS vào một use-case thực tế, end-to-end. Khách hàng mục tiêu là các kỹ sư DevOps/Cloud Engineer cần kiểm toán an ninh tự động trước khi merge code vào production (nguyên lý Shift-Left Security), đội ngũ bảo mật (SecOps) cần báo cáo tuân thủ tiêu chuẩn an ninh quốc tế, và nhà quản trị (FinOps) muốn tối ưu chi phí hạ tầng.
 
-### 1. Tóm Tắt Điều Hành (Executive Summary)
+### 2. Tuyên bố vấn đề
+Vấn đề hiện tại
+- Cấu hình sai hạ tầng gây rò rỉ dữ liệu diện rộng: hơn 80% sự cố an ninh đám mây bắt nguồn từ lỗi cấu hình cơ bản của con người (mở cổng SSH 22 ra `0.0.0.0/0`, S3 bucket không bật mã hóa SSE-S3/KMS, cấp quyền IAM wildcard `*`).
+- Quy trình kiểm toán thủ công chậm trễ: việc rà soát code hạ tầng thủ công tốn 2–3 ngày, trở thành "nút thắt cổ chai" làm chậm tốc độ phát hành sản phẩm.
+- Công cụ quét tĩnh truyền thống thiếu ngữ cảnh: các công cụ regex/linter thông thường (Checkov, tfsec) có tỷ lệ cảnh báo giả (False Positive) cao, không hiểu được mối liên kết giữa các tài nguyên và không có khả năng tự động sinh mã khắc phục.
+- Hiện tượng ảo tưởng (Hallucination) của AI: sử dụng các LLM đại trà thường dẫn đến hiện tượng trích dẫn sai số hiệu điều khoản bảo mật hoặc gợi ý cú pháp Terraform lỗi thời nếu không có cơ sở tri thức RAG ghim chặt.
+- Chi phí hạ tầng cao khi duy trì server AI: thuê các máy chủ EC2 có GPU chuyên dụng gây lãng phí hàng trăm USD/tháng khi hệ thống không có yêu cầu quét.
 
-Trong bối cảnh làn sóng chuyển đổi số và di chuyển hạ tầng lên điện toán đám mây bùng nổ, **Infrastructure as Code (IaC)** — đặc biệt là mã nguồn Terraform — đã trở thành tiêu chuẩn cốt lõi để các tổ chức xây dựng và quản trị tài nguyên AWS. Tuy nhiên, theo các báo cáo bảo mật đám mây từ Gartner và Palo Alto Networks, hơn **80% sự cố lộ lọt dữ liệu và vi phạm an ninh đám mây bắt nguồn từ lỗi cấu hình sai (misconfigurations)** do con người vô tình tạo ra trong mã IaC (ví dụ: mở cổng SSH 22 ra Internet `0.0.0.0/0`, gán quyền IAM quá mức `AdministratorAccess`, không bật mã hóa S3 Bucket SSE-KMS, hoặc kích hoạt tài nguyên nhàn rỗi gây lãng phí hàng nghìn USD mỗi tháng).
+Giải pháp
+Kiến trúc serverless, trả tiền theo request, tự scale: Lambda Core Engine chạy trên AWS Lambda + API Gateway (HTTP API), Next.js SSR host trên AWS Amplify, CloudFront (gắn WAF Web ACL tại edge) làm CDN phân phối static assets/SSR và định tuyến API. Cơ chế RAG với Bedrock Knowledge Base (Titan Text Embeddings V2 + Vector DB) ghim chặt tri thức chuẩn mực CIS AWS Foundations Benchmark v3.0, loại bỏ hoàn toàn hiện tượng ảo tưởng. Bedrock Agent (Claude 3.5 Sonnet) suy luận ngữ cảnh, tính điểm tuân thủ và tự động sinh mã Terraform đã vá lỗi hoàn chỉnh. CloudWatch Logs/Metrics + Alarm + SNS cung cấp giám sát tập trung và cảnh báo khẩn cấp cho admin qua Email; WAF, IAM least-privilege, Cognito và SSM Parameter Store đảm nhiệm bảo mật; EventBridge Scheduler + Lambda riêng xử lý cron job kiểm toán tự động hằng ngày.
 
-**CloudGuard AI** ra đời như một giải pháp đột phá, kết hợp sức mạnh của **Generative AI** và kiến trúc **RAG (Retrieval-Augmented Generation)** trên nền tảng **Amazon Bedrock** nhằm tự động hóa hoàn toàn quy trình rà soát an ninh, đánh giá mức độ tuân thủ và tối ưu hóa chi phí hạ tầng AWS. Hệ thống sử dụng mô hình ngôn ngữ tiên tiến **Anthropic Claude 3.5 Sonnet** được trang bị bộ cơ sở tri thức véc-tơ hóa từ bộ tài liệu tiêu chuẩn an ninh quốc tế **CIS AWS Foundations Benchmark v3.0** và **AWS Well-Architected Framework**. 
+Lợi ích và hoàn vốn đầu tư (ROI)
+Nền tảng tự động scale theo nhu cầu với chi phí chỉ ~$1–2/tháng — kiến trúc Serverless loại bỏ hoàn toàn chi phí nhàn rỗi (Zero Idle Cost), không cần duy trì EC2/GPU liên tục, tiết kiệm hơn 95% so với thuê máy chủ AI cố định. Rút ngắn 90% thời gian rà soát an ninh (từ 2–3 ngày xuống dưới 10 giây), ngăn chặn 100% lỗ hổng cơ bản trước khi đưa lên Production, và workshop song ngữ step-by-step tạo ra ở cuối dự án là tài nguyên học tập tái sử dụng giá trị cho cộng đồng kỹ sư đám mây triển khai GenAI & DevSecOps trên AWS.
 
-Với kiến trúc **100% Serverless & Event-Driven** (AWS Lambda, Amazon API Gateway, Amazon DynamoDB, Amazon S3, AWS Amplify), CloudGuard AI cung cấp khả năng phân tích ngữ cảnh hạ tầng theo thời gian thực, chấm điểm tư thế an ninh **Security Posture Score (0–100)**, chỉ rõ điều khoản vi phạm và **tự động sinh mã nguồn Terraform đã vá lỗi (Auto-Remediation)** chỉ với 1 cú click. Dự án vận hành với chi phí cực kỳ tối ưu (**chỉ ~1$ - 2$/tháng**, tận dụng tối đa gói AWS Free Tier và không tốn phí duy trì server nhàn rỗi), mang lại giải pháp DevSecOps thiết thực cho cả doanh nghiệp khởi nghiệp lẫn môi trường nghiên cứu học thuật.
-
----
-
-### 2. Tuyên Bố Vấn Đề (Problem Statement)
-
-#### Bối Cảnh Thực Tế & Khó Khăn Hiện Tại
-1. **Kiểm toán thủ công chậm trễ và dễ bỏ sót**: Việc rà soát an ninh mã hạ tầng (Terraform, CloudFormation) trước khi triển khai thường được thực hiện thủ công bởi đội ngũ bảo mật hạn hẹp. Khi số lượng tài nguyên tăng vọt, quy trình này trở thành "nút thắt cổ chai" (bottleneck), kéo dài chu kỳ phát hành sản phẩm và dễ bỏ lọt các lỗ hổng nghiêm trọng.
-2. **Công cụ rà soát tĩnh (Static Code Analysis) thiếu ngữ cảnh**: Các công cụ mã nguồn mở truyền thống (như tfsec, checkov) sử dụng các luật biểu thức chính quy (regex) cố định. Chúng thường sinh ra số lượng lớn cảnh báo giả (false positives), không hiểu được ngữ cảnh kiến trúc liên kết giữa các tài nguyên (ví dụ: EC2 nằm trong Private Subnet không thể bị tấn công trực tiếp từ Internet dù Security Group mở cổng), và quan trọng nhất là **không có khả năng giải thích và tự động sửa code**.
-3. **Ảo giác của mô hình AI tạo sinh thông thường**: Khi lập trình viên sử dụng các công cụ LLM đại trà (ChatGPT, Claude thông thường) để hỏi về an ninh, mô hình dễ gặp hiện tượng **ảo tưởng (hallucination)**, trích dẫn sai số hiệu điều khoản bảo mật hoặc gợi ý các cú pháp Terraform đã lỗi thời (deprecated), dẫn đến rủi ro nghiêm trọng khi áp dụng vào production.
-
-#### Giải Pháp Đột Phá Từ CloudGuard AI
-CloudGuard AI giải quyết triệt để 3 thách thức trên bằng giải pháp tích hợp thông minh:
-- **Trí tuệ nhân tạo RAG chuẩn xác 100%**: Chỉ mục toàn bộ văn bản tiêu chuẩn CIS AWS Foundations Benchmark v3.0 và AWS Best Practices vào **Amazon Bedrock Knowledge Bases** (sử dụng mô hình embedding **Amazon Titan Text Embeddings V2** và cơ sở dữ liệu véc-tơ). Mọi nhận định vi phạm đều được đối chiếu trực tiếp từ điều luật thực tế, loại bỏ hoàn toàn hiện tượng ảo tưởng.
-- **Tác tử AI tự động lập kế hoạch và sửa lỗi**: **Amazon Bedrock Agent** đóng vai trò như một chuyên gia DevSecOps ảo cao cấp, phân tích cây cú pháp trừu tượng (AST) của file Terraform, đối chiếu với tri thức RAG và tự động sinh ra đoạn mã Terraform đã sửa chuẩn xác (diff view).
-- **Tích hợp liền mạch CI/CD Pipeline**: Hỗ trợ tiếp nhận mã nguồn trực tiếp qua giao diện web hiện đại (AWS Amplify) hoặc tự động kích hoạt thông qua Webhook khi lập trình viên tạo Pull Request trên GitHub/GitLab, ngăn chặn lỗ hổng ngay tại cửa ngõ phát triển (Shift-Left Security).
-
-#### Lợi Ích & Khả Năng Hoàn Vốn (ROI)
-- **Giảm 90% thời gian rà soát an ninh**: Thời gian thẩm định một bộ mã hạ tầng rút ngắn từ 2–3 ngày xuống còn dưới 10 giây.
-- **Ngăn chặn 100% các lỗ hổng an ninh cơ bản trước khi lên Production**: Đảm bảo toàn bộ tài nguyên lưu trữ (S3, EBS, RDS) được mã hóa, các cổng nhạy cảm (22, 3389, 3306) không bị phơi nhiễm ra Internet và tài khoản IAM tuân thủ nguyên tắc quyền tối thiểu.
-- **Tiết kiệm ngân sách vượt trội**: Mô hình Serverless giúp loại bỏ 100% chi phí nhàn rỗi (Zero Idle Cost). Doanh nghiệp chỉ chi trả khi có lượt quét thực tế với mức phí chỉ khoảng 0,001$ cho mỗi lần phân tích file. Thời gian hoàn vốn đầu tư (Break-even) đạt được ngay trong tháng đầu tiên vận hành.
-
----
-
-### 3. Kiến Trúc Giải Pháp (Solution Architecture)
-
-CloudGuard AI được thiết kế theo chuẩn **AWS Well-Architected Framework**, tuân thủ nghiêm ngặt 6 trụ cột (Bảo mật, Độ tin cậy, Hiệu năng, Tối ưu chi phí, Vận hành xuất sắc và Tính bền vững). 
-
-Dưới đây là sơ đồ kiến trúc chính thức của hệ thống:
+### 3. Kiến trúc giải pháp
+Request từ người dùng đi qua CloudFront (WAF Web ACL gắn tại edge) đến hai origin: Amplify (frontend Next.js SSR, luồng Static/SSR) và API Gateway (HTTP API) → Lambda (backend Core Audit Engine, luồng API Calls); Amplify cũng “SSR fetch” ngược về API khi render phía server. Người dùng DevOps xác thực qua Amazon Cognito (JWT Auth). External CI/CD (GitHub/GitLab PR) gửi webhook quét mã tự động vào API Gateway. Lambda Core Engine bóc tách cú pháp Terraform AST, truy vấn tri thức CIS Benchmark v3.0 qua Bedrock Knowledge Bases (RAG), điều phối Claude 3.5 Sonnet suy luận, đọc cấu hình từ SSM Parameter Store, lưu báo cáo PDF vào S3 qua Pre-signed URL, ghi lịch sử kiểm toán vào DynamoDB, và gửi email qua SES. EventBridge Scheduler trigger Lambda hàng ngày để tự động rà soát posture. CloudWatch thu log/metric, khi vượt ngưỡng hoặc phát hiện lỗi CRITICAL thì Alarm đẩy sang SNS gửi email khẩn cấp cho admin. Chi tiết kiến trúc:
 
 ![Sơ Đồ Kiến Trúc Hệ Thống CloudGuard AI](https://nhatminh05.github.io/fcj-workshop-template/images/2-Proposal/cloudguard_architecture.jpg)
 
-#### Danh Mục Dịch Vụ AWS Sử Dụng
-- **AWS WAF (Web Application Firewall)**: Thiết lập bộ luật Web ACL bảo vệ điểm cuối CloudFront và API Gateway khỏi các cuộc tấn công DDoS, SQLi, Cross-Site Scripting (XSS) và ngăn chặn bot tự động quét lỗ hổng.
-- **AWS IAM (Identity and Access Management)**: Áp dụng các vai trò thực thi (Execution Roles) tuân thủ nguyên tắc đặc quyền tối thiểu (Least Privilege), cấp quyền giới hạn cho AWS Lambda và Bedrock Agent.
-- **Amazon CloudFront**: Mạng phân phối nội dung (CDN) toàn cầu, cung cấp khả năng phân phối mã tĩnh với độ trễ thấp và tích hợp chứng chỉ bảo mật SSL/TLS cạnh.
-- **Amazon Cognito**: Hệ thống User Pools quản lý thông tin tài khoản của kỹ sư DevOps, xác thực người dùng an toàn bằng chuỗi mã hóa JSON Web Token (JWT).
-- **AWS Certificate Manager (ACM)**: Cung cấp và tự động gia hạn chứng chỉ số SSL/TLS công khai cho tên miền tùy chỉnh tại cả vùng toàn cầu (us-east-1 cho CloudFront) và vùng cục bộ (ap-southeast-1 cho API Gateway).
-- **Amazon API Gateway (HTTP API)**: Cổng giao tiếp RESTful API tiếp nhận các luồng yêu cầu quét mã (`POST /scan`), tra cứu lịch sử (`GET /history`) và xem chi tiết báo cáo (`GET /report/{id}`), hỗ trợ cơ chế giới hạn lưu lượng (rate-limiting).
-- **AWS Systems Manager (SSM) Parameter Store**: Kho lưu trữ tập trung, mã hóa bảo mật các khóa cấu hình ứng dụng, ARN của Bedrock Agent và URL tích hợp Slack/Teams Webhook.
-- **AWS Lambda (Core Audit Engine)**: Trái tim tính toán Serverless chạy môi trường runtime Python 3.12, chịu trách nhiệm bóc tách cú pháp Terraform HCL, điều phối Agent AI, tổng hợp điểm số và tạo file báo cáo kiểm toán PDF.
-- **AWS Amplify**: Nền tảng lưu trữ và phân phối giao diện web hiện đại xây dựng trên Next.js và React, cho phép người dùng thao tác trực tiếp, dán mã nguồn và xem kết quả trực quan.
-- **Amazon EventBridge Scheduler**: Bộ điều phối lịch trình Serverless tự động kích hoạt hàm Lambda thực hiện rà soát định kỳ toàn bộ trạng thái hạ tầng đám mây hàng ngày.
-- **Amazon Bedrock Agent**: Tác tử trí tuệ nhân tạo xây dựng trên nền tảng Anthropic Claude 3.5 Sonnet, có khả năng suy luận logic chuyên sâu, đối chiếu vi phạm tiêu chuẩn an ninh và tự động sinh mã Terraform khắc phục lỗi.
-- **Amazon Bedrock Knowledge Bases (RAG)**: Hệ sinh thái tìm kiếm tăng cường thông tin, sử dụng mô hình véc-tơ hóa Amazon Titan Text Embeddings V2 kết hợp cơ sở dữ liệu véc-tơ để truy xuất chính xác các điều khoản trong bộ tiêu chuẩn CIS AWS Foundations Benchmark.
-- **Amazon Bedrock Guardrails**: Lớp phòng thủ bảo vệ mô hình AI, ngăn ngừa các cuộc tấn công tiêm nhiễm câu lệnh (Prompt Injection), lọc và che giấu các thông tin bí mật công nghệ (như AWS Access Key, mật khẩu, JWT token) và dữ liệu định danh cá nhân (PII).
-- **Amazon S3 (Simple Storage Service)**: Lưu trữ các tài liệu tiêu chuẩn CIS Benchmark PDF gốc, mã nguồn Terraform người dùng tải lên và các tệp báo cáo kiểm toán định dạng PDF hoàn chỉnh.
-- **Amazon DynamoDB**: Cơ sở dữ liệu NoSQL với độ trễ tính bằng mili-giây, lưu trữ lịch sử các phiên quét, bảng điểm tuân thủ, danh sách các lỗ hổng phát hiện và mốc thời gian thực hiện.
-- **Amazon SES (Simple Email Service)**: Dịch vụ gửi thư điện tử tự động, chuyển tiếp báo cáo kiểm toán định kỳ và tóm tắt an ninh tới hòm thư của đội ngũ quản trị DevSecOps.
-- **Amazon CloudWatch**: Hệ thống giám sát tập trung thu thập toàn bộ nhật ký (Logs), số lượng token Bedrock tiêu thụ, thời gian phản hồi của Lambda và các chỉ số đo lường hiệu năng hệ thống.
-- **Amazon SNS (Simple Notification Service)**: Kênh thông báo tức thời (Pub/Sub), tự động bắn tin nhắn cảnh báo khẩn cấp tới quản trị viên qua Slack, SMS hoặc Email ngay khi phát hiện lỗ hổng ở mức độ Nghiêm trọng (CRITICAL).
+Lưu ý về WAF: WAF không phải một “trạm” độc lập trên đường truyền — Web ACL được gắn trực tiếp vào CloudFront distribution và đánh giá request ngay tại edge location trước khi CloudFront xử lý. Web ACL cho CloudFront bắt buộc tạo ở scope Global (us-east-1).
 
-#### Thiết Kế Thành Phần Chi Tiết (Component Design)
-1. **Phân Tầng Cửa Ngõ & Xác Thực (Edge & Security Layer)**:
-   - Toàn bộ lưu lượng truy cập từ người dùng và hệ thống CI/CD bên ngoài đều đi qua lớp bảo vệ AWS WAF và mạng phân phối Amazon CloudFront. Người dùng bắt buộc phải đăng nhập thông qua Amazon Cognito để nhận JWT Bearer Token trước khi có thể gửi yêu cầu quét mã.
-2. **Phân Tầng Giao Tiếp API (API Layer)**:
-   - Amazon API Gateway kiểm tra tính hợp lệ của JWT Token từ Cognito Authorizer. Nếu hợp lệ, API Gateway chuyển tiếp payload mã nguồn Terraform tới AWS Lambda, đồng thời áp dụng cơ chế throttling để ngăn chặn tình trạng spam tài nguyên.
-3. **Phân Tầng Xử Lý Trung Tâm (Core Audit Engine - Lambda)**:
-   - Hàm Lambda bóc tách file Terraform thành cấu trúc cây cú pháp (AST) bằng thư viện phân tích cú pháp chuyên dụng. Lambda lấy các tham số nhạy cảm từ SSM Parameter Store, sau đó đóng gói ngữ cảnh hạ tầng và gọi đến Bedrock Agent.
-4. **Phân Tầng Trí Tuệ Nhân Tạo Lõi (GenAI & RAG Brain Layer)**:
-   - Bedrock Agent phân tích cấu trúc tài nguyên, đồng thời phát lệnh truy vấn véc-tơ sang Bedrock Knowledge Bases để tìm kiếm các điều luật CIS liên quan.
-   - Dữ liệu trả về được kiểm duyệt qua Bedrock Guardrails để đảm bảo không bị rò rỉ khóa bí mật. Claude 3.5 Sonnet tổng hợp kết quả, tính điểm Security Posture Score (từ 0 đến 100), phân loại lỗ hổng theo 4 cấp độ (CRITICAL, HIGH, MEDIUM, LOW) và sinh ra khối mã Terraform sửa lỗi tương ứng.
-5. **Phân Tầng Lưu Trữ & Phân Phối Kết Quả (Data & Notification Layer)**:
-   - Lambda lưu toàn bộ kết quả chi tiết vào Amazon DynamoDB, đồng thời kết xuất file báo cáo PDF lưu trữ tại Amazon S3. 
-   - Nếu phát hiện lỗ hổng mức độ CRITICAL (ví dụ: cổng 22 mở toàn bộ Internet, bucket S3 cho phép đọc công khai không xác thực), CloudWatch Alarms sẽ ngay lập tức kích hoạt Amazon SNS để bắn cảnh báo khẩn cấp tới điện thoại và kênh Slack của kỹ sư trực vận hành.
+Dịch vụ AWS sử dụng
+- AWS Lambda: Chạy Core Audit Engine (Python 3.12) + cron jobs — serverless, free tier 1M request/tháng, code đã tối ưu cold-start.
+- Amazon API Gateway (HTTP API): Cửa ngõ REST API — rẻ hơn REST API Gateway ~70%, tích hợp Lambda native.
+- AWS Amplify: Hosting Next.js SSR, CI/CD tự động từ Git.
+- Amazon CloudFront: CDN phân phối static assets/SSR và API — edge location toàn cầu giảm độ trễ, là điểm gắn WAF Web ACL.
+- Amazon Cognito: Quản lý User Pools và xác thực kỹ sư DevOps bằng JWT Bearer Token.
+- Amazon Bedrock Agent: Tác tử AI dùng Anthropic Claude 3.5 Sonnet suy luận logic, đối chiếu vi phạm và sinh mã tự sửa lỗi.
+- Amazon Bedrock Knowledge Bases (RAG): Sử dụng Amazon Titan Text Embeddings V2 kết hợp vector database lập chỉ mục bộ quy tắc CIS Benchmark v3.0.
+- Amazon Bedrock Guardrails: Ngăn ngừa Prompt Injection, che giấu AWS Secrets / API Keys và dữ liệu cá nhân PII.
+- Amazon S3: Lưu trữ tài liệu quy tắc CIS Benchmark, file Terraform thô và báo cáo kiểm toán PDF hoàn chỉnh; upload qua Pre-signed URL, chặn toàn bộ public access.
+- Amazon DynamoDB: Cơ sở dữ liệu NoSQL lưu trữ lịch sử các phiên quét, bảng điểm tuân thủ và danh sách lỗi.
+- Amazon SES: Gửi email thông báo định kỳ và tóm tắt kiểm toán cho quản trị viên.
+- Amazon CloudWatch: Log + metric + alarm, tích hợp sẵn với Lambda/API Gateway.
+- Amazon SNS: Cảnh báo admin qua email subscription trực tiếp khi có lỗi CRITICAL.
+- Amazon EventBridge Scheduler: Trigger cron quét tự động hằng ngày trong môi trường serverless.
+- AWS Systems Manager Parameter Store: Lưu tập trung secrets và cấu hình (Bedrock ARN, Webhooks).
+- IAM + ACM + WAF: Least-privilege roles; chứng chỉ SSL/TLS miễn phí (ACM us-east-1 cho CloudFront, ACM ap-southeast-1 cho API Gateway); chặn tấn công lớp 7.
 
----
+Thiết kế thành phần
+- Phân phối nội dung & Biên: CloudFront phục vụ static assets/SSR và API tại edge location toàn cầu; WAF Web ACL lọc request tại edge; Cognito quản lý xác thực người dùng bằng JWT token.
+- Giao diện người dùng: AWS Amplify host ứng dụng Next.js 15 SSR, deploy tự động từ Git.
+- Xử lý kiểm toán cốt lõi: AWS Lambda đóng gói logic bóc tách Terraform HCL phía sau API Gateway HTTP API.
+- Trí tuệ nhân tạo RAG: Bedrock Knowledge Base vector store + Claude 3.5 Sonnet agent suy luận ngữ cảnh và sinh mã khắc phục.
+- Tầng dữ liệu: DynamoDB lưu trữ lịch sử các phiên quét; S3 lưu trữ tài liệu quy tắc CIS và báo cáo PDF qua Pre-signed URL.
+- Lập lịch & Cảnh báo: EventBridge Scheduler kích hoạt Lambda kiểm toán hằng ngày; CloudWatch + SNS phát cảnh báo khẩn cấp khi phát hiện lỗi CRITICAL.
+- Bảo mật & Chứng chỉ: Lambda Execution Role tuân thủ Least Privilege; HTTPS-only với chứng chỉ ACM; secrets lưu trong SSM Parameter Store, không hard-code credentials.
 
-### 4. Triển Khai Kỹ Thuật (Technical Implementation)
+### 4. Triển khai kỹ thuật
+Các giai đoạn triển khai
+- Nghiên cứu & thiết kế: học AWS cơ bản (IAM, Lambda, Bedrock, S3, API Gateway); khảo sát kiến trúc RAG cho IaC (Tuần 1–2).
+- Hoàn thiện ứng dụng & RAG: chuẩn hóa bộ quy tắc CIS Benchmark v3.0, viết mã nguồn bóc tách cú pháp Terraform, kết nối Bedrock RAG (Tuần 3–5).
+- Triển khai hạ tầng AWS: tạo IAM roles; deploy core engine lên Lambda + API Gateway; deploy FE lên Amplify; cấu hình S3, DynamoDB, Bedrock Knowledge Base, CloudFront, WAF, SSM Parameter Store (Tuần 6–8).
+- Giám sát & tối ưu: cấu hình CloudWatch Logs/Metrics, Alarm → SNS, EventBridge cron; tối ưu chi phí token Bedrock (Tuần 9–10).
+- Kiểm thử & tài liệu: test end-to-end với các test case lỗi kinh điển, kiểm thử độ chuẩn xác; viết workshop song ngữ step-by-step, hướng dẫn clean-up (Tuần 11–12).
 
-#### Các Giai Đoạn Triển Khai Chi Tiết
-Dự án được cấu trúc bài bản qua 4 giai đoạn kỹ thuật rõ ràng:
+Yêu cầu kỹ thuật
+- Backend: Python 3.12 (boto3, bedrock-agent-runtime, regex HCL parser), tối ưu cold-start cho Lambda, deploy sau API Gateway HTTP API.
+- AI & RAG: Amazon Titan Text Embeddings V2 (1.024 dimensions), OpenSearch Serverless vector collection, Anthropic Claude 3.5 Sonnet.
+- Frontend: Next.js (TypeScript, TailwindCSS) build và host trên AWS Amplify với hỗ trợ SSR.
+- Mạng & bảo mật: WAF Web ACL scope Global (us-east-1) gắn vào CloudFront; chứng chỉ ACM us-east-1 (CloudFront) và ap-southeast-1 (API Gateway); secrets quản lý qua SSM Parameter Store; Cognito JWT auth.
 
-1. **Giai đoạn 1: Thiết Kế Tri Thức RAG & Chuẩn Hóa Bộ Tiêu Chuẩn (Tháng 1)**:
-   - Thu thập và tiền xử lý văn bản tài liệu tiêu chuẩn quốc tế CIS AWS Foundations Benchmark v3.0 và AWS Security Best Practices sang định dạng Markdown chuẩn.
-   - Thiết lập Amazon S3 Bucket lưu trữ dữ liệu tri thức nguồn, cấu hình Chunking Strategy (độ dài đoạn văn 512 tokens, tỷ lệ gối đầu 20%) trong **Amazon Bedrock Knowledge Bases**.
-   - Tạo vector embeddings với mô hình **Amazon Titan Text Embeddings V2** và liên kết với OpenSearch Serverless / Vector Index.
-   - Thử nghiệm các câu lệnh Prompt System và thiết lập bộ quy tắc an toàn trong **Bedrock Guardrails**.
+### 5. Lộ trình & Mốc triển khai
+Lộ trình dự án (12 tuần)
+- Giai đoạn 1 — Nghiên cứu & thiết kế (Tuần 1–2): học AWS cơ bản, khảo sát kiến trúc Serverless GenAI & RAG → bàn giao: bản proposal này + sơ đồ kiến trúc draw.io.
+- Giai đoạn 2 — Hoàn thiện ứng dụng & RAG (Tuần 3–5): chuẩn hóa data source CIS Benchmark, xây dựng parser Terraform HCL, kết nối Bedrock RAG → bàn giao: core engine chạy thử nghiệm ở local.
+- Giai đoạn 3 — Triển khai hạ tầng AWS (Tuần 6–8): IAM, Lambda + API Gateway, Amplify, S3, DynamoDB, Bedrock Knowledge Base, CloudFront, WAF, Cognito, SSM Parameter Store → bàn giao: hệ thống chạy trên AWS, truy cập công khai.
+- Giai đoạn 4 — Giám sát & tối ưu (Tuần 9–10): CloudWatch, Alarm → SNS, EventBridge cron, tối ưu chi phí token → bàn giao: dashboard giám sát + alert hoạt động.
+- Giai đoạn 5 — Kiểm thử & tài liệu (Tuần 11–12): test end-to-end, workshop song ngữ, hướng dẫn clean-up → bàn giao: workshop website + báo cáo hoàn chỉnh.
 
-2. **Giai đoạn 2: Xây Dựng Hệ Thống Serverless Backend & Lõi Phân Tích (Tháng 2)**:
-   - Khởi tạo bảng Amazon DynamoDB (`CloudGuard_ScanHistory`) với Partition Key là `ScanId` và Sort Key là `Timestamp`.
-   - Viết mã nguồn hàm AWS Lambda (Python 3.12) tích hợp AWS SDK (boto3) để tương tác với Bedrock Runtime, DynamoDB, S3 và SES.
-   - Xây dựng các hàm bóc tách mã nguồn Terraform, kiểm tra lỗi cú pháp và trích xuất danh sách tài nguyên (EC2, S3, IAM, Security Groups, RDS).
-   - Thiết lập cấu hình Amazon API Gateway (HTTP API) tích hợp xác thực JWT từ Amazon Cognito.
+### 6. Ước tính ngân sách
+Chi phí hạ tầng
+Dịch vụ AWS:
+- AWS Lambda: ~$0/tháng (free tier 1M request/tháng, 512 MB memory).
+- Amazon Bedrock (Claude 3.5 Sonnet + Titan Embeddings V2): ~$0.5 - $1/tháng (~500 requests phân tích IaC).
+- Amazon API Gateway (HTTP API): ~$0.01/tháng ($1/triệu request).
+- AWS Amplify: ~$0.5/tháng (build minutes + hosting SSR).
+- Amazon S3: ~$0.02/tháng (lưu file tf và tài liệu quy tắc CIS).
+- Amazon DynamoDB: ~$0/tháng (chế độ On-demand pay-per-request trong Free Tier).
+- AWS WAF: ~$0 - $1/tháng (Web ACL cơ bản).
+- Amazon CloudFront CDN: ~$0.1/tháng.
+- CloudWatch + SNS + EventBridge: ~$0/tháng (trong hạn mức Free Tier).
+- SSM Parameter Store: ~$0/tháng (standard parameters miễn phí).
 
-3. **Giai đoạn 3: Phát Triển Giao Diện Người Dùng & Tích Hợp Tự Động Hóa (Tháng 2 – Tháng 3)**:
-   - Xây dựng ứng dụng web hiện đại bằng **Next.js (App Router)** và **Tailwind CSS**, tích hợp trình biên tập mã Monaco Editor (tương tự VS Code) để người dùng dán và chỉnh sửa trực tiếp mã Terraform.
-   - Thiết kế bảng điều khiển trực quan: Biểu đồ điểm số an ninh (Radar Chart), danh sách lỗi vi phạm phân loại theo màu sắc, và công cụ so sánh trực quan (Diff Viewer) giữa mã gốc và mã đã được AI sửa.
-   - Triển khai ứng dụng lên **AWS Amplify**, kết nối với CloudFront CDN và gắn chứng chỉ bảo mật ACM.
-   - Cấu hình **Amazon EventBridge Scheduler** để tự động quét kiểm toán định kỳ vào lúc 00:00 hàng ngày.
-   - Xây dựng kịch bản GitHub Actions Workflow mẫu, hướng dẫn tích hợp gọi Webhook API của CloudGuard AI khi có Pull Request mới.
+Tổng: ~$1–2/tháng
 
-4. **Giai đoạn 4: Kiểm Thử Toàn Diện, Tối Ưu Hiệu Năng & Đóng Gói Workshop (Tháng 3)**:
-   - Tiến hành kiểm thử hộp trắng và hộp đen với 50 kịch bản file Terraform chứa các lỗi bảo mật điển hình (từ cơ bản đến nâng cao).
-   - Đo lường độ chính xác của mô hình RAG (đạt tỷ lệ phát hiện chính xác trên 96% và loại trừ hoàn toàn hiện tượng ảo tưởng thông tin).
-   - Tối ưu hóa thời gian thực thi của AWS Lambda (dưới 8 giây cho mỗi tệp kiểm toán 500 dòng code).
-   - Hoàn thiện tài liệu hướng dẫn thực hành từng bước (Hands-on Lab) cho bài viết Workshop.
+Lựa chọn kiến trúc tiết kiệm chi phí: Hệ thống ứng dụng 100% Serverless kết hợp mô hình On-Demand của Amazon Bedrock thay vì thuê GPU/EC2 chuyên dụng (tiết kiệm hơn $100–$200/tháng chi phí thuê máy chủ AI cố định). Kiến trúc không dùng NAT Gateway (~$32/tháng), Lambda kết nối Bedrock trực tiếp qua mạng nội bộ AWS, giúp đưa chi phí vận hành tiệm cận 0 VNĐ khi không có lượt quét.
 
----
+### 7. Đánh giá rủi ro
+Ma trận rủi ro
+- Hiện tượng ảo tưởng (Hallucination) của AI: mức độ cao.
+- Vượt hạn mức Bedrock Model Quota/Rate Limit: mức độ trung bình.
+- Lộ lọt thông tin nhạy cảm (AWS Secrets, API Keys, PII) trong code gửi lên: mức độ cao.
+- Lambda cold-start làm chậm request đầu tiên: mức độ thấp.
+- Vượt free tier gây phát sinh chi phí ngoài ý muốn: mức độ thấp.
 
-### 5. Lộ Trình & Mốc Triển Khai (Roadmap & Milestones)
+Chiến lược giảm thiểu
+- Ảo tưởng: Sử dụng RAG với CIS Benchmark v3.0 ghim chặt ngữ cảnh, cấu hình temperature = 0.1 để AI trả lời khách quan, bắt buộc trích dẫn mã điều luật thực tế.
+- Rate limit: Thiết lập retry backoff trong Lambda, cache kết quả quét đối với các đoạn code trùng lặp trên DynamoDB.
+- Bảo mật dữ liệu: Kích hoạt Bedrock Guardrails tự động phát hiện và che giấu Secrets, API Keys và PII trước khi gửi tới mô hình LLM.
+- Chi phí: Cài đặt AWS Budgets và CloudWatch Billing Alarm ở ngưỡng $5/tháng; dọn dẹp tài nguyên sau khi demo.
+- Credentials: lưu secrets trong SSM Parameter Store; không commit file `.env` lên GitHub; IAM key xoay vòng định kỳ.
 
-| Mốc Thời Gian | Giai Đoạn Triển Khai | Nhiệm Vụ Trọng Tâm & Sản Phẩm Đầu Ra | Trạng Thái |
-| :--- | :--- | :--- | :---: |
-| **Tháng 1 (Tuần 1–4)** | Nghiên cứu & Thiết kế | • Nắm vững các tiêu chuẩn CIS AWS Foundations Benchmark v3.0.<br>• Hoàn thành tài liệu đề xuất giải pháp (Proposal).<br>• Xây dựng và kiểm thử sơ bộ kiến trúc RAG trên Amazon Bedrock. | **Hoàn thành 100%** |
-| **Tháng 2 (Tuần 5–8)** | Phát triển Backend & AI | • Xây dựng hệ thống Serverless Core (Lambda, API Gateway, DynamoDB).<br>• Tích hợp Bedrock Agent với Claude 3.5 Sonnet và Knowledge Bases.<br>• Viết kịch bản tự động chấm điểm và sinh mã vá lỗi Terraform. | **Đang triển khai** |
-| **Tháng 3 (Tuần 9–11)**| Frontend & Automation | • Hoàn thiện giao diện Next.js Dashboard trên AWS Amplify.<br>• Cấu hình EventBridge Scheduler và cơ chế cảnh báo qua SNS/SES.<br>• Tích hợp luồng CI/CD GitHub Actions Webhook. | **Sẵn sàng** |
-| **Tháng 3 (Tuần 12)**  | Đánh giá & Báo cáo | • Kiểm thử toàn diện 50 test cases hạ tầng mẫu.<br>• Soạn thảo hoàn chỉnh tài liệu Workshop thực hành 5 chương.<br>• Chuẩn bị slide và kịch bản vấn đáp bảo vệ trước hội đồng giám khảo. | **Kế hoạch** |
+Kế hoạch dự phòng
+- Nếu mô hình Claude 3.5 Sonnet gặp sự cố vùng, chuyển hướng tự động sang Claude 3 Haiku qua cấu hình SSM Parameter Store.
+- Bộ regex scanner cục bộ dự phòng cho các quy tắc cơ bản (cổng 22, cổng 3389) khi mất kết nối tới AI.
+- Hướng dẫn clean-up đảm bảo có thể gỡ toàn bộ tài nguyên nhanh chóng sau demo để dừng mọi chi phí.
 
----
-
-### 6. Ước Tính Ngân Sách (Cost Estimation & ROI)
-
-Hệ thống CloudGuard AI được thiết kế theo tư duy kiến trúc tối ưu hóa chi phí (FinOps), tận dụng tối đa mô hình Serverless và gói miễn phí **AWS Free Tier**.
-
-Bảng dự toán chi phí vận hành hàng tháng (ước tính cho quy mô 1.000 lượt quét kiểm toán mã nguồn hạ tầng/tháng):
-
-| Dịch Vụ AWS | Cấu Hình / Quy Mô Định Mức Ước Tính | Chi Phí Trong Gói Free Tier | Chi Phí Vận Hành Thực Tế |
-| :--- | :--- | :---: | :---: |
-| **AWS Lambda** | 1.000 lượt gọi/tháng, thời gian chạy trung bình 5 giây, cấp phát 512 MB RAM | Miễn phí (thuộc 1.000.000 requests/tháng miễn phí) | **0,00 USD** |
-| **Amazon API Gateway** | 2.000 HTTP API calls/tháng | Miễn phí (thuộc 1.000.000 calls đầu tiên trong 12 tháng) | **0,00 USD** |
-| **Amazon S3 Standard** | 2 GB lưu trữ tài liệu CIS & báo cáo PDF, 3.000 yêu cầu PUT/GET | Miễn phí (thuộc 5 GB lưu trữ Standard miễn phí) | **0,00 USD** |
-| **Amazon DynamoDB** | 1 bảng, dung lượng lưu trữ 500 MB, chế độ On-Demand Read/Write | Miễn phí (thuộc 25 GB lưu trữ NoSQL miễn phí trọn đời) | **0,00 USD** |
-| **AWS Amplify** | Lưu trữ mã nguồn tĩnh Next.js, băng thông 5 GB/tháng | Miễn phí (thuộc định mức 15 GB băng thông miễn phí) | **0,00 USD** |
-| **Amazon Bedrock (Claude 3.5)**| ~1.000 lượt gọi AI, trung bình 1.500 input tokens và 800 output tokens/lượt | Tính theo lượng token tiêu thụ thực tế | **~1,20 USD** |
-| **Amazon Bedrock (Titan V2)** | Véc-tơ hóa tài liệu CIS Benchmark (lưu trữ 500.000 tokens véc-tơ) | Chi phí một lần và truy vấn véc-tơ hàng tháng | **~0,15 USD** |
-| **Amazon SES & SNS** | 200 emails báo cáo/tháng, 50 tin nhắn cảnh báo SNS | Miễn phí (thuộc gói 62.000 emails/tháng miễn phí từ EC2/Lambda) | **0,00 USD** |
-| **CloudWatch & WAF** | Thu thập 1 GB logs giám sát, bộ luật WAF cơ bản | Nằm trong ngưỡng giám sát cơ bản | **~0,25 USD** |
-| **TỔNG CỘNG HÀNG THÁNG** | **Hệ thống Serverless hoàn chỉnh phục vụ kiểm toán an ninh** | **Tiết kiệm 95% chi phí** | **~1,60 USD / tháng** |
-
-> **Tổng chi phí vận hành cho cả năm chỉ khoảng ~19,20 USD (tương đương chưa tới 500.000 VNĐ)**. So với chi phí thuê máy chủ ảo EC2 truyền thống (tối thiểu 15–20 USD/tháng cho instance cỡ nhỏ chạy liên tục) hoặc mua bản quyền các phần mềm kiểm toán thương mại (hàng nghìn USD/năm), CloudGuard AI mang lại hiệu quả kinh tế vượt trội (ROI đạt trên 98%).
-
----
-
-### 7. Đánh Giá Rủi Ro & Chiến Lược Giảm Thiểu (Risk Assessment & Mitigation)
-
-| Rủi Ro Nhận Diện | Mức Độ | Xác Suất | Chiến Lược Phòng Ngừa & Giảm Thiểu Chủ Động |
-| :--- | :---: | :---: | :--- |
-| **Nguy cơ AI "ảo tưởng" (Hallucination)** | Cao | Thấp | Ứng dụng kiến trúc **Bedrock Knowledge Bases (RAG)** ép mô hình Claude 3.5 Sonnet chỉ được phép trích dẫn căn cứ từ bộ tài liệu CIS Benchmark v3.0 đã được thẩm định trong S3. |
-| **Tấn công tiêm nhiễm câu lệnh (Prompt Injection)** | Cao | Trung bình | Kích hoạt bộ lọc an toàn **Amazon Bedrock Guardrails**, thiết lập danh sách từ khóa cấm, phát hiện nỗ lực bẻ khóa hướng dẫn hệ thống (jailbreak) và chặn đứng yêu cầu độc hại ngay từ đầu vào. |
-| **Rò rỉ khóa bí mật (API Keys / Secrets trong mã IaC)** | Rất cao | Trung bình | Tích hợp thuật toán quét regex nhận dạng chuỗi bí mật (AWS Secret Keys, Private Keys) ngay tại hàm Lambda; sử dụng Guardrails tự động bôi đen (masking) các thông tin nhạy cảm trước khi gửi sang mô hình AI. |
-| **Vượt ngân sách do lạm dụng API Bedrock** | Trung bình | Thấp | Thiết lập hạn mức **Rate-Limiting** trên Amazon API Gateway (tối đa 10 requests/phút cho mỗi người dùng); cài đặt cảnh báo ngân sách tự động **AWS Budgets** khi chi phí chạm mốc 5,00 USD. |
-| **Thời gian phản hồi AI vượt ngưỡng Timeout** | Trung bình | Trung bình | Cấu hình thời gian chờ (Timeout) của AWS Lambda ở mức hợp lý (60 giây); tối ưu hóa kích thước cửa sổ phân tích cú pháp mã nguồn; gửi phản hồi bất đồng bộ (Asynchronous processing) kèm thông báo qua email/webhook khi hoàn tất rà soát file lớn. |
-
----
-
-### 8. Kết Quả Kỳ Vọng & Giá Trị Đồ Án (Expected Outcomes & Value)
-
-#### Giá Trị Kỹ Thuật Đạt Được
-- **Sản phẩm hoàn chỉnh, hoạt động thực tế 100%**: Xây dựng thành công một nền tảng DevSecOps tự động hóa rà soát hạ tầng hiện đại, có giao diện đồ họa trực quan và luồng CI/CD hoạt động mượt mà trên môi trường AWS thực tế.
-- **Làm chủ công nghệ Cloud & GenAI hàng đầu**: Áp dụng thành công các công nghệ tiên tiến nhất hiện nay của AWS: **Amazon Bedrock Agent**, **Knowledge Bases (RAG)**, **Guardrails**, kết hợp kiến trúc **Serverless** hướng sự kiện (Event-Driven).
-- **Bộ mã nguồn mở chất lượng cao**: Đóng gói mã nguồn sạch sẽ, có cấu trúc module rõ ràng, đi kèm kịch bản triển khai tự động (Terraform IaC) và tài liệu hướng dẫn chi tiết giúp cộng đồng kỹ sư trẻ dễ dàng thực hành và mở rộng.
-
-#### Giá Trị Học Thuật & Đóng Góp Thực Tiễn
-- **Phục vụ đồ án tốt nghiệp xuất sắc**: Dự án thể hiện rõ năng lực nghiên cứu độc lập, tư duy kiến trúc hệ thống chuẩn quốc tế và khả năng giải quyết bài toán nhức nhối thực tế của sinh viên chuyên ngành Trí tuệ Nhân tạo tại Đại học FPT.
-- **Lan tỏa giá trị cho cộng đồng AWS First Cloud AI Journey (FCAJ)**: Đóng góp một bài thực hành Workshop mẫu mực (Section 5) mang tính thực chiến cao, giúp các bạn sinh viên và kỹ sư mới bắt đầu làm quen với phương pháp xây dựng AI Agent trên nền tảng AWS một cách bài bản, an toàn và tối ưu chi phí.
+### 8. Kết quả kỳ vọng
+Cải tiến kỹ thuật: Toàn bộ nền tảng chạy serverless trên AWS — tự scale theo traffic, HTTPS-only, được WAF & Cognito bảo vệ, phân tích an ninh dựa trên AI và RAG trong vòng dưới 10 giây thay cho kiểm toán thủ công hàng ngày. Tự động sinh mã khắc phục chuẩn xác, kèm giám sát CloudWatch và cảnh báo tức thời qua SNS.
+Giá trị dài hạn: Kiến trúc tham chiếu production-grade cho việc ứng dụng GenAI & RAG vào quy trình DevSecOps / FinOps trên AWS, workshop song ngữ step-by-step tái sử dụng được cho cộng đồng kỹ sư đám mây, và mô hình chi phí siêu tiết kiệm (~$1–2/tháng) đã được kiểm chứng thực tế.
