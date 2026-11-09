@@ -5,23 +5,36 @@ weight: 1
 chapter: false
 pre: " <b> 3.1. </b> "
 ---
-# SESSION POLICIES TRONG AMAZON EKS POD IDENTITY
 
-Amazon EKS Pod Identity vừa bổ sung tính năng session policies, cho phép bạn thu hẹp quyền IAM một cách linh hoạt và chính xác cho từng pod mà không cần tạo thêm nhiều IAM roles riêng biệt. Đây là bước tiến quan trọng giúp áp dụng nguyên tắc least privilege hiệu quả hơn trong môi trường Kubernetes quy mô lớn.
+# XÂY DỰNG CHUYÊN GIA KINH DOANH ĐA TÁC TỬ VỚI AMAZON BEDROCK
 
-Các điểm chính cần nắm:
+Các hệ thống AI đơn lẻ thường gặp khó khăn khi xử lý các quyết định kinh doanh phức tạp đòi hỏi nhiều chuyên môn (R&D, Pháp lý, Tài chính). Việc dồn mọi dữ liệu vào một prompt duy nhất dễ làm quá tải ngữ cảnh, tăng chi phí token và gây nhầm lẫn thông tin.
 
-* Session policy là một IAM policy inline được chỉ định khi tạo hoặc cập nhật Pod Identity association.
-* Quyền hiệu quả = intersection (giao) giữa permissions của IAM role và session policy → session policy chỉ có thể thu hẹp, không thể mở rộng quyền.
-* Giúp tránh tình trạng over-permissioning khi reuse chung một IAM role cho nhiều workloads có nhu cầu khác nhau.
-* Hỗ trợ cả same-account và cross-account (qua IAM role chaining).
-* Giảm đáng kể số lượng IAM roles cần quản lý, tránh chạm giới hạn quota IAM trong cluster lớn.
-* Cấu hình dễ dàng qua AWS Management Console, AWS CLI hoặc AWS SDK khi tạo association giữa Kubernetes ServiceAccount và IAM role.
+AWS giới thiệu giải pháp cộng tác đa tác tử (Multi-Agent Collaboration) trên Amazon Bedrock. Các thành phần chính:
 
-Tính năng này đặc biệt hữu ích khi bạn có nhiều ứng dụng chạy trên cùng một IAM role nhưng cần giới hạn quyền khác nhau (ví dụ: một pod chỉ đọc S3 bucket cụ thể, pod khác chỉ gọi một số API nhất định).
+* **Amazon Bedrock Agents:** Xây dựng các agent tự trị theo từng chuyên môn.
+* **Supervisor Agent:** Tác tử điều phối, phân chia nhiệm vụ và tổng hợp kết quả.
+* **Knowledge Bases:** Kết nối tài liệu nghiên cứu và pháp lý làm nguồn tham chiếu.
+* **AWS Lambda:** Công cụ (Action Groups) để truy vấn số liệu và API tài chính.
+* **Amazon Bedrock Guardrails:** Lọc nội dung và bảo vệ dữ liệu nhạy cảm.
 
-...Hình ảnh...
+Hệ thống phân chia 3 agent chuyên trách phối hợp cùng Supervisor:
 
-...Link...
+* **R&D Agent:** Tra cứu dữ liệu kỹ thuật và thử nghiệm sản phẩm.
+* **Legal Agent:** Rà soát hợp đồng và rủi ro tuân thủ pháp lý.
+* **Finance Agent:** Phân tích chi phí, định giá và dự báo thị trường.
 
-...Hướng dẫn...
+Điểm hay là tính cô lập ngữ cảnh (context isolation), mỗi agent chỉ xử lý đúng phạm vi chuyên môn giúp câu trả lời chính xác hơn và tiết kiệm token. Khi mở rộng, doanh nghiệp chỉ cần ghép thêm agent mới mà không phải viết lại hệ thống.
+
+**Lưu ý từ bài viết:**
+
+* Cần viết hướng dẫn (instruction) rõ ràng cho Supervisor để chia việc chuẩn xác.
+* Dữ liệu trong bài là mô phỏng ngành dược, khi dùng thật cần chuẩn bị Knowledge Base riêng.
+* Chi phí phụ thuộc vào số lượt gọi giữa các agent.
+* Nên dùng Bedrock Guardrails để kiểm soát quyền xem dữ liệu giữa các phòng ban.
+
+*Nguồn tham khảo:* [Build an intelligent multi-agent business expert using Amazon Bedrock – AWS Machine Learning Blog](https://aws.amazon.com/blogs/machine-learning/build-an-intelligent-multi-agent-business-expert-using-amazon-bedrock/)
+
+![Kiến trúc Multi-Agent Collaboration với Amazon Bedrock](https://nhatminh05.github.io/fcj-workshop-template/images/3-BlogsPosted/3.1-Blog1/AmazonBedrockMultiAgent.jpg)
+
+[Link bài viết gốc](https://www.facebook.com/groups/awsstudygroupfcj/permalink/2330331201065172/)
