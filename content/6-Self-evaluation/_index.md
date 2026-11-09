@@ -6,10 +6,20 @@ chapter: false
 pre: " <b> 6. </b> "
 ---
 
-During my internship at **Amazon Web Services Vietnam Company Limited** from **14/09/2026** to **14/12/2026**, I had the opportunity to learn, practice, and apply the knowledge acquired in school to a real-world working environment.  
-I participated in building and deploying the **CloudGuard AI: Automated AWS Infrastructure Security & Cost Auditor project on AWS Serverless infrastructure powered by Amazon Bedrock GenAI & RAG**, through which I improved my skills in Python development, deploying and operating AWS Serverless infrastructure (Lambda, API Gateway, DynamoDB, S3), integrating Generative AI & RAG with Amazon Bedrock, cloud cost optimization (FinOps), cloud security auditing (DevSecOps) following CIS Benchmark v3.0, system monitoring with CloudWatch/SNS, and authoring bilingual technical documentation and workshops.  
+During my internship at **Amazon Web Services Viet Nam Company Limited** from **14/09/2026** to **14/12/2026**, I had the opportunity to learn, practice, and apply the advanced knowledge acquired at FPT University into an enterprise-grade cloud computing environment.  
 
-In terms of work ethic, I always strived to complete tasks well, complied with workplace regulations, and actively engaged with colleagues to improve work efficiency.
+I directly researched, architected, and implemented the **CloudGuard AI: Automated AWS Infrastructure Security & Cost Auditor project on AWS Serverless infrastructure powered by Amazon Bedrock GenAI & RAG**. Through developing this project, I strengthened and mastered the complete spectrum of technical expertise established in the Proposal:
+
+* **Generative AI & RAG Engineering:** Integrated foundational Amazon Bedrock services using Anthropic Claude 3.5 Sonnet and Amazon Titan Text Embeddings V2 (1,024 dimensions); established Bedrock Knowledge Bases anchored to OpenSearch Serverless vector collections to eliminate model hallucinations.
+* **Cloud Security & Compliance Auditing (DevSecOps):** Applied the international CIS AWS Foundations Benchmark v3.0 standard to automatically inspect Terraform HCL infrastructure templates, detecting critical vulnerabilities (such as wide-open SSH port 22 `0.0.0.0/0`, unencrypted S3 buckets, and wildcard IAM `*`) and automatically generating remediation code.
+* **100% Serverless Architecture:** Designed a fully decoupled serverless backend with AWS Lambda (Python 3.12, cold-start optimized) fronted by Amazon API Gateway (HTTP API), object storage with Amazon S3, and NoSQL data persistence with Amazon DynamoDB in On-Demand pay-per-request mode.
+* **Automation, Scheduling & Telemetry:** Configured EventBridge Scheduler for automated daily scans (`cron(0 1 * * ? *)`), centralized logging and metrics with Amazon CloudWatch, and real-time emergency alerting via Amazon SNS for high/critical security breaches.
+* **Perimeter Security & Identity Governance:** Deployed AWS WAF Web ACLs at CloudFront Edge, provisioned SSL/TLS certificates via ACM (us-east-1 and ap-southeast-1), managed user authentication with Amazon Cognito User Pools via JWT Auth, and secured secrets and Model IDs within AWS Systems Manager Parameter Store.
+* **Frontend Engineering & Content Delivery:** Built a responsive analytics dashboard using Next.js (TypeScript, TailwindCSS) with Server-Side Rendering (SSR), deployed continuously via AWS Amplify, and globally accelerated through Amazon CloudFront CDN.
+* **Cloud Financial Engineering (FinOps):** Realized significant architectural cost savings: routed traffic internally between Lambda and AWS service endpoints over TLS to eliminate NAT Gateway costs (~$32/month) and avoid dedicated EC2 GPU instances (~$100–$200/month), reducing total continuous 24/7 operating costs to just ~$11–15/month and approaching $0 when idle.
+* **Shift-Left Security & Technical Writing:** Embedded automated security checks directly into CI/CD Pull Request Webhooks, and authored a comprehensive bilingual 6-lab hands-on technical workshop.
+
+In terms of work ethic, I always strived to complete tasks well, strictly complied with workplace regulations, proactively resolved challenges, and actively engaged with mentors and colleagues to improve work efficiency.
 
 To objectively reflect on my internship period, I would like to evaluate myself based on the following criteria:
 
