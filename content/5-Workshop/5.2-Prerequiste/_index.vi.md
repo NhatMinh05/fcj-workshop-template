@@ -1,242 +1,208 @@
 ---
-title : "Các bước chuẩn bị"
-date : 2024-01-01 
-weight : 2
-chapter : false
-pre : " <b> 5.2. </b> "
+title: "Chuẩn bị Môi trường & Cấp quyền IAM"
+date: 2024-01-01
+weight: 2
+chapter: false
+pre: " <b> 5.2. </b> "
 ---
 
-#### IAM permissions
-Gắn IAM permission policy sau vào tài khoản aws user của bạn để triển khai và dọn dẹp tài nguyên trong workshop này.
+# 5.2 Chuẩn bị Môi trường & Cấp quyền IAM
+
+Trước khi tiến hành xây dựng các thành phần của hệ thống CloudGuard AI, bạn cần chuẩn bị môi trường tài khoản AWS, kích hoạt quyền sử dụng các mô hình Trí tuệ Nhân tạo trong **Amazon Bedrock**, và khởi tạo các tài nguyên phụ trợ ban đầu (S3, DynamoDB, IAM Role).
+
+---
+
+### Bước 1: Kiểm Tra Tài Khoản & Cấu Hình AWS CLI
+
+Bạn có thể thực hiện bài lab trực tiếp thông qua **AWS CloudShell** (giao diện dòng lệnh tích hợp sẵn trên AWS Management Console) hoặc trên máy tính cá nhân đã cài đặt **AWS CLI v2**.
+
+1. Mở terminal và kiểm tra danh tính tài khoản AWS đang đăng nhập:
+```bash
+aws sts get-caller-identity
 ```
+
+Kết quả trả về sẽ có dạng:
+```json
 {
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "VisualEditor0",
-            "Effect": "Allow",
-            "Action": [
-                "cloudformation:*",
-                "cloudwatch:*",
-                "ec2:AcceptTransitGatewayPeeringAttachment",
-                "ec2:AcceptTransitGatewayVpcAttachment",
-                "ec2:AllocateAddress",
-                "ec2:AssociateAddress",
-                "ec2:AssociateIamInstanceProfile",
-                "ec2:AssociateRouteTable",
-                "ec2:AssociateSubnetCidrBlock",
-                "ec2:AssociateTransitGatewayRouteTable",
-                "ec2:AssociateVpcCidrBlock",
-                "ec2:AttachInternetGateway",
-                "ec2:AttachNetworkInterface",
-                "ec2:AttachVolume",
-                "ec2:AttachVpnGateway",
-                "ec2:AuthorizeSecurityGroupEgress",
-                "ec2:AuthorizeSecurityGroupIngress",
-                "ec2:CreateClientVpnEndpoint",
-                "ec2:CreateClientVpnRoute",
-                "ec2:CreateCustomerGateway",
-                "ec2:CreateDhcpOptions",
-                "ec2:CreateFlowLogs",
-                "ec2:CreateInternetGateway",
-                "ec2:CreateLaunchTemplate",
-                "ec2:CreateNetworkAcl",
-                "ec2:CreateNetworkInterface",
-                "ec2:CreateNetworkInterfacePermission",
-                "ec2:CreateRoute",
-                "ec2:CreateRouteTable",
-                "ec2:CreateSecurityGroup",
-                "ec2:CreateSubnet",
-                "ec2:CreateSubnetCidrReservation",
-                "ec2:CreateTags",
-                "ec2:CreateTransitGateway",
-                "ec2:CreateTransitGatewayPeeringAttachment",
-                "ec2:CreateTransitGatewayPrefixListReference",
-                "ec2:CreateTransitGatewayRoute",
-                "ec2:CreateTransitGatewayRouteTable",
-                "ec2:CreateTransitGatewayVpcAttachment",
-                "ec2:CreateVpc",
-                "ec2:CreateVpcEndpoint",
-                "ec2:CreateVpcEndpointConnectionNotification",
-                "ec2:CreateVpcEndpointServiceConfiguration",
-                "ec2:CreateVpnConnection",
-                "ec2:CreateVpnConnectionRoute",
-                "ec2:CreateVpnGateway",
-                "ec2:DeleteCustomerGateway",
-                "ec2:DeleteFlowLogs",
-                "ec2:DeleteInternetGateway",
-                "ec2:DeleteNetworkInterface",
-                "ec2:DeleteNetworkInterfacePermission",
-                "ec2:DeleteRoute",
-                "ec2:DeleteRouteTable",
-                "ec2:DeleteSecurityGroup",
-                "ec2:DeleteSubnet",
-                "ec2:DeleteSubnetCidrReservation",
-                "ec2:DeleteTags",
-                "ec2:DeleteTransitGateway",
-                "ec2:DeleteTransitGatewayPeeringAttachment",
-                "ec2:DeleteTransitGatewayPrefixListReference",
-                "ec2:DeleteTransitGatewayRoute",
-                "ec2:DeleteTransitGatewayRouteTable",
-                "ec2:DeleteTransitGatewayVpcAttachment",
-                "ec2:DeleteVpc",
-                "ec2:DeleteVpcEndpoints",
-                "ec2:DeleteVpcEndpointServiceConfigurations",
-                "ec2:DeleteVpnConnection",
-                "ec2:DeleteVpnConnectionRoute",
-                "ec2:Describe*",
-                "ec2:DetachInternetGateway",
-                "ec2:DisassociateAddress",
-                "ec2:DisassociateRouteTable",
-                "ec2:GetLaunchTemplateData",
-                "ec2:GetTransitGatewayAttachmentPropagations",
-                "ec2:ModifyInstanceAttribute",
-                "ec2:ModifySecurityGroupRules",
-                "ec2:ModifyTransitGatewayVpcAttachment",
-                "ec2:ModifyVpcAttribute",
-                "ec2:ModifyVpcEndpoint",
-                "ec2:ReleaseAddress",
-                "ec2:ReplaceRoute",
-                "ec2:RevokeSecurityGroupEgress",
-                "ec2:RevokeSecurityGroupIngress",
-                "ec2:RunInstances",
-                "ec2:StartInstances",
-                "ec2:StopInstances",
-                "ec2:UpdateSecurityGroupRuleDescriptionsEgress",
-                "ec2:UpdateSecurityGroupRuleDescriptionsIngress",
-                "iam:AddRoleToInstanceProfile",
-                "iam:AttachRolePolicy",
-                "iam:CreateInstanceProfile",
-                "iam:CreatePolicy",
-                "iam:CreateRole",
-                "iam:DeleteInstanceProfile",
-                "iam:DeletePolicy",
-                "iam:DeleteRole",
-                "iam:DeleteRolePolicy",
-                "iam:DetachRolePolicy",
-                "iam:GetInstanceProfile",
-                "iam:GetPolicy",
-                "iam:GetRole",
-                "iam:GetRolePolicy",
-                "iam:ListPolicyVersions",
-                "iam:ListRoles",
-                "iam:PassRole",
-                "iam:PutRolePolicy",
-                "iam:RemoveRoleFromInstanceProfile",
-                "lambda:CreateFunction",
-                "lambda:DeleteFunction",
-                "lambda:DeleteLayerVersion",
-                "lambda:GetFunction",
-                "lambda:GetLayerVersion",
-                "lambda:InvokeFunction",
-                "lambda:PublishLayerVersion",
-                "logs:CreateLogGroup",
-                "logs:DeleteLogGroup",
-                "logs:DescribeLogGroups",
-                "logs:PutRetentionPolicy",
-                "route53:ChangeTagsForResource",
-                "route53:CreateHealthCheck",
-                "route53:CreateHostedZone",
-                "route53:CreateTrafficPolicy",
-                "route53:DeleteHostedZone",
-                "route53:DisassociateVPCFromHostedZone",
-                "route53:GetHostedZone",
-                "route53:ListHostedZones",
-                "route53domains:ListDomains",
-                "route53domains:ListOperations",
-                "route53domains:ListTagsForDomain",
-                "route53resolver:AssociateResolverEndpointIpAddress",
-                "route53resolver:AssociateResolverRule",
-                "route53resolver:CreateResolverEndpoint",
-                "route53resolver:CreateResolverRule",
-                "route53resolver:DeleteResolverEndpoint",
-                "route53resolver:DeleteResolverRule",
-                "route53resolver:DisassociateResolverEndpointIpAddress",
-                "route53resolver:DisassociateResolverRule",
-                "route53resolver:GetResolverEndpoint",
-                "route53resolver:GetResolverRule",
-                "route53resolver:ListResolverEndpointIpAddresses",
-                "route53resolver:ListResolverEndpoints",
-                "route53resolver:ListResolverRuleAssociations",
-                "route53resolver:ListResolverRules",
-                "route53resolver:ListTagsForResource",
-                "route53resolver:UpdateResolverEndpoint",
-                "route53resolver:UpdateResolverRule",
-                "s3:AbortMultipartUpload",
-                "s3:CreateBucket",
-                "s3:DeleteBucket",
-                "s3:DeleteObject",
-                "s3:GetAccountPublicAccessBlock",
-                "s3:GetBucketAcl",
-                "s3:GetBucketOwnershipControls",
-                "s3:GetBucketPolicy",
-                "s3:GetBucketPolicyStatus",
-                "s3:GetBucketPublicAccessBlock",
-                "s3:GetObject",
-                "s3:GetObjectVersion",
-                "s3:GetBucketVersioning",
-                "s3:ListAccessPoints",
-                "s3:ListAccessPointsForObjectLambda",
-                "s3:ListAllMyBuckets",
-                "s3:ListBucket",
-                "s3:ListBucketMultipartUploads",
-                "s3:ListBucketVersions",
-                "s3:ListJobs",
-                "s3:ListMultipartUploadParts",
-                "s3:ListMultiRegionAccessPoints",
-                "s3:ListStorageLensConfigurations",
-                "s3:PutAccountPublicAccessBlock",
-                "s3:PutBucketAcl",
-                "s3:PutBucketPolicy",
-                "s3:PutBucketPublicAccessBlock",
-                "s3:PutObject",
-                "secretsmanager:CreateSecret",
-                "secretsmanager:DeleteSecret",
-                "secretsmanager:DescribeSecret",
-                "secretsmanager:GetSecretValue",
-                "secretsmanager:ListSecrets",
-                "secretsmanager:ListSecretVersionIds",
-                "secretsmanager:PutResourcePolicy",
-                "secretsmanager:TagResource",
-                "secretsmanager:UpdateSecret",
-                "sns:ListTopics",
-                "ssm:DescribeInstanceProperties",
-                "ssm:DescribeSessions",
-                "ssm:GetConnectionStatus",
-                "ssm:GetParameters",
-                "ssm:ListAssociations",
-                "ssm:ResumeSession",
-                "ssm:StartSession",
-                "ssm:TerminateSession"
-            ],
-            "Resource": "*"
-        }
-    ]
+    "UserId": "AIDASAMPLEUSERIDEXAMPLE",
+    "Account": "123456789012",
+    "Arn": "arn:aws:iam::123456789012:user/devops-admin"
 }
-
 ```
 
-#### Khởi tạo tài nguyên bằng CloudFormation
+2. Lưu lại mã số tài khoản AWS (**AWS Account ID**) của bạn (ví dụ: `123456789012`) vì bạn sẽ cần sử dụng nó để đặt tên cho các tài nguyên duy nhất trên toàn cầu (S3 Bucket).
 
-Trong lab này, chúng ta sẽ dùng N.Virginia region (us-east-1).
+3. Đặt biến môi trường cho khu vực triển khai (ưu tiên chọn `ap-southeast-1` Singapore hoặc `us-east-1` N. Virginia nơi có đầy đủ các mô hình Bedrock mới nhất):
+```bash
+export AWS_REGION="ap-southeast-1"
+export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+```
 
-Để chuẩn bị cho môi trường làm workshop, chúng ta deploy CloudFormation template sau (click link): [PrivateLinkWorkshop ](https://us-east-1.console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/quickcreate?templateURL=https://s3.us-east-1.amazonaws.com/reinvent-endpoints-builders-session/Nested.yaml&stackName=PLCloudSetup). Để nguyên các lựa chọn mặc định.
+---
 
-![create stack](/images/5-Workshop/5.2-Prerequisite/create-stack1.png)
+### Bước 2: Kích Hoạt Quyền Truy Cập Mô Hình Trong Amazon Bedrock
 
-+ Lựa chọn 2 mục acknowledgement 
-+ Chọn Create stack
+Amazon Bedrock yêu cầu người dùng phải chủ động gửi yêu cầu cấp quyền (**Request Model Access**) trước khi có thể gọi API tới các mô hình nền tảng (Foundation Models).
 
-![create stack](/images/5-Workshop/5.2-Prerequisite/create-stack2.png)
+1. Truy cập vào **AWS Management Console** và tìm kiếm dịch vụ **Amazon Bedrock**.
+2. Ở thanh điều hướng bên trái, cuộn xuống mục **Bedrock configurations** và chọn **Model access**.
+3. Nhấp vào nút **Modify model access** (hoặc **Enable specific models**).
+4. Đánh dấu chọn 2 mô hình cốt lõi sau:
+   - **Anthropic**: Chọn `Claude 3.5 Sonnet` (hoặc `Claude 3 Sonnet`).
+   - **Amazon**: Chọn `Titan Text Embeddings V2`.
+5. Nhấp **Next**, chấp nhận các điều khoản sử dụng (EULA) và nhấp **Submit**.
+6. Chờ từ 1-2 phút cho đến khi cột **Access status** của cả 2 mô hình chuyển sang trạng thái màu xanh lá: **Access granted**.
 
-Quá trình triển khai CloudFormation cần khoảng 15 phút để hoàn thành.
+---
 
-![complete](/images/5-Workshop/5.2-Prerequisite/complete.png)
+### Bước 3: Khởi Tạo Amazon S3 Bucket Cho Tri Thức CIS
 
-+ 2 VPCs đã được tạo
+Amazon S3 sẽ đóng vai trò làm kho lưu trữ nguồn dữ liệu (**Data Source**) cho Bedrock Knowledge Base.
 
-![vpcs](/images/5-Workshop/5.2-Prerequisite/vpcs.png)
+1. Tạo một S3 bucket mới với tên duy nhất toàn cầu:
+```bash
+aws s3 mb s3://cloudguard-audit-data-${AWS_ACCOUNT_ID} --region ${AWS_REGION}
+```
 
-+ 3 EC2s đã được tạo
+2. Bật tính năng chặn toàn bộ truy cập công khai (**Block Public Access**) để bảo mật tuyệt đối dữ liệu:
+```bash
+aws s3api put-public-access-block \
+    --bucket cloudguard-audit-data-${AWS_ACCOUNT_ID} \
+    --public-access-block-configuration "BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true"
+```
 
-![EC2](/images/5-Workshop/5.2-Prerequisite/ec2.png)
+3. Bật tính năng mã hóa mặc định (**Server-Side Encryption with SSE-S3**):
+```bash
+aws s3api put-bucket-encryption \
+    --bucket cloudguard-audit-data-${AWS_ACCOUNT_ID} \
+    --server-side-encryption-configuration '{"Rules": [{"ApplyServerSideEncryptionByDefault": {"SSEAlgorithm": "AES256"}}]}'
+```
+
+4. Tạo thư mục con `knowledge-base/` bên trong bucket để sẵn sàng đón nhận các file quy tắc CIS Benchmark:
+```bash
+aws s3api put-object --bucket cloudguard-audit-data-${AWS_ACCOUNT_ID} --key knowledge-base/
+```
+
+---
+
+### Bước 4: Khởi Tạo Bảng Amazon DynamoDB Lưu Trữ Lịch Sử Quét
+
+Hệ thống cần lưu lại toàn bộ kết quả của các phiên kiểm toán (thời gian, điểm số an ninh, danh sách lỗ hổng và mã đã sửa). Ta sử dụng **Amazon DynamoDB** ở chế độ **On-Demand** để hoàn toàn miễn phí khi không có truy vấn.
+
+1. Chạy lệnh tạo bảng `CloudGuard_ScanHistory` với Partition Key là `scan_id`:
+```bash
+aws dynamodb create-table \
+    --table-name CloudGuard_ScanHistory \
+    --attribute-definitions AttributeName=scan_id,AttributeType=S \
+    --key-schema AttributeName=scan_id,KeyType=HASH \
+    --billing-mode PAY_PER_REQUEST \
+    --region ${AWS_REGION}
+```
+
+2. Kiểm tra xem bảng đã chuyển sang trạng thái `ACTIVE` hay chưa:
+```bash
+aws dynamodb describe-table \
+    --table-name CloudGuard_ScanHistory \
+    --query "Table.TableStatus" \
+    --output text
+```
+
+---
+
+### Bước 5: Cấp Quyền IAM Execution Role Cho AWS Lambda
+
+Hàm Lambda Core Audit Engine cần có các quyền truy cập hạn chế (Least Privilege) để có thể gọi Bedrock RAG, đọc S3, ghi DynamoDB và xuất nhật ký CloudWatch Logs.
+
+1. Tạo tệp Trust Policy cho phép dịch vụ Lambda đảm nhận vai trò (`lambda-trust-policy.json`):
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+```
+
+2. Tạo IAM Role `CloudGuard_Lambda_ExecutionRole`:
+```bash
+aws iam create-role \
+    --role-name CloudGuard_Lambda_ExecutionRole \
+    --assume-role-policy-document file://lambda-trust-policy.json
+```
+
+3. Tạo tệp chính sách quyền hạn chi tiết (`lambda-permissions-policy.json`):
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "BedrockInvokePermissions",
+      "Effect": "Allow",
+      "Action": [
+        "bedrock:InvokeModel",
+        "bedrock:Retrieve",
+        "bedrock:RetrieveAndGenerate"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "S3BucketAccess",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        "arn:aws:s3:::cloudguard-audit-data-*",
+        "arn:aws:s3:::cloudguard-audit-data-*/*"
+      ]
+    },
+    {
+      "Sid": "DynamoDBReadWrite",
+      "Effect": "Allow",
+      "Action": [
+        "dynamodb:PutItem",
+        "dynamodb:GetItem",
+        "dynamodb:Query",
+        "dynamodb:Scan"
+      ],
+      "Resource": "arn:aws:dynamodb:*:*:table/CloudGuard_ScanHistory"
+    },
+    {
+      "Sid": "CloudWatchLogs",
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "arn:aws:logs:*:*:*"
+    },
+    {
+      "Sid": "SNSPublish",
+      "Effect": "Allow",
+      "Action": [
+        "sns:Publish"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+```
+
+4. Gắn policy này vào Role vừa tạo:
+```bash
+aws iam put-role-policy \
+    --role-name CloudGuard_Lambda_ExecutionRole \
+    --policy-name CloudGuard_Core_Policy \
+    --policy-document file://lambda-permissions-policy.json
+```
+
+Như vậy, toàn bộ môi trường và các quyền hạn cơ bản đã được thiết lập chuẩn mực. Trong bước tiếp theo, chúng ta sẽ bắt đầu xây dựng **Kho tri thức Bedrock Knowledge Base với CIS Benchmark v3.0**!
