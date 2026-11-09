@@ -89,7 +89,7 @@ Chi phí hạ tầng
 - Dịch vụ AWS:
   - AWS Lambda: ~$0/tháng (nằm trong free tier 1M request/tháng, 512 MB memory).
   - Amazon Bedrock (Claude 3.5 Sonnet + Titan Embeddings V2): ~$2–3/tháng (~1.000–1.500 lượt kiểm toán IaC, tính theo token thực tế).
-  - Amazon API Gateway (HTTP API): ~$1/tháng (~$1/triệu request).
+  - API Gateway (HTTP API): ~$1/tháng ($1/triệu requests).
   - AWS Amplify: ~$1/tháng (build minutes + hosting Next.js SSR).
   - Amazon S3: ~$0.05/tháng (lưu trữ file mã nguồn Terraform, tài liệu CIS và báo cáo kiểm toán PDF).
   - Amazon DynamoDB: ~$0.50/tháng (lưu lịch sử quét và bảng điểm tuân thủ, chế độ On-Demand).

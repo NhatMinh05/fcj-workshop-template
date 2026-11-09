@@ -89,7 +89,7 @@ Infrastructure Costs
 - AWS Services:
   - AWS Lambda: ~$0/month (within free tier 1M requests/month, 512 MB memory).
   - Amazon Bedrock (Claude 3.5 Sonnet + Titan Embeddings V2): ~$2–3/month (~1,000–1,500 IaC audit requests, pay-per-token).
-  - API Gateway (HTTP API): ~$1/month (~$1/million requests).
+  - API Gateway (HTTP API): ~$1/month ($1/million requests).
   - AWS Amplify: ~$1/month (build minutes + Next.js SSR hosting).
   - Amazon S3: ~$0.05/month (storing Terraform templates, CIS rules, and compiled PDF reports).
   - Amazon DynamoDB: ~$0.50/month (audit session history and compliance scores, On-Demand mode).
