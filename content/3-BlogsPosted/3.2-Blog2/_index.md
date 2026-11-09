@@ -6,32 +6,29 @@ chapter: false
 pre: " <b> 3.2. </b> "
 ---
 
-# CLOUDGUARD AI: AUTOMATED AWS INFRASTRUCTURE SECURITY & COST AUDITOR USING GENAI & RAG ON AMAZON BEDROCK
+# AUTOMATING AWS INFRASTRUCTURE SECURITY AUDIT & COST OPTIMIZATION WITH GENAI & RAG ON AMAZON BEDROCK
 
-In modern Cloud and DevOps workflows, managing cloud environments using Infrastructure as Code (IaC) templates such as Terraform and CloudFormation has become industry standard. However, manual security reviews and cost optimization audits are notoriously time-consuming and prone to human oversight, often leaving critical misconfigurations undetected — such as wide-open SSH port 22 (`0.0.0.0/0`), unencrypted S3 buckets, or wildcard IAM policies (`*`).
+In modern DevOps workflows, managing cloud environments using Infrastructure as Code (IaC such as Terraform and CloudFormation) has become standard practice. However, manual security reviews and cost optimization audits before deployment are time-consuming and often miss dangerous misconfigurations, such as opening SSH port 22 to the public internet (0.0.0.0/0), unencrypted S3 buckets, or wildcard IAM permissions (*).
 
-To address this challenge, **CloudGuard AI** was designed as an enterprise-grade Serverless solution powered by Generative AI and Retrieval-Augmented Generation (RAG) on **Amazon Bedrock**.
+To address this challenge via Shift-Left Security, CloudGuard AI combines Generative AI and RAG on Amazon Bedrock.
 
-### Core Architecture Components:
+Core architecture components:
+* Amazon Bedrock (Claude 3.5 Sonnet & Titan Text Embeddings V2): parses Terraform HCL code structures, identifies vulnerabilities, and automatically generates remediation code
+* Bedrock Knowledge Bases & OpenSearch Serverless: anchors RAG context to CIS AWS Foundations Benchmark v3.0, eliminating hallucinations
+* AWS Lambda & Amazon API Gateway (HTTP API): serverless orchestration and audit execution in under 10 seconds at low cost ($1/million requests)
+* Amazon DynamoDB & Amazon S3: stores scan history, compliance scores, and infrastructure templates
+* EventBridge Scheduler & Amazon SNS: daily scheduled scans and instant emergency alerts for high-severity violations
+* AWS WAF, Amazon Cognito & SSM Parameter Store: edge protection, user authentication, and secure secrets management
 
-* **Amazon Bedrock (Claude 3.5 Sonnet & Titan Text Embeddings V2):** Serves as the intelligent AI reasoning engine, parsing Terraform HCL code structures, detecting compliance violations, and generating remediation code snippets.
-* **Bedrock Knowledge Bases & OpenSearch Serverless:** Anchors the RAG context strictly to international security standards — **CIS AWS Foundations Benchmark v3.0**, eliminating hallucinations and ensuring every audit finding cites specific benchmark recommendations.
-* **AWS Lambda (Python 3.12) & Amazon API Gateway (HTTP API):** Executes serverless syntax extraction and audit orchestration in under 10 seconds, delivering high throughput at ultra-low cost ($1/million requests).
-* **Amazon DynamoDB & Amazon S3:** Securely stores scan session history, compliance scorecards, and audit report archives.
-* **EventBridge Scheduler & Amazon SNS:** Triggers automated daily compliance scans and broadcasts instant emergency email alerts whenever high-severity vulnerabilities are detected.
-* **Perimeter Defense & Distribution:** Secured with AWS WAF attached at the CloudFront Edge, user identity managed by Amazon Cognito, and secrets stored in SSM Parameter Store.
+Architecture highlights:
+* Shift-Left Security: scans directly from CI/CD pipelines via Webhooks, catching issues at the Pull Request stage
+* Cost optimization (FinOps): 100% serverless, zero idle compute cost, total continuous 24/7 enterprise cost around $11–15/month (saving $100–$200/month vs dedicated EC2 GPU instances)
+* NAT Gateway elimination: Lambda connects to internal AWS services over TLS, saving $32/month
 
-### Key Innovations & Practical Value:
-
-* **Shift-Left Security:** Integrates seamlessly into CI/CD pipelines via Webhooks, intercepting misconfigurations at the Pull Request stage before any resource is provisioned into production environments.
-* **Superior Cost Optimization:** Built on a 100% Serverless pay-as-you-go architecture, maintaining $0 idle operating cost and totaling just ~$11–15/month for continuous 24/7 enterprise operations (saving $100–$200/month compared to dedicated EC2 GPU instances).
-* **Automated Code Remediation:** Beyond reporting violations, CloudGuard AI generates production-ready Terraform correction blocks that developers can merge immediately.
-
-### Practical Engineering Considerations:
-
-* Enforce a low temperature (`temperature = 0.1`) on Bedrock to ensure deterministic compliance scoring and repeatable audit reports.
-* Route traffic securely over TLS between Lambda and internal AWS service endpoints, eliminating NAT Gateway requirements and saving ~$32/month.
-* Manage secrets and model fallback identifiers inside SSM Parameter Store to prevent hard-coding credentials into application logic.
+Implementation notes:
+* Set low temperature (0.1) on Bedrock for consistent compliance scoring
+* Anchor Knowledge Bases to official benchmark versions for accurate regulatory citations
+* Store secrets and model identifiers in SSM Parameter Store for secure configuration
 
 ![CloudGuard AI Architecture Diagram](https://nhatminh05.github.io/fcj-workshop-template/images/3-BlogsPosted/3.2-Blog2/CloudGuardAIArchitecture.jpg)
 
