@@ -31,4 +31,4 @@ Performance and cost metrics:
 
 ![AI Image Generation Architecture on Amazon ECS and AWS Inferentia2](https://nhatminh05.github.io/fcj-workshop-template/images/3-BlogsPosted/3.2-Blog2/ECSInferentia2Architecture.png)
 
-[Link to the original post](https://www.facebook.com/groups/660548818043427/?is_private_post_share_link=1)
+[Link to the original post](https://www.facebook.com/groups/awsstudygroupfcj/permalink/2340362116728747/)

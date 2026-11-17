@@ -31,4 +31,4 @@ Hiệu năng và chi phí tạo ảnh thực tế:
 
 ![Kiến trúc tạo ảnh AI trên Amazon ECS và AWS Inferentia2](https://nhatminh05.github.io/fcj-workshop-template/images/3-BlogsPosted/3.2-Blog2/ECSInferentia2Architecture.png)
 
-[Link bài viết gốc](https://www.facebook.com/groups/660548818043427/?is_private_post_share_link=1)
+[Link bài viết gốc](https://www.facebook.com/groups/awsstudygroupfcj/permalink/2340362116728747/)
