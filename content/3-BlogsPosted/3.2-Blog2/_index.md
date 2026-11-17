@@ -6,30 +6,29 @@ chapter: false
 pre: " <b> 3.2. </b> "
 ---
 
-# AUTOMATING AWS INFRASTRUCTURE SECURITY AUDIT & COST OPTIMIZATION WITH GENAI & RAG ON AMAZON BEDROCK
+# HIGH-QUALITY COST-EFFECTIVE AI IMAGE GENERATION ON AMAZON ECS WITH AWS INFERENTIA2
 
-In modern DevOps workflows, managing cloud environments using Infrastructure as Code (IaC such as Terraform and CloudFormation) has become standard practice. However, manual security reviews and cost optimization audits before deployment are time-consuming and often miss dangerous misconfigurations, such as opening SSH port 22 to the public internet (0.0.0.0/0), unencrypted S3 buckets, or wildcard IAM permissions (*).
+Deploying AI image generation in production often faces three critical challenges: slow generation latency, steep GPU infrastructure costs, and lengthy container cold-start times caused by on-instance model compilation (taking 25–45 minutes). When user traffic spikes, application latency climbs and GPU bills surge rapidly.
 
-To address this challenge via Shift-Left Security, CloudGuard AI combines Generative AI and RAG on Amazon Bedrock.
+AWS Professional Services introduced an optimized reference architecture that solves these problems by pairing the **Z-Image-Turbo (6-billion-parameter diffusion transformer)** model with **Amazon ECS** container orchestration on **AWS Inferentia2** accelerators.
 
-Core architecture components:
-* Amazon Bedrock (Claude 3.5 Sonnet & Titan Text Embeddings V2): parses Terraform HCL code structures, identifies vulnerabilities, and automatically generates remediation code
-* Bedrock Knowledge Bases & OpenSearch Serverless: anchors RAG context to CIS AWS Foundations Benchmark v3.0, eliminating hallucinations
-* AWS Lambda & Amazon API Gateway (HTTP API): serverless orchestration and audit execution in under 10 seconds at low cost ($1/million requests)
-* Amazon DynamoDB & Amazon S3: stores scan history, compliance scores, and infrastructure templates
-* EventBridge Scheduler & Amazon SNS: daily scheduled scans and instant emergency alerts for high-severity violations
-* AWS WAF, Amazon Cognito & SSM Parameter Store: edge protection, user authentication, and secure secrets management
+Core architectural components and mechanisms:
 
-Architecture highlights:
-* Shift-Left Security: scans directly from CI/CD pipelines via Webhooks, catching issues at the Pull Request stage
-* Cost optimization (FinOps): 100% serverless, zero idle compute cost, total continuous 24/7 enterprise cost around $11–15/month (saving $100–$200/month vs dedicated EC2 GPU instances)
-* NAT Gateway elimination: Lambda connects to internal AWS services over TLS, saving $32/month
+* **Z-Image-Turbo Model:** A 6B diffusion transformer model (from Alibaba's Tongyi-MAI team) requiring only 8 denoising steps (compared to 20–50 steps in traditional models) with deterministic output across identical seeds.
+* **AWS Inferentia2 Accelerators:** Running on EC2 `inf2.8xlarge` instances with 2 NeuronCores and 32 GB HBM, optimized specifically for transformer inference at just $1.97/hr in us-east-1.
+* **"Compile Once, Cache on EFS" Pattern:** The model is compiled once in the CI/CD pipeline (orchestrated via AWS Step Functions and AWS Batch) into NEFF artifacts and cached on **Amazon EFS**. A SHA-256 hash checks source code: API or configuration updates skip compilation entirely. New containers mount EFS at launch and reach serving readiness in just **2 minutes** instead of 30+ minutes.
+* **Three Independent ECS Services by Resolution:** Separate deployments for 512×512, 768×768, and 1024×1024 behind an Application Load Balancer (ALB). An `X-Target-Resolution` header routes requests to the appropriate target group, allowing each resolution tier to scale independently based on demand.
+* **Real-time WebSocket Streaming:** Intermediate JPEG frames produced during the 8 denoising steps are streamed back to the React frontend through API Gateway WebSocket connections, providing users with live visual feedback as images sharpen.
 
-Implementation notes:
-* Set low temperature (0.1) on Bedrock for consistent compliance scoring
-* Anchor Knowledge Bases to official benchmark versions for accurate regulatory citations
-* Store secrets and model identifiers in SSM Parameter Store for secure configuration
+Performance and cost metrics:
 
-![CloudGuard AI Architecture Diagram](https://nhatminh05.github.io/fcj-workshop-template/images/3-BlogsPosted/3.2-Blog2/CloudGuardAIArchitecture.jpg)
+* **512×512 Resolution:** 4.87s latency, **$0.003 per image** (~$2.66 per 1,000 images), ~739 images/hr/instance throughput.
+* **768×768 Resolution:** 9.81s latency, **$0.005 per image** (~$5.36 per 1,000 images), ~367 images/hr/instance throughput.
+* **1024×1024 Resolution:** 19.39s latency, **$0.011 per image** (~$10.59 per 1,000 images), ~186 images/hr/instance throughput.
+* The ultra-low per-image cost enables generative AI image creation to serve as an embedded application feature rather than a prohibitive standalone service.
 
-[Link to the original post](https://www.facebook.com/groups/awsstudygroupfcj/permalink/2330331201065172/)
+*Source:* [High-quality cost-effective AI image generation on Amazon ECS – AWS Containers Blog](https://aws.amazon.com/blogs/containers/high-quality-cost-effective-ai-image-generation-on-amazon-ecs/)
+
+![AI Image Generation Architecture on Amazon ECS and AWS Inferentia2](https://nhatminh05.github.io/fcj-workshop-template/images/3-BlogsPosted/3.2-Blog2/ECSInferentia2Architecture.png)
+
+[Link to the original post](https://www.facebook.com/groups/660548818043427/?is_private_post_share_link=1)

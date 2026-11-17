@@ -6,30 +6,29 @@ chapter: false
 pre: " <b> 3.2. </b> "
 ---
 
-# TỰ ĐỘNG HÓA KIỂM TOÁN AN NINH & TỐI ƯU CHI PHÍ HẠ TẦNG AWS VỚI GENAI & RAG TRÊN AMAZON BEDROCK
+# TẠO ẢNH AI CHẤT LƯỢNG CAO VỚI CHI PHÍ TỐI ƯU TRÊN AMAZON ECS VÀ AWS INFERENTIA2
 
-Trong quy trình DevOps hiện đại, việc quản trị hạ tầng dưới dạng mã nguồn (Infrastructure as Code - IaC như Terraform, CloudFormation) là tiêu chuẩn bắt buộc. Tuy nhiên, việc rà soát an ninh và kiểm toán chi phí thủ công trước khi deploy thường tốn nhiều giờ, đồng thời rất dễ bỏ sót các cấu hình sai lệch nguy hiểm như: mở cổng SSH 22 cho toàn Internet (0.0.0.0/0), không mã hóa S3 bucket, hay cấp quyền IAM wildcard (*).
+Tạo ảnh AI ở môi trường Production thường gặp phải 3 trở ngại lớn: tốc độ xử lý chậm, chi phí hạ tầng GPU đắt đỏ, và thời gian khởi động container (cold-start) kéo dài do phải biên dịch mô hình cho chip tăng tốc (mất từ 25–45 phút). Khi có lưu lượng truy cập tăng đột biến, người dùng phải chờ đợi lâu và hóa đơn điện toán đám mây tăng vọt.
 
-Để giải quyết bài toán theo hướng Shift-Left Security, mình xây dựng giải pháp CloudGuard AI kết hợp Generative AI và RAG trên Amazon Bedrock.
+Đội ngũ AWS Professional Services đã giới thiệu một giải pháp kiến trúc tối ưu để giải quyết triệt để bài toán này, kết hợp mô hình khuếch tán **Z-Image-Turbo (6 tỷ tham số)** chạy trên dịch vụ container **Amazon ECS** và chip tăng tốc chuyên dụng **AWS Inferentia2**.
 
-Các thành phần chính của kiến trúc:
-* Amazon Bedrock (Claude 3.5 Sonnet & Titan Text Embeddings V2): phân tích cú pháp Terraform HCL, phát hiện lỗ hổng và tự động sinh mã khắc phục (remediation code)
-* Bedrock Knowledge Bases & OpenSearch Serverless: ghim ngữ cảnh RAG vào tiêu chuẩn CIS AWS Foundations Benchmark v3.0, loại bỏ hoàn toàn hiện tượng ảo tưởng (hallucination)
-* AWS Lambda & Amazon API Gateway (HTTP API): điều phối và phân tích serverless dưới 10 giây với chi phí tối ưu ($1/triệu request)
-* Amazon DynamoDB & Amazon S3: lưu trữ lịch sử quét, điểm tuân thủ và mẫu hạ tầng
-* EventBridge Scheduler & Amazon SNS: lập lịch quét định kỳ hằng ngày và gửi cảnh báo khẩn cấp khi có lỗ hổng nghiêm trọng
-* AWS WAF, Amazon Cognito & SSM Parameter Store: bảo vệ ứng dụng tại biên, xác thực người dùng và quản lý secrets an toàn
+Các thành phần và cơ chế cốt lõi trong giải pháp:
 
-Điểm hay của kiến trúc:
-* Bảo mật Shift-Left: quét trực tiếp từ vòng CI/CD qua Webhook, chặn rủi ro ngay từ bước tạo Pull Request
-* Tối ưu chi phí (FinOps): vận hành 100% Serverless, tiệm cận 0đ khi không có lượt quét, chi phí chạy 24/7 chỉ khoảng $11–15/tháng (tiết kiệm hơn $100–$200/tháng so với EC2 GPU)
-* Loại bỏ NAT Gateway: Lambda kết nối nội bộ qua TLS, tiết kiệm thêm $32/tháng
+* **Mô hình Z-Image-Turbo:** Thuộc nhóm Diffusion Transformer (từ Alibaba), chỉ cần 8 bước khử nhiễu (thay vì 20–50 bước như các mô hình khác) và có tính tất định (cùng prompt và seed luôn tạo ra ảnh giống hệt nhau).
+* **Chip tăng tốc AWS Inferentia2:** Chạy trên EC2 `inf2.8xlarge` với 2 NeuronCores và 32 GB HBM, tối ưu hóa cho tác vụ Transformer inference với chi phí chỉ $1.97/giờ (tiết kiệm hơn nhiều so với GPU NVIDIA).
+* **Mô hình "Compile Once, Cache on EFS":** Mô hình được biên dịch trước một lần duy nhất trong CI/CD (Step Functions + AWS Batch) thành file NEFF rồi lưu vào **Amazon EFS**. Mã băm SHA-256 giúp nhận diện thay đổi: khi sửa code API thì không cần compile lại mô hình. Container mới khi scale-out chỉ cần mount EFS và sẵn sàng phục vụ chỉ sau **2 phút** thay vì hơn 30 phút.
+* **Tách 3 ECS Service độc lập theo độ phân giải:** Phân tách rõ ràng thành 3 service (512×512, 768×768, 1024×1024) đứng sau Application Load Balancer (ALB). Header `X-Target-Resolution` điều phối request đến đúng service, giúp từng độ phân giải tự động scale theo nhu cầu tải thực tế.
+* **Streaming thời gian thực qua WebSocket:** Từng khung hình JPEG trung gian sau mỗi bước khử nhiễu được stream trực tiếp về React frontend qua API Gateway WebSocket, giúp người dùng theo dõi bức ảnh nét dần theo thời gian thực (5–20 giây).
 
-Lưu ý khi triển khai:
-* Cần đặt temperature thấp (0.1) trên Bedrock để kết quả chấm điểm tuân thủ nhất quán
-* Knowledge Base cần ghim đúng phiên bản benchmark để trích dẫn điều luật chuẩn xác
-* Quản lý API keys và secrets qua SSM Parameter Store để đảm bảo an toàn
+Hiệu năng và chi phí tạo ảnh thực tế:
 
-![Sơ đồ kiến trúc giải pháp CloudGuard AI](https://nhatminh05.github.io/fcj-workshop-template/images/3-BlogsPosted/3.2-Blog2/CloudGuardAIArchitecture.jpg)
+* **Độ phân giải 512×512:** Thời gian 4.87s, chi phí chỉ **$0.003 / ảnh** (~$2.66 / 1.000 ảnh), throughput đạt ~739 ảnh/giờ/instance.
+* **Độ phân giải 768×768:** Thời gian 9.81s, chi phí **$0.005 / ảnh** (~$5.36 / 1.000 ảnh), throughput đạt ~367 ảnh/giờ/instance.
+* **Độ phân giải 1024×1024:** Thời gian 19.39s, chi phí **$0.011 / ảnh** (~$10.59 / 1.000 ảnh), throughput đạt ~186 ảnh/giờ/instance.
+* Chi phí đủ thấp để tích hợp tính năng tạo ảnh trực tiếp vào ứng dụng web/mobile (embedded feature) mà không cần xây dựng hệ thống GPU đắt đỏ riêng biệt.
 
-[Link bài viết gốc](https://www.facebook.com/groups/awsstudygroupfcj/permalink/2330331201065172/)
+*Nguồn tham khảo:* [High-quality cost-effective AI image generation on Amazon ECS – AWS Containers Blog](https://aws.amazon.com/blogs/containers/high-quality-cost-effective-ai-image-generation-on-amazon-ecs/)
+
+![Kiến trúc tạo ảnh AI trên Amazon ECS và AWS Inferentia2](https://nhatminh05.github.io/fcj-workshop-template/images/3-BlogsPosted/3.2-Blog2/ECSInferentia2Architecture.png)
+
+[Link bài viết gốc](https://www.facebook.com/groups/660548818043427/?is_private_post_share_link=1)
