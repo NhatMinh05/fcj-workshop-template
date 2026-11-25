@@ -59,7 +59,7 @@ Results are stored in **Amazon DynamoDB** and shown in the web UI within seconds
 
 ## 4. Solution Architecture
 
-![ImageGuard architecture diagram](../images/2-proposal/imageguard-architecture.drawio.png)
+![ImageGuard architecture diagram](https://nhatminh05.github.io/fcj-workshop-template/images/2-Proposal/imageguard-architecture.drawio.png)
 
 *Figure 1. ImageGuard architecture (drawn by the team in draw.io with the AWS Architecture Icons). Arrow numbers match the table in Section 4.2. Arrow colors: blue – upload flow; orange – AI processing flow; green – view results flow; dashed grey – monitoring; dashed red – IAM.*
 
