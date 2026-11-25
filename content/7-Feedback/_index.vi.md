@@ -6,45 +6,44 @@ chapter: false
 pre: " <b> 7. </b> "
 ---
 
-> Dưới đây là những chia sẻ và đóng góp ý kiến cá nhân của mình sau 3 tháng trải nghiệm tại chương trình **First Cloud AI Journey (FCAJ)** do **Amazon Web Services (AWS) Việt Nam** tổ chức:
+> Khép lại 3 tháng thực tập tại **First Cloud AI Journey (FCAJ)** do **AWS Việt Nam** tổ chức, dưới đây là những đúc kết ngắn gọn và đóng góp ý kiến từ góc nhìn trải nghiệm thực tế của bản thân:
 
-### Đánh giá chung
+### 1. Đánh giá quá trình thực tập
 
-**1. Môi trường làm việc & Tự học**  
-Chương trình vận hành theo mô hình tự học 100%, ban đầu mình có cảm giác hơi ngợp trước lượng kiến thức đồ sộ của AWS. Tuy nhiên, chính môi trường tự chủ, không gò bó đã rèn luyện cho mình tính tự giác cao, khả năng tự đọc AWS Documentation và tự giải quyết lỗi độc lập.
+- **Môi trường tự học và tính chủ động:**  
+  Chương trình không có giáo trình gò bó hay dạy học truyền thống mà đề cao 100% tính tự học. Tuần đầu mình khá bỡ ngỡ trước lượng kiến thức đồ sộ của AWS, nhưng chính việc tự mày mò tài liệu chính thống (AWS Docs) đã giúp mình rèn được tư duy độc lập và khả năng tự giải quyết vấn đề.
 
-**2. Sự hỗ trợ của mentor / team admin**  
-Các anh chị admin hỗ trợ thủ tục rất nhanh và thường xuyên tổ chức các chuỗi sự kiện, Tech Talk bổ ích. Admin không phát sẵn tài liệu học mà để sinh viên tự tìm tòi; khi gặp vướng mắc về kiến trúc thì mentor sẽ đặt câu hỏi gợi mở, giúp mình tự tư duy giải pháp theo chuẩn AWS Well-Architected.
+- **Vai trò của Ban tổ chức và Mentor:**  
+  Các anh chị admin hỗ trợ thủ tục rất chu đáo và thường xuyên kết nối các buổi Tech Talk, sự kiện chuyên đề hữu ích. Admin không phát sẵn tài liệu học mà để sinh viên tự tìm tòi; khi gặp vướng mắc về kiến trúc thì mentor sẽ đặt câu hỏi gợi mở, giúp mình tự tư duy giải pháp theo chuẩn AWS Well-Architected.
 
-**3. Sự phù hợp giữa công việc và chuyên ngành học**  
-Là sinh viên chuyên ngành AI, trước đây mình chỉ quen train model trên máy cá nhân. Qua dự án ImageGuard, mình được học cách đưa mô hình thị giác máy tính (Amazon Rekognition) lên kiến trúc Serverless thực tế, kết hợp Lambda, S3, DynamoDB và API Gateway.
+- **Gắn kết chuyên ngành AI với Hạ tầng Cloud:**  
+  Là sinh viên AI, trước đây mình chỉ tập trung huấn luyện mô hình trên máy cục bộ. Kỳ thực tập đã giúp mình hiểu được cách đưa mô hình thị giác máy tính (Amazon Rekognition) vào môi trường Production thực tế thông qua kiến trúc Serverless (Lambda, S3, API Gateway, DynamoDB).
 
-**4. Cơ hội học hỏi & phát triển kỹ năng**  
-Mình học được rất nhiều kiến thức thực chiến: từ thiết kế hệ thống hướng sự kiện (Event-driven), phân quyền IAM Least Privilege, thiết lập CloudWatch Alarms đến tư duy tối ưu chi phí (FinOps). Ngoài ra, mình còn rèn được kỹ năng viết technical blog trên AWS Study Group.
+- **Kỹ năng tích lũy:**  
+  Nắm vững thiết kế hệ thống hướng sự kiện (Event-driven), phân quyền bảo mật IAM Least Privilege, giám sát hệ thống với CloudWatch Alarms và tư duy tối ưu chi phí (FinOps). Đồng thời, kỹ năng viết kỹ thuật (Technical Writing) cũng tiến bộ rõ rệt qua việc viết blog trên AWS Study Group.
 
-**5. Văn hóa & tinh thần đồng đội**  
-Các bạn thực tập sinh và cộng đồng AWS Study Group rất nhiệt tình. Mỗi khi gặp bug khó như S3 event trigger hay CORS, mọi người đều sẵn sàng thức đêm trao đổi, chia sẻ cách xử lý cùng nhau.
+- **Văn hóa cộng đồng:**  
+  Cộng đồng sinh viên FCAJ và nhóm AWS Study Group rất cởi mở, sẵn sàng trao đổi và chia sẻ kinh nghiệm xử lý lỗi (troubleshooting) mỗi khi gặp các ca khó như CORS hay S3 event trigger.
 
-**6. Chính sách / quyền lợi cho thực tập sinh**  
-Chương trình tài trợ credit AWS thực hành đầy đủ, voucher thi chứng chỉ quốc tế và tạo điều kiện tham gia các sự kiện công nghệ chất lượng cao. Đây là sự hỗ trợ rất thiết thực cho sinh viên.
-
----
-
-### Một số câu hỏi khác
-
-- **Điều bạn hài lòng nhất trong thời gian thực tập?**  
-  Tự tay hoàn thiện được một sản phẩm Serverless AI hoàn chỉnh (ImageGuard) chạy mượt mà trên AWS và tự tin hơn rất nhiều vào khả năng tự học công nghệ mới của bản thân.
-
-- **Điều bạn nghĩ ban tổ chức có thể cải thiện?**  
-  Có thể sắp xếp thêm một buổi "Office Hours" ngắn ở giai đoạn đầu để các nhóm trình bày nháp sơ đồ kiến trúc và nhận phản biện sớm từ các Solution Architect.
-
-- **Nếu giới thiệu cho bạn bè, bạn có khuyên họ tham gia không?**  
-  Chắc chắn có. Đây là cơ hội tuyệt vời để sinh viên cọ xát thực tế, rèn tính tự lập và tiếp cận chuẩn mực công nghệ đám mây chuẩn quốc tế.
+- **Chính sách hỗ trợ:**  
+  Tài trợ credit thực hành đầy đủ, voucher thi chứng chỉ AWS và cơ hội tham gia các sự kiện công nghệ chất lượng cao là những quyền lợi vô cùng giá trị đối với sinh viên.
 
 ---
 
-### Đề xuất & mong muốn
+### 2. Trải nghiệm & Cảm nhận cá nhân
 
-- **Đề xuất trải nghiệm:** Tiếp tục duy trì và mở rộng thêm các buổi Tech Talk/Meetup chia sẻ sâu về các case study doanh nghiệp thực tế.
-- **Dự định tương lai:** Tiếp tục đồng hành, viết bài chia sẻ kỹ thuật trên cộng đồng AWS Study Group và chinh phục các chứng chỉ AWS tiếp theo.
-- **Lời cảm ơn:** Em xin gửi lời cảm ơn chân thành tới Ban tổ chức FCAJ, các anh chị Mentor và AWS Việt Nam vì một kỳ thực tập rất ý nghĩa và đáng nhớ!
+- **Điều tâm đắc nhất:** Tự tay xây dựng hoàn chỉnh giải pháp Serverless AI (ImageGuard), thấy hệ thống xử lý ảnh mượt mà trong thực tế với chi phí tối ưu (~8,37 USD/tháng).
+- **Thách thức lớn nhất:** Thay đổi thói quen từ việc "viết code cho chạy được" sang tư duy "thiết kế hệ thống an toàn, chịu lỗi và tiết kiệm chi phí".
+- **Góc nhìn về chương trình:** Rất khuyến khích các bạn sinh viên khóa sau tham gia nếu muốn vượt qua vùng an toàn lý thuyết để tiếp cận thực tế công nghiệp đám mây.
+
+---
+
+### 3. Đề xuất cải tiến & Định hướng
+
+- **Đề xuất cho ban tổ chức:** Ở giai đoạn đầu làm Proposal, nếu có thêm 1 buổi "Office Hours" ngắn để các nhóm trao đổi nhanh về bản phác thảo kiến trúc với Solution Architect thì các bạn sẽ tự tin hơn khi bắt tay vào triển khai.
+- **Tiếp tục mở rộng sự kiện:** Duy trì và mời thêm các chuyên gia chia sẻ sâu về các bài toán thực tế của doanh nghiệp tại các buổi Tech Talk.
+- **Định hướng tiếp theo:** Tiếp tục đóng góp bài viết chuyên môn cho cộng đồng AWS Study Group và chinh phục các chứng chỉ AWS cấp độ cao hơn.
+
+---
+
+*Chân thành cảm ơn Ban tổ chức FCAJ, các anh chị Mentor và AWS Việt Nam vì một kỳ thực tập đầy trải nghiệm và bổ ích!*
