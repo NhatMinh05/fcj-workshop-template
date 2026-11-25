@@ -8,10 +8,6 @@ pre: " <b> 2. </b> "
 
 # ImageGuard – AI-Powered Image Moderation and Labeling on AWS Serverless
 
-{{% notice info %}}
-**Status:** Proposal v2.0.
-{{% /notice %}}
-
 ## 1. Overview
 
 **ImageGuard** is a serverless web application that helps classified-ad sites, forums and student clubs **automatically moderate and categorize images uploaded by users**. When a user uploads a photo, the system uses the computer-vision AI service **Amazon Rekognition** to:

@@ -8,10 +8,6 @@ pre: " <b> 2. </b> "
 
 # ImageGuard – Kiểm duyệt và gắn nhãn ảnh tự động bằng AI trên AWS Serverless
 
-{{% notice info %}}
-**Trạng thái:** Bản đề xuất v2.0.
-{{% /notice %}}
-
 ## 1. Tổng quan
 
 **ImageGuard** là một ứng dụng web serverless giúp các trang rao vặt, diễn đàn hoặc câu lạc bộ sinh viên **tự động kiểm duyệt và phân loại ảnh do người dùng tải lên**. Khi người dùng đăng ảnh, hệ thống dùng dịch vụ AI thị giác máy tính **Amazon Rekognition** để:
