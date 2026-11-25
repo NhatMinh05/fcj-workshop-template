@@ -14,5 +14,5 @@ Bài blog này giới thiệu giải pháp cộng tác đa tác tử (Multi-Agen
 ###  [Blog 2 - TẠO ẢNH AI CHẤT LƯỢNG CAO VỚI CHI PHÍ TỐI ƯU TRÊN AMAZON ECS VÀ AWS INFERENTIA2](3.2-Blog2/)
 Bài blog này giới thiệu kiến trúc tạo ảnh AI hiệu năng cao, chi phí thấp kết hợp mô hình Z-Image-Turbo trên Amazon ECS và chip AWS Inferentia2, áp dụng pattern "Compile Once, Cache on EFS" giúp container scale-out chỉ mất 2 phút và hạ chi phí chỉ còn $0.003–$0.011 mỗi ảnh.
 
-###  [Blog 3 - ...](3.3-Blog3/)
-Blog này giới thiệu Amazon EKS Pod Identity vừa bổ sung tính năng session policies, cho phép bạn thu hẹp quyền IAM một cách linh hoạt và chính xác cho từng pod mà không cần tạo thêm nhiều IAM roles riêng biệt. Đây là bước tiến quan trọng giúp áp dụng nguyên tắc least privilege hiệu quả hơn trong môi trường Kubernetes quy mô lớn.
+###  [Blog 3 - ĐỊNH TUYẾN INFERENCE AI ĐA VÙNG VỚI AMAZON SAGEMAKER HYPERPOD GLOBAL INFERENCE GATEWAY](3.3-Blog3/)
+Bài blog này giới thiệu Amazon SageMaker HyperPod Global Inference Gateway — kiến trúc định tuyến hai tầng với một điểm cuối duy nhất (single endpoint) điều phối request thông minh qua nhiều cụm và nhiều AWS Region dựa trên KV cache và hàng đợi thực tế, giúp tận dụng tối đa GPU nhàn rỗi và tự động failover mà không cần tự xây dựng hạ tầng mạng phức tạp.

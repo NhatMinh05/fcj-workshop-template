@@ -14,5 +14,5 @@ This blog introduces the Multi-Agent Collaboration solution on Amazon Bedrock, c
 ###  [Blog 2 - HIGH-QUALITY COST-EFFECTIVE AI IMAGE GENERATION ON AMAZON ECS WITH AWS INFERENTIA2](3.2-Blog2/)
 This blog introduces a high-performance, cost-effective AI image generation architecture running Z-Image-Turbo on Amazon ECS and AWS Inferentia2 accelerators, featuring the "Compile Once, Cache on EFS" pattern that enables container scale-out in just 2 minutes and drives cost down to $0.003–$0.011 per image.
 
-###  [Blog 3 - ...](3.3-Blog3/)
-This blog introduces the newly added session policies feature in Amazon EKS Pod Identity, which allows you to narrow IAM permissions flexibly and precisely for each pod without needing to create multiple separate IAM roles. This is an important step forward that helps apply the principle of least privilege more effectively in large-scale Kubernetes environments.
+###  [Blog 3 - MULTI-REGION AI INFERENCE ROUTING WITH AMAZON SAGEMAKER HYPERPOD GLOBAL INFERENCE GATEWAY](3.3-Blog3/)
+This blog introduces Amazon SageMaker HyperPod Global Inference Gateway — a two-tier routing architecture with a single managed endpoint that intelligently distributes inference requests across multiple clusters and AWS Regions based on real-time KV cache and queue depth signals, putting idle GPUs to work with automated failover and zero custom networking plumbing.
