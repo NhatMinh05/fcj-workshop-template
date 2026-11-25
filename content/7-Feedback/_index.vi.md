@@ -38,11 +38,11 @@ pre: " <b> 7. </b> "
 
 ---
 
-### 3. Đề xuất cải tiến & Định hướng
+### 3. Đề xuất & Mong muốn trong tương lai
 
-- **Đề xuất cho ban tổ chức:** Ở giai đoạn đầu làm Proposal, nếu có thêm 1 buổi "Office Hours" ngắn để các nhóm trao đổi nhanh về bản phác thảo kiến trúc với Solution Architect thì các bạn sẽ tự tin hơn khi bắt tay vào triển khai.
-- **Tiếp tục mở rộng sự kiện:** Duy trì và mời thêm các chuyên gia chia sẻ sâu về các bài toán thực tế của doanh nghiệp tại các buổi Tech Talk.
-- **Định hướng tiếp theo:** Tiếp tục đóng góp bài viết chuyên môn cho cộng đồng AWS Study Group và chinh phục các chứng chỉ AWS cấp độ cao hơn.
+- **Về công tác tổ chức của chương trình:** Bản thân mình cảm thấy vô cùng hài lòng với sự chuẩn bị chu đáo và chuyên nghiệp từ ban tổ chức. Mọi khâu từ cung cấp tài nguyên AWS thực hành, giải đáp thủ tục nhanh chóng cho đến chất lượng của các chuỗi sự kiện Tech Talk đều được AWS thực hiện rất xuất sắc, vượt ngoài kỳ vọng ban đầu của mình.
+- **Mong muốn đối với chương trình:** Hy vọng AWS Việt Nam sẽ tiếp tục duy trì và nhân rộng mô hình thực tập tự học thực chiến này đến nhiều bạn sinh viên hơn nữa ở các khóa sau, giúp các bạn có cơ hội tiếp cận sớm với môi trường công nghệ đám mây chuẩn quốc tế.
+- **Định hướng cá nhân:** Tiếp tục đào sâu các dịch vụ AWS nâng cao, ứng dụng kiến thức Cloud & Serverless AI đã tích lũy vào đồ án chuyên ngành tại Đại học FPT, đồng thời tiếp tục đồng hành và chia sẻ kiến thức cùng cộng đồng AWS Study Group.
 
 ---
 

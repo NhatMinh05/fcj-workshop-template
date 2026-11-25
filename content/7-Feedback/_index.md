@@ -38,11 +38,11 @@ pre: " <b> 7. </b> "
 
 ---
 
-### 3. Constructive Suggestions & Future Goals
+### 3. Suggestions & Future Aspirations
 
-- **Program Suggestion:** Introducing a brief "Office Hours" session during the initial Proposal stage would allow teams to validate their draft architectures with Solution Architects before coding.
-- **Event Expansion:** Continue inviting industry experts to share enterprise case studies in upcoming Tech Talks and meetups.
-- **Next Steps:** Keep contributing technical posts to the AWS Study Group community and work toward earning advanced AWS certifications.
+- **Program Organization & Delivery:** I am genuinely impressed by and satisfied with the professionalism and thoughtful coordination from the organizing team. Everything from AWS sandbox provisioning and prompt logistical support to the caliber of technical events and tech talks was executed exceptionally well by AWS, exceeding my expectations.
+- **Wishes for the Program:** I hope AWS Viet Nam continues to sustain and expand this hands-on, self-directed internship model for future student cohorts, offering more aspiring engineers an authentic pathway to enterprise cloud technologies.
+- **Personal Next Steps:** Continue exploring advanced AWS cloud services, applying Serverless AI and cloud architecture principles to my academic capstone projects at FPT University, and actively contributing technical insights to the AWS Study Group community.
 
 ---
 
