@@ -38,10 +38,10 @@ pre: " <b> 7. </b> "
 
 ---
 
-### 3. Đề xuất & Mong muốn trong tương lai
+### 3. Đề xuất & Định hướng tương lai
 
-- **Về công tác tổ chức của chương trình:** Bản thân mình cảm thấy vô cùng hài lòng với sự chuẩn bị chu đáo và chuyên nghiệp từ ban tổ chức. Mọi khâu từ cung cấp tài nguyên AWS thực hành, giải đáp thủ tục nhanh chóng cho đến chất lượng của các chuỗi sự kiện Tech Talk đều được AWS thực hiện rất xuất sắc, vượt ngoài kỳ vọng ban đầu của mình.
-- **Mong muốn đối với chương trình:** Hy vọng AWS Việt Nam sẽ tiếp tục duy trì và nhân rộng mô hình thực tập tự học thực chiến này đến nhiều bạn sinh viên hơn nữa ở các khóa sau, giúp các bạn có cơ hội tiếp cận sớm với môi trường công nghệ đám mây chuẩn quốc tế.
+- **Đề xuất thúc đẩy đạt chứng chỉ AWS:** Ban tổ chức có thể xem xét khuyến khích và thúc đẩy các bạn thực tập sinh đặt mục tiêu hoàn thành ít nhất 1 chứng chỉ AWS chính quy (như *AWS Certified Cloud Practitioner* hoặc *Solutions Architect – Associate*) trong suốt kỳ thực tập. Việc kết hợp giữa tự học lý thuyết, thực hành dự án thực tế và thi chứng chỉ quốc tế sẽ tạo động lực học tập rất lớn, giúp sinh viên vừa có sản phẩm hoàn thiện, vừa có chứng chỉ uy tín làm hành trang vững chắc cho sự nghiệp sau này.
+- **Mong muốn đối với chương trình:** Hy vọng AWS Việt Nam sẽ tiếp tục duy trì và nhân rộng mô hình thực tập tự học thực chiến này đến nhiều thế hệ sinh viên hơn nữa, vì đây thực sự là bệ phóng tuyệt vời giúp sinh viên tiếp cận chuẩn mực công nghệ đám mây thực tế.
 - **Định hướng cá nhân:** Tiếp tục đào sâu các dịch vụ AWS nâng cao, ứng dụng kiến thức Cloud & Serverless AI đã tích lũy vào đồ án chuyên ngành tại Đại học FPT, đồng thời tiếp tục đồng hành và chia sẻ kiến thức cùng cộng đồng AWS Study Group.
 
 ---

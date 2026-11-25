@@ -38,10 +38,10 @@ pre: " <b> 7. </b> "
 
 ---
 
-### 3. Suggestions & Future Aspirations
+### 3. Constructive Suggestions & Future Goals
 
-- **Program Organization & Delivery:** I am genuinely impressed by and satisfied with the professionalism and thoughtful coordination from the organizing team. Everything from AWS sandbox provisioning and prompt logistical support to the caliber of technical events and tech talks was executed exceptionally well by AWS, exceeding my expectations.
-- **Wishes for the Program:** I hope AWS Viet Nam continues to sustain and expand this hands-on, self-directed internship model for future student cohorts, offering more aspiring engineers an authentic pathway to enterprise cloud technologies.
+- **Promoting AWS Certification Achievement:** The program could consider actively encouraging or motivating interns to complete at least one official AWS certification (such as *AWS Certified Cloud Practitioner* or *Solutions Architect – Associate*) during their internship period. Combining self-directed learning, hands-on project implementation, and earning an industry-recognized credential creates a powerful learning incentive, equipping students with both a working portfolio and accredited validation for their future careers.
+- **Wishes for the Program:** I hope AWS Viet Nam continues to sustain and expand this practical, self-directed internship model for future student cohorts, as it serves as an exceptional bridge connecting academic foundations with enterprise cloud standards.
 - **Personal Next Steps:** Continue exploring advanced AWS cloud services, applying Serverless AI and cloud architecture principles to my academic capstone projects at FPT University, and actively contributing technical insights to the AWS Study Group community.
 
 ---
