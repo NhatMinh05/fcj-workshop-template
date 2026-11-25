@@ -7,7 +7,7 @@ pre: " <b> 6. </b> "
 ---
 
 Trong suốt thời gian thực tập tại **Công ty TNHH Amazon Web Services Việt Nam** từ **14/09/2026** đến **14/12/2026**, tôi đã có cơ hội học hỏi, rèn luyện và áp dụng kiến thức đã được trang bị tại trường vào môi trường làm việc thực tế.  
-Tôi đã tham gia xây dựng và triển khai **dự án CloudGuard AI: Automated AWS Infrastructure Security & Cost Auditor trên hạ tầng AWS Serverless kết hợp Amazon Bedrock GenAI & RAG**, qua đó cải thiện kỹ năng **lập trình Python, triển khai và vận hành hạ tầng AWS Serverless (Lambda, API Gateway, DynamoDB, S3), tích hợp Generative AI & RAG (Bedrock, Claude 3.5 Sonnet), kiểm toán an ninh đám mây theo chuẩn CIS Benchmark v3.0, tối ưu chi phí cloud, giám sát hệ thống, và viết tài liệu/báo cáo kỹ thuật song ngữ**.  
+Tôi đã tham gia xây dựng và triển khai **dự án ImageGuard: Kiểm duyệt và gắn nhãn ảnh tự động bằng AI trên hạ tầng AWS Serverless (Amazon Rekognition, Lambda, S3, DynamoDB, API Gateway, Cognito, CloudFront, SNS, SQS, CloudWatch)**, qua đó nâng cao năng lực **thiết kế kiến trúc hướng sự kiện (event-driven serverless architecture), lập trình xử lý backend bằng Python trên AWS Lambda, tích hợp dịch vụ AI thị giác máy tính Amazon Rekognition, xác thực người dùng an toàn với Amazon Cognito & JWT Authorizer, áp dụng nguyên tắc đặc quyền tối thiểu (IAM Least Privilege), giám sát và cảnh báo hệ thống với CloudWatch Alarms & SNS, tối ưu hóa chi phí điện toán đám mây và biên soạn tài liệu/báo cáo kỹ thuật song ngữ**.  
 
 Về tác phong, tôi luôn cố gắng hoàn thành tốt nhiệm vụ, tuân thủ nội quy, và tích cực trao đổi với đồng nghiệp để nâng cao hiệu quả công việc.
 

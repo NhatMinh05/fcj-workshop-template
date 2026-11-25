@@ -7,7 +7,7 @@ pre: " <b> 6. </b> "
 ---
 
 During my internship at **Amazon Web Services Viet Nam Company Limited** from **14/09/2026** to **14/12/2026**, I had the opportunity to learn, practice, and apply the knowledge acquired in school to a real-world working environment.  
-I participated in building and deploying the **CloudGuard AI: Automated AWS Infrastructure Security & Cost Auditor project on AWS Serverless infrastructure powered by Amazon Bedrock GenAI & RAG**, through which I improved my skills in **Python development, deploying and operating AWS Serverless infrastructure (Lambda, API Gateway, DynamoDB, S3), integrating Generative AI & RAG (Bedrock, Claude 3.5 Sonnet), cloud security auditing under CIS Benchmark v3.0, cloud cost optimization, system monitoring, and writing bilingual technical documentation/reports**.  
+I participated in building and deploying the **ImageGuard: AI-Powered Image Moderation and Labeling project on AWS Serverless infrastructure (Amazon Rekognition, Lambda, S3, DynamoDB, API Gateway, Cognito, CloudFront, SNS, SQS, CloudWatch)**, through which I strengthened my skills in **designing event-driven serverless architectures, developing backend processing logic with Python on AWS Lambda, integrating computer-vision AI services with Amazon Rekognition, implementing secure authentication via Amazon Cognito & JWT Authorizers, enforcing IAM Least Privilege, system observability and alerting with CloudWatch Alarms & SNS, cloud cost optimization, and authoring comprehensive bilingual technical documentation and reports**.  
 
 In terms of work ethic, I always strived to complete tasks well, complied with workplace regulations, and actively engaged with colleagues to improve work efficiency.
 
