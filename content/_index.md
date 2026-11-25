@@ -20,11 +20,11 @@ chapter: false
 
 &emsp; **Major:** Artificial Intelligence
 
-&emsp; **Class:** AWS082025
+&emsp; **Student ID:** SE193041
 
 &emsp; **Internship Company:** Amazon Web Services Viet Nam Company Limited
 
-&emsp; **Internship Position:** Workforce Bootcamp - First Cloud AI Journey
+&emsp; **Internship Position:**  First Cloud AI Journey (FCAJ) Intern
 
 &emsp; **Internship Duration:** From 14/09/2026 to 14/12/2026
 
