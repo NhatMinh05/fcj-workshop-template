@@ -59,7 +59,7 @@ Kết quả được lưu vào **Amazon DynamoDB** và hiển thị trên giao d
 
 ## 4. Kiến trúc giải pháp
 
-![Sơ đồ kiến trúc ImageGuard](https://nhatminh05.github.io/fcj-workshop-template/images/2-Proposal/imageguard-architecture.drawio.png)
+![Sơ đồ kiến trúc ImageGuard](../../images/2-proposal/imageguard-architecture.drawio.png)
 
 *Hình 1. Sơ đồ kiến trúc ImageGuard (nhóm tự vẽ bằng draw.io với bộ AWS Architecture Icons). Số trên mũi tên tương ứng với bảng ở mục 4.2. Màu mũi tên: xanh dương – luồng upload; cam – luồng xử lý AI; xanh lá – luồng xem kết quả; xám nét đứt – giám sát; đỏ nét đứt – IAM.*
 
