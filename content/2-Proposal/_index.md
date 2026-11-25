@@ -1,128 +1,221 @@
 ---
 title: "Proposal"
-date: 2024-01-01
+date: 2026-11-06
 weight: 2
 chapter: false
 pre: " <b> 2. </b> "
 ---
 
-# CloudGuard AI: Automated AWS Infrastructure Security & Cost Auditor
-## GenAI & RAG-Powered Automated Security Compliance (CIS Benchmark v3.0) and Cloud Cost Optimization
+# ImageGuard – AI-Powered Image Moderation and Labeling on AWS Serverless
 
-### 1. Executive Summary
-This project builds a complete cloud infrastructure security auditing and cost optimization platform (**DevSecOps & FinOps**), consisting of two decoupled applications: **Backend** — a serverless REST API built with Python 3.12 on AWS Lambda + API Gateway, orchestrating **Anthropic Claude 3.5 Sonnet** and **Retrieval-Augmented Generation (RAG)** via **Amazon Titan Text Embeddings V2** to parse Terraform HCL Abstract Syntax Trees (AST), cross-reference the **CIS AWS Foundations Benchmark v3.0**, calculate compliance posture scores (0–100), and generate automated remediation code — and **Frontend** — a Next.js SSR application built on React, featuring a bilingual vi/en UI, dark/light themes, a visual Security Gauge, severity-tagged finding accordions, and a side-by-side diff viewer with a one-click code copy action.
+{{% notice info %}}
+**Status:** Proposal v2.0.
+{{% /notice %}}
 
-The goal of this workshop is to deploy the entire system onto AWS Serverless infrastructure (region ap-southeast-1): the Next.js SSR frontend runs on AWS Amplify, the Python core engine runs on Lambda + API Gateway, all behind CloudFront and secured by AWS WAF and Amazon Cognito — demonstrating the ability to apply AWS services to a real, end-to-end use case. Target customers are DevOps/Cloud Engineers requiring automated pre-merge security verification (Shift-Left Security), SecOps compliance officers auditing cloud postures, and FinOps administrators seeking cloud waste reduction.
+## 1. Overview
 
-### 2. Problem Statement
-What’s the Problem?
-- Infrastructure misconfigurations causing widespread data exposure: over 80% of cloud security incidents stem from human configuration errors (SSH port 22 open to `0.0.0.0/0`, unencrypted S3 storage, overly permissive wildcard IAM policies).
-- Manual code reviews create release bottlenecks: manual line-by-line inspection takes 2–3 days, delaying sprint delivery.
-- Traditional static analysis linters lack architectural context: regex-based linters (Checkov, tfsec) suffer from high false-positive rates, cannot interpret inter-resource relationships, and cannot rewrite compliant code.
-- Generative AI hallucination risks: general-purpose LLMs hallucinate non-existent compliance clauses or produce deprecated Terraform syntax without grounding.
-- Idle server costs: provisioning dedicated GPU-enabled EC2 instances wastes hundreds of dollars per month during inactive scanning windows.
+**ImageGuard** is a serverless web application that helps classified-ad sites, forums and student clubs **automatically moderate and categorize images uploaded by users**. When a user uploads a photo, the system uses the computer-vision AI service **Amazon Rekognition** to:
 
-The Solution
-A serverless, pay-per-request, auto-scaling architecture: Python Core Engine runs on Lambda + API Gateway (HTTP API), Next.js SSR is hosted on AWS Amplify, and CloudFront (with an edge-attached WAF Web ACL) distributes assets and routes API requests. The RAG architecture in Bedrock Knowledge Base (Titan Text Embeddings V2 + Vector DB) anchors reasoning strictly to the CIS AWS Foundations Benchmark v3.0, eliminating hallucinations. Bedrock Agent (Claude 3.5 Sonnet) evaluates contextual risk, computes scores, and generates compliant remediation snippets. CloudWatch Logs/Metrics + Alarm + SNS provide centralized observability and instant admin escalation; WAF, IAM least-privilege, Cognito, and SSM Parameter Store enforce security; EventBridge Scheduler + Lambda handles daily automated posture scans.
+1. **Moderate:** detect inappropriate content (violence, explicit content, weapons, drugs, …). Violating images are marked `REJECTED` and an administrator receives an email alert.
+2. **Label:** for valid images, automatically generate labels that describe the content (for example *Laptop*, *Bicycle*, *Book*) so users can see at a glance what an image contains and administrators can look it up when needed.
 
-Benefits and Return on Investment
-The platform auto-scales on demand at a monthly operating cost of only ~$11–15/month — the serverless design eliminates 100% of idle costs (Zero Idle Cost), avoiding dedicated EC2/GPU instances and saving >95% compared to static infrastructure. It accelerates review cycles by 90% (from 2–3 days to <10 seconds), eliminates 100% of baseline misconfigurations pre-deployment, and the bilingual step-by-step workshop produced at the end serves as an enduring educational asset for the cloud engineering community.
+Results are stored in **Amazon DynamoDB** and shown in the web UI within seconds. The whole system follows an **event-driven**, **serverless** architecture: there are no servers to manage, and the team pays only for actual usage.
 
-### 3. Solution Architecture
-User requests flow through CloudFront (WAF Web ACL attached at the edge) to two origins: Amplify (Next.js SSR frontend, Static/SSR flow) and API Gateway (HTTP API) → Lambda (Python Core Audit Engine, API Calls flow); Amplify also performs “SSR fetch” calls back to the API during server rendering. DevOps engineers authenticate via Amazon Cognito (JWT Auth). External CI/CD pipelines (GitHub/GitLab PR) dispatch automated webhook scan payloads to API Gateway. Lambda parses Terraform AST, queries CIS Benchmark v3.0 rules via Bedrock Knowledge Bases (RAG), prompts Claude 3.5 Sonnet, reads configuration from SSM Parameter Store, saves PDF summaries in S3 via Pre-signed URLs, writes audit records to DynamoDB, and dispatches email via SES. EventBridge Scheduler triggers a daily Lambda scan. CloudWatch aggregates logs/metrics; on threshold breach or CRITICAL finding, an Alarm publishes to SNS, alerting administrators via email. The architecture is detailed below:
+## 2. Problem Statement
 
-![CloudGuard AI Official Architecture Diagram](https://nhatminh05.github.io/fcj-workshop-template/images/2-Proposal/cloudguard_architecture.jpg)
+- Platforms that let users post images (classified ads, forums, community groups) receive many images every day. **Manual review** is labor-intensive and slow, and it exposes reviewers directly to harmful content.
+- Without moderation, violating images can appear publicly and harm users and the platform's reputation.
+- User-uploaded images usually have **no description or tags**, so they are hard to find again.
 
-Note on WAF: WAF is not a standalone hop on the network path — the Web ACL is attached directly to the CloudFront distribution and evaluates requests at the edge location before CloudFront processes them. A Web ACL used with CloudFront must be created in the Global scope (us-east-1).
+**Solution:** automate both tasks with AI as soon as an image is uploaded. Violating images are blocked before they are displayed; valid images are labeled with their content.
 
-AWS Services Used
-- AWS Lambda: Runs the Python 3.12 Core Audit Engine + cron jobs — serverless, 1M free requests/month, cold-start optimized.
-- Amazon API Gateway (HTTP API): REST API front door — ~70% cheaper than REST API Gateway, native Lambda integration.
-- AWS Amplify: Next.js SSR hosting with automated Git CI/CD.
-- Amazon CloudFront: CDN serving static assets/SSR and API — global edge locations cut latency, attachment point for WAF Web ACL.
-- Amazon Cognito: User directory management (User Pools) issuing cryptographically signed JWT tokens for DevOps access.
-- Amazon Bedrock Agent: Intelligent reasoning agent powered by Anthropic Claude 3.5 Sonnet for multi-step policy deduction and code remediation.
-- Amazon Bedrock Knowledge Bases (RAG): Semantic vector search engine indexing CIS Benchmark v3.0 using Amazon Titan Text Embeddings V2.
-- Amazon Bedrock Guardrails: Enforces safety guardrails, blocking prompt injections and masking secrets (AWS keys, credentials, PII).
-- Amazon S3: Object storage for CIS Benchmark standards, raw IaC templates, and compiled PDF reports via Pre-signed URLs; public access blocked.
-- Amazon DynamoDB: Low-latency NoSQL database recording scan histories, compliance scores, and granular finding records.
-- Amazon SES: Transactional email engine delivering audit summaries and executive posture reports.
-- Amazon CloudWatch: Logs, metrics, and alarms integrated natively with Lambda and API Gateway.
-- Amazon SNS: Real-time administrative alerting via direct email subscription upon CRITICAL findings.
-- Amazon EventBridge Scheduler: Serverless cron trigger executing daily automated infrastructure compliance scans.
-- AWS Systems Manager Parameter Store: Encrypted centralized store for application parameters and webhook secrets.
-- IAM + ACM + WAF: Least-privilege roles; free SSL/TLS certificates (ACM in us-east-1 for CloudFront, ACM in ap-southeast-1 for API Gateway); layer-7 attack protection.
+## 3. Objectives & Scope
 
-Component Design
-- Content delivery & Edge: CloudFront serves static assets/SSR and API at global edge locations; WAF Web ACL filters requests at the edge; Cognito handles JWT authentication.
-- Frontend: AWS Amplify hosts the Next.js 15 SSR application, deployed automatically from Git.
-- Core Audit Processing: AWS Lambda wraps Terraform HCL AST parsing behind API Gateway HTTP API.
-- Generative AI & RAG: Bedrock Knowledge Base vector store + Claude 3.5 Sonnet agent for multi-step reasoning and automated remediation.
-- Data layer: DynamoDB persists audit session records; S3 stores regulatory standards and PDF reports via Pre-signed URLs.
-- Automation & Alerting: EventBridge Scheduler invokes Lambda daily; CloudWatch + SNS broadcast instant critical alerts.
-- Security & Certificates: Lambda Execution Role scoped to Least Privilege; HTTPS-only with ACM certificates; secrets stored in SSM Parameter Store.
+### 3.1. Objectives
 
-### 4. Technical Implementation
-Implementation Phases
-- Research & design: learn AWS fundamentals (IAM, Lambda, Bedrock, S3, API Gateway); study serverless RAG patterns for IaC (Weeks 1–2).
-- Application development & RAG: standardize CIS Benchmark v3.0 rules, build Terraform AST parser, integrate Bedrock RAG (Weeks 3–5).
-- AWS infrastructure deployment: create IAM roles; deploy core engine to Lambda + API Gateway; deploy FE to Amplify; configure S3, DynamoDB, Bedrock Knowledge Base, CloudFront, WAF, SSM Parameter Store (Weeks 6–8).
-- Monitoring & optimization: configure CloudWatch Logs/Metrics, Alarm → SNS, EventBridge cron; optimize Bedrock token consumption (Weeks 9–10).
-- Testing & documentation: end-to-end testing with benchmark violation test suites; write bilingual step-by-step workshop and clean-up guide (Weeks 11–12).
+1. Build an automated pipeline, **Upload → AI moderation → AI labeling → Storage → Display**, that runs entirely on AWS.
+2. Apply the **AWS Well-Architected Framework**, especially the **Security** pillar (IAM least privilege, no public resources, no hard-coded credentials).
+3. Provide full observability with **Amazon CloudWatch** (Logs, Metrics, Alarms) and email alerts through **Amazon SNS**.
+4. Keep operating cost at **about USD 8–9/month** under a realistic workload (Section 6).
+5. Write a **bilingual step-by-step guide** that lets others reproduce the deployment.
 
-Technical Requirements
-- Backend: Python 3.12 (boto3, bedrock-agent-runtime, regex HCL parser), cold-start optimized, deployed behind API Gateway HTTP API.
-- AI & RAG: Amazon Titan Text Embeddings V2 (1,024 dimensions), OpenSearch Serverless vector collection, Anthropic Claude 3.5 Sonnet.
-- Frontend: Next.js (TypeScript, TailwindCSS) built and hosted on AWS Amplify with SSR support.
-- Networking & security: WAF Web ACL in Global scope (us-east-1) attached to CloudFront; ACM certificates in us-east-1 (CloudFront) and ap-southeast-1 (API Gateway); secrets managed in SSM Parameter Store; Cognito JWT auth.
+### 3.2. Success Criteria
 
-### 5. Timeline & Milestones
-Project Timeline (12 weeks)
-- Phase 1 — Research & design (Weeks 1–2): AWS fundamentals, serverless GenAI & RAG architecture study → deliverable: this proposal + draw.io architecture diagram.
-- Phase 2 — Core Engine & RAG development (Weeks 3–5): CIS Benchmark dataset preparation, Terraform HCL parser, Bedrock RAG integration → deliverable: local prototype running end-to-end.
-- Phase 3 — AWS infrastructure deployment (Weeks 6–8): IAM, Lambda + API Gateway, Amplify, S3, DynamoDB, Bedrock Knowledge Base, CloudFront, WAF, Cognito, SSM Parameter Store → deliverable: live system publicly accessible on AWS.
-- Phase 4 — Monitoring & optimization (Weeks 9–10): CloudWatch, Alarm → SNS, EventBridge cron, cost optimization → deliverable: active monitoring dashboard + alerting pipeline.
-- Phase 5 — Testing & documentation (Weeks 11–12): end-to-end validation, bilingual workshop, clean-up guide → deliverable: workshop website + final internship report.
+| Criterion | Target |
+|---|---|
+| End-to-end processing time per image (upload → result) | ≤ 10 seconds |
+| Violating images correctly blocked on the test set | ≥ 90% |
+| Valid images wrongly blocked (false positives) on the test set | ≤ 10% |
+| API calls without signing in | Rejected (HTTP 401) |
+| User A reading User B's images or results | Not possible |
+| Violating image detected | Email alert sent to the administrator |
+| Direct Internet access to S3 buckets | Blocked (Block Public Access) |
 
-### 6. Budget Estimation
-Infrastructure Costs
-- AWS Services:
-  - AWS Lambda: ~$0/month (within free tier 1M requests/month, 512 MB memory).
-  - Amazon Bedrock (Claude 3.5 Sonnet + Titan Embeddings V2): ~$2–3/month (~1,000–1,500 IaC audit requests, pay-per-token).
-  - API Gateway (HTTP API): ~$1/month ($1/million requests).
-  - AWS Amplify: ~$1/month (build minutes + Next.js SSR hosting).
-  - Amazon S3: ~$0.05/month (storing Terraform templates, CIS rules, and compiled PDF reports).
-  - Amazon DynamoDB: ~$0.50/month (audit session history and compliance scores, On-Demand mode).
-  - Amazon SES: ~$0.10 per 1,000 emails (scheduled audit summaries and alerts).
-  - AWS WAF: ~$6/month (Web ACL attached at CloudFront edge + managed rule sets).
-  - CloudFront CDN: ~$1–2/month (static assets/SSR distribution and global API caching).
-  - CloudWatch + SNS + EventBridge: ~$0–1/month (centralized logging, critical alerts, and daily cron triggers).
-  - SSM Parameter Store: ~$0/month (standard parameters are free).
+### 3.3. Scope
 
-Total: ~$11–15/month
+| In scope | Out of scope |
+|---|---|
+| JPG/PNG images, ≤ 5 MB | Video, animated GIFs |
+| Content moderation + automatic labeling | **Face recognition** (biometric data, privacy-sensitive) |
+| Showing the status and labels of each image in the user's own image list | Searching / filtering images by label and full-text search (future work) |
+| Sign-up/sign-in with Amazon Cognito | Dedicated admin UI, appeals against moderation results |
+| Single Region: **us-east-1** | Multi-Region, disaster recovery |
 
-Cost-saving architecture choice: The platform leverages 100% serverless compute and Bedrock On-Demand pricing rather than provisioning dedicated EC2/GPU instances (saving $100–$200/month). It eliminates the NAT Gateway (~$32/month) by connecting Lambda directly to internal AWS service endpoints over TLS, keeping total idle operating costs at $0.
+## 4. Solution Architecture
 
-### 7. Risk Assessment
-Risk Matrix
-- LLM Hallucination: high severity.
-- Bedrock Model Quota / Rate Limiting: medium severity.
-- Sensitive credential leakage (AWS Keys, API Tokens, PII) in uploaded code: high severity.
-- Lambda cold-start latency: low severity.
-- Unexpected billing beyond free tier: low severity.
+![ImageGuard architecture diagram](../images/2-proposal/imageguard-architecture.drawio.png)
 
-Mitigation Strategies
-- Hallucination: Anchor retrieval to CIS Benchmark v3.0 via RAG, set temperature = 0.1 for deterministic scoring, mandate explicit rule citation.
-- Rate limiting: Implement exponential backoff retry in Lambda; cache audit results for identical code hashes in DynamoDB.
-- Sensitive data protection: Activate Bedrock Guardrails to automatically detect and redact secrets, credentials, and PII prior to model invocation.
-- Cost control: Configure AWS Budgets and CloudWatch Billing Alarms at a $5/month threshold; tear down resources post-demo.
-- Credentials: Store all secrets in SSM Parameter Store; git-ignore `.env`; rotate IAM keys periodically.
+*Figure 1. ImageGuard architecture (drawn by the team in draw.io with the AWS Architecture Icons). Arrow numbers match the table in Section 4.2. Arrow colors: blue – upload flow; orange – AI processing flow; green – view results flow; dashed grey – monitoring; dashed red – IAM.*
 
-Contingency Plans
-- If Claude 3.5 Sonnet experiences regional service throttling, failover dynamically to Claude 3 Haiku via SSM configuration.
-- Local regex-based fallback scanner for foundational rules (port 22, port 3389) during AI network degradation.
-- Complete clean-up guide ensures immediate teardown of all provisioned cloud resources post-presentation to halt all costs.
+### 4.1. AWS Services and Rationale
 
-### 8. Expected Outcomes
-Technical Improvements: The entire platform operates serverless on AWS — auto-scaling with traffic, HTTPS-only, WAF and Cognito protected, executing AI and RAG compliance analysis in under 10 seconds. Automated code remediation with CloudWatch monitoring and SNS alerting replaces manual reviews.
-Long-term Value: A production-grade reference architecture for enterprise GenAI & RAG DevSecOps on AWS, a reusable bilingual step-by-step workshop for the cloud community, and a cost-optimized model (~$11–15/month) validated against real-world infrastructure code.
+| Service | Role in the system | Why it was chosen |
+|---|---|---|
+| **Amazon S3** | (1) Stores user images (private bucket); (2) hosts the static website | 99.999999999% durability, low cost, emits **S3 Events** to trigger processing |
+| **Amazon CloudFront** | Serves the static site over HTTPS and reads S3 through **Origin Access Control (OAC)** | The website bucket stays private; free HTTPS; covered by the Always Free tier (1 TB/month) |
+| **Amazon Cognito** (User Pool) | Sign-up, sign-in, issues **JWT tokens** | Managed identity, free up to 10,000 MAU, the app never stores passwords |
+| **Amazon API Gateway** (HTTP API) | REST endpoints for the web app, protected by a Cognito **JWT authorizer** | Cheaper than REST APIs (~USD 1 per million requests), native Cognito integration |
+| **AWS Lambda** (Python 3.12) | Three functions: `presign-upload`, `process-image`, `get-images` | Serverless, pay per invocation, scales automatically |
+| **Amazon Rekognition** | `DetectModerationLabels` (moderation) and `DetectLabels` (labeling) | Pre-trained AI, no model training needed; reads images directly from S3; available on the Free plan |
+| **Amazon DynamoDB** (On-demand) | Stores moderation results and labels per user | Serverless NoSQL, pay per request, low latency, 25 GB free |
+| **Amazon SQS** | **Dead-Letter Queue (DLQ)** for failed processing events | No data loss on failure; events can be reprocessed |
+| **Amazon CloudWatch** | Logs, metrics (built-in + custom), alarms, dashboard | Centralized monitoring, required by the workshop |
+| **Amazon SNS** | Sends email when a violating image is found and when an alarm fires | Simple; 1,000 emails/month free |
+| **AWS IAM** | One dedicated least-privilege IAM role per Lambda function | Security foundation of the whole system |
+
+**Why Region us-east-1:** prices are usually the lowest among Regions and all required services are available. The ~200 ms latency from Vietnam has little impact, because the static site is served through CloudFront (with edge locations in Hanoi and Ho Chi Minh City) and the slowest step is AI image analysis anyway. For a real deployment serving Vietnamese users, the team would consider moving to Singapore (ap-southeast-1) to reduce latency and meet personal-data regulations; Region and resource names are environment variables, so no code changes are needed.
+
+### 4.2. Data Flow
+
+The numbers in this table match the numbers on the arrows in Figure 1.
+
+| # | From → To | Description |
+|---|---|---|
+| 1 | User → CloudFront → S3 `imageguard-web` | The user opens the site over HTTPS. CloudFront reads the static site from the private bucket through **Origin Access Control (OAC)** |
+| 2 | User ↔ Cognito | Sign in with Managed login (authorization code + PKCE) and receive a **JWT token** |
+| 3 | User → API Gateway | The web app calls `POST /upload-url` with the token; the **JWT authorizer** validates it first |
+| 3a | API Gateway → Lambda `presign-upload` | API Gateway invokes the upload-link Lambda |
+| 3b | `presign-upload` → DynamoDB | Creates a `PENDING` record and returns a **presigned URL** (a temporary upload link that expires after 5 minutes) for `uploads/{userId}/{imageId}.jpg` |
+| 4 | User → S3 `imageguard-images` | The browser uploads the image **directly to S3** with the presigned URL (the image never passes through API Gateway or Lambda) |
+| 5 | S3 → Lambda `process-image` | The **ObjectCreated** event (only for the `uploads/` prefix) asynchronously invokes the processing Lambda |
+| 6 | `process-image` → Rekognition | Calls `DetectModerationLabels`; only if the image is clean, calls `DetectLabels` (up to 10 labels, confidence ≥ 80%) |
+| 6a | Rekognition → S3 `imageguard-images` | Rekognition reads the image directly from S3 (the Lambda never downloads it) |
+| 7 | `process-image` → DynamoDB | Updates the record to `APPROVED` (with labels) or `REJECTED` (with the reason, when a blocked label is found with confidence ≥ 60%) |
+| 8 | `process-image` → SNS → Admin | Only when the image is `REJECTED` **and** step 7 succeeded: an alert email is sent to the administrator |
+| 9 | `process-image` → SQS DLQ | If the Lambda still fails after 2 retries, the event goes to the **dead-letter queue** for reprocessing |
+| 10 | User → API Gateway | The web app calls `GET /images` with the token (shares the arrow of step 3) |
+| 10a | API Gateway → Lambda `get-images` | API Gateway invokes the read Lambda |
+| 10b | `get-images` → DynamoDB | Queries **only by the `userId` taken from the token's `sub` claim**, newest first; **APPROVED** images are shown through short-lived presigned GET URLs, never made public |
+| 11 | 3 Lambdas → CloudWatch | Write logs and metrics (Embedded Metric Format) |
+| 12 | CloudWatch → SNS | Alarms (Lambda errors, messages in the DLQ, API 5xx, …) send emails through SNS |
+| — | IAM → 3 Lambdas | Each Lambda has its own least-privilege **IAM execution role** (Section 4.3) |
+
+### 4.3. Security Design (Security Pillar)
+
+| Principle | How ImageGuard applies it |
+|---|---|
+| **Least privilege** | Each Lambda has its own role. `process-image` may only call `s3:GetObject` on `uploads/*`, `rekognition:DetectModerationLabels` + `rekognition:DetectLabels`, `dynamodb:UpdateItem` on **exactly one** table and `sns:Publish` to **exactly one** topic. `presign-upload` may only call `s3:PutObject` on `uploads/*` and `dynamodb:PutItem`. `get-images` may only call `dynamodb:Query` and `s3:GetObject` |
+| **Rekognition limitation** | Rekognition's image-analysis APIs **do not support resource-level permissions**, so `"Resource": "*"` is required. The team compensates by allowing **exactly the 2 actions** needed, never `rekognition:*` |
+| **No public resources** | Both buckets have **Block Public Access** enabled. The website bucket is readable only by CloudFront via OAC. The image bucket accepts and serves images only through short-lived presigned URLs |
+| **Authentication & data isolation** | Every API requires a Cognito JWT. `userId` always comes from the token's `sub` claim, **never** from client input, so users cannot read each other's data |
+| **No hard-coded credentials** | Lambdas use IAM roles (temporary credentials issued by AWS). Bucket, table and topic names are passed as **environment variables**. The GitHub repository contains no access keys and has a `.gitignore` |
+| **Encryption** | S3 and DynamoDB encrypt data at rest by default; all traffic uses HTTPS/TLS |
+| **Input protection** | Presigned URLs restrict the image `Content-Type`; the Lambda checks size (≤ 5 MB) and format before calling the AI |
+| **Privacy** | No face recognition features are used; no biometric data is stored |
+
+> **Why are the Lambdas not placed in a VPC/private subnet?** The system has no database or server that needs a private network. The Lambdas reach S3, DynamoDB, Rekognition and SNS over HTTPS, authenticated by IAM. Putting them in a VPC would add NAT Gateway or interface VPC endpoint charges (tens of USD per month) without a meaningful security gain for this architecture. The team lists it as a future extension if compliance requires it.
+
+### 4.4. Mapping to the AWS Well-Architected Framework
+
+| Pillar | Application |
+|---|---|
+| Operational Excellence | CloudWatch Logs (14-day retention), dashboard, alarms; a reproducible deployment guide |
+| Security | See Section 4.3 |
+| Reliability | Event-driven design; Lambda retries twice automatically; the DLQ keeps failed events; clear `PENDING/APPROVED/REJECTED/FAILED` states |
+| Performance Efficiency | Direct-to-S3 uploads with presigned URLs; Rekognition reads images straight from S3 (the Lambda never downloads them); key-based DynamoDB queries |
+| Cost Optimization | 100% serverless, pay per use; **`DetectLabels` is called only after an image passes moderation**; S3 Lifecycle; 14-day log retention; AWS Budgets |
+| Sustainability | No idle resources; compute is used only when an image needs processing |
+
+### 4.5. Why Amazon Rekognition
+
+The initial plan used **Amazon Bedrock** for invoice processing. During testing, the team's account had a Bedrock quota of 0, and the quota increase request was not approved. The team switched to **Amazon Rekognition** (a pre-trained AI service that is available on the current account and was tested successfully in the console) and kept most of the serverless architecture. The incident is documented in the Troubleshooting section of the workshop.
+
+## 5. Plan & Timeline
+
+Internship period: 14/09/2026 – 14/12/2026. Workshop submission deadline: **30/11/2026** (confirmed by FCAJ).
+
+### 5.1. Roles
+
+| Member | Main responsibility |
+|---|---|
+| Member A | Team lead, integration, IAM & security |
+| Member B | `process-image` Lambda, Rekognition integration, test image set and accuracy evaluation |
+| Member C | Cognito, API Gateway, `presign-upload` and `get-images` Lambdas |
+| Member D | Static web UI, S3 + CloudFront (OAC) |
+| Member E | CloudWatch, SNS, DLQ, cost estimation, clean-up guide |
+
+*Every member must understand the whole architecture and be able to explain all of it, not only their own part.*
+
+### 5.2. Weekly Timeline
+
+| Internship week | Dates | Tasks | Output |
+|---|---|---|---|
+| Week 7 | 26/10 – 01/11 | Finalize topic, write proposal v1.0; test Bedrock, discover the zero quota | Proposal v1.0, incident notes |
+| Week 8 | 02/11 – 08/11 | Request a quota increase (denied); switch to Rekognition, write proposal v2.0; create S3, DynamoDB, IAM roles; build the `process-image` Lambda + S3 event | Proposal v2.0, working image pipeline |
+| Week 9 | 09/11 – 15/11 | Cognito, API Gateway, the two API Lambdas; static site + CloudFront; CloudWatch metrics/alarms/dashboard, SNS, DLQ; testing; AWS Pricing Calculator; record the demo video | End-to-end demo, video, cost table |
+| Week 10 | 16/11 – 19/11 | Write the bilingual 5-Workshop section (step-by-step, testing, clean-up), take screenshots, finalize the diagram, peer review | **Submit workshop on 19/11** |
+| Week 10–12 | 20/11 – 14/12 | Apply mentor feedback, finish blogs and worklogs, clean up resources | Final report |
+
+## 6. Cost Estimation
+
+**Workload scenario:** a small forum/classified-ad site receives about **3,000 images/month** (~100/day), 1 MB on average, about 3% violating, and about 30,000 views per month. Region **us-east-1**, on-demand prices, **before Free Tier/credits**.
+
+| Service | Assumptions | Estimated cost (USD/month) |
+|---|---|---|
+| Amazon Rekognition | 3,000 `DetectModerationLabels` + ~2,910 `DetectLabels` calls × USD 0.001/image | 5.91 |
+| AWS Lambda | 3 arm64 functions, 36,000 invocations × 500 ms × 256 MB | 0.07 (within the free tier) |
+| Amazon API Gateway (HTTP API) | 33,000 requests | 0.03 |
+| Amazon DynamoDB (On-demand) | ~6,000 WRU + 30,000 RRU, < 1 GB | 0.01 |
+| Amazon S3 | 3 GB (30-day lifecycle), 3,000 PUT, 30,000 GET | 0.10 |
+| Amazon CloudWatch | 5 custom metrics (EMF) 1.50 + 7 alarms 0.70 + 0.1 GB logs 0.05; 1 dashboard | 2.25 (within the free tier: 10 metrics, 10 alarms, 3 dashboards) |
+| Amazon CloudFront | ~2 GB transfer, 40,000 requests | 0.00 (Always Free) |
+| Amazon Cognito | < 10,000 MAU | 0.00 |
+| Amazon SNS, Amazon SQS | About 100 emails/messages | 0.00 |
+| **Total** | | **≈ USD 8.37/month (≈ USD 100/year)** |
+
+During development and the demo (fewer than 300 images expected), Rekognition costs only about USD 0.60, and everything is covered by the account's credits.
+
+*AWS Pricing Calculator link:* [https://calculator.aws/#/estimate?id=5fa9c30d042e143fc2fd1f9387af56c6709e22f9](https://calculator.aws/#/estimate?id=5fa9c30d042e143fc2fd1f9387af56c6709e22f9)
+
+> **Updated after deployment (20/11/2026):** the first estimate was USD 6.40/month. During the real deployment the team added 7 CloudWatch alarms and 5 custom metrics (EMF) for monitoring, so CloudWatch rose from USD 0.27 to 2.25. Within the account's free tier this part is close to zero. Data transfer out when users view images (~3 GB/month) is inside the 100 GB/month free allowance.
+
+### Cost Optimization Strategy
+
+- **100% serverless** architecture: no EC2, NAT Gateway or always-on resources.
+- **Moderate first, label second:** violating images skip `DetectLabels`, saving one API call per blocked image.
+- Rekognition **reads images directly from S3**, so the Lambda runs briefly (~2 seconds) with little memory (256 MB).
+- **S3 Lifecycle policy** deletes images after 30 days (or moves them to S3 Glacier if long-term retention is needed).
+- **14-day CloudWatch Logs retention** instead of the default "Never expire".
+- **HTTP API** instead of REST API (about 70% cheaper).
+- **AWS Budgets** alert at USD 10; run the **clean-up** right after grading.
+- Above 1 million images/month, Rekognition's tiered pricing lowers the per-image cost automatically.
+
+## 7. Risks & Mitigation
+
+| Risk | Impact | Mitigation |
+|---|---|---|
+| Rekognition blocks valid images or misses violating ones | Poor user experience or harmful content slips through | Confidence threshold and blocked categories are environment variables that can be tuned; accuracy measured on the test set |
+| Service quotas on new accounts (already happened with Bedrock) | AI calls fail | Rekognition verified to work on the account; retry with backoff on throttling |
+| Recursive S3 → Lambda → S3 trigger | Runaway cost | Trigger only on the `uploads/` prefix; the Lambda never writes back to S3 |
+| Access keys leaked to GitHub | Account compromise | Use IAM roles only; `.gitignore`; review before every commit |
+| Test images that infringe copyright or are too disturbing | Legal and ethical issues | Use the team's own photos or freely licensed images; test moderation with mild categories (alcohol, tobacco, toy weapons) |
+| Unexpected charges | Credit loss | AWS Budgets; clean-up checklist |
+| Limited time (~2 weeks) | Missing the deadline | Build the MVP first, extras later; every week has a clear deliverable |
+| Members are still new to AWS | Delays; cannot answer the mentor's questions | Learn while building; peer reviews; every member explains the full architecture |
+
+## 8. Expected Outcomes
+
+- A working web application: sign in → upload an image → violating images are blocked with an email alert, valid images are labeled and listed in the user's own gallery.
+- A monitoring setup with a CloudWatch dashboard, alarms and email alerts.
+- A bilingual workshop guide that can be reproduced from scratch, including testing, troubleshooting and clean-up.
+- Hands-on skills for the team: event-driven serverless architecture, IAM least privilege, AWS AI services, monitoring and cost optimization, and how to adapt when a service is quota-restricted.
