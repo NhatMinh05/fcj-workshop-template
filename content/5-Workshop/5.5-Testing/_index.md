@@ -35,14 +35,14 @@ The DLQ test also proves **least privilege**: the error in the DLQ is `AccessDen
 
 | Criterion | Target | Measured result |
 |---|---|---|
-| Processing time per image | ≤ 10 seconds | ✅ About 0.5–1 second (`ProcessingLatency` metric on the dashboard) |
-| Violating images blocked | ≥ 90% | ⚠️ Not enough samples to conclude: the current test set has only 2 images |
-| Valid images blocked by mistake | ≤ 10% | ⚠️ 1 of 2 images blocked by mistake (wooden toy gun → Violence/Weapons 98%); the sample is too small, a larger test set is needed |
-| API call without sign-in | Rejected (401) | ✅ `{"message":"Unauthorized"}` |
-| User A sees user B's images | Impossible | ✅ The real user's gallery shows only their own images although the table also holds `test-user-001` items (`Query` by `sub`) |
-| Violating image detected | Admin email | ✅ |
-| Direct access to the S3 bucket | Blocked | ✅ 403 AccessDenied |
-| Desktop console experience | Modern console dashboard with KPIs and public feed | ✅ Comprehensive visualization on desktop screens with fast controls |
+| Processing time per image | ≤ 10 seconds | About 0.5–1 second (`ProcessingLatency` metric on the dashboard) |
+| Violating images blocked | ≥ 90% | Not enough samples to conclude: the current test set has only 2 images |
+| Valid images blocked by mistake | ≤ 10% | 1 of 2 images blocked by mistake (wooden toy gun → Violence/Weapons 98%); the sample is too small, a larger test set is needed |
+| API call without sign-in | Rejected (401) | `{"message":"Unauthorized"}` |
+| User A sees user B's images | Impossible | The real user's gallery shows only their own images although the table also holds `test-user-001` items (`Query` by `sub`) |
+| Violating image detected | Admin email | Passed |
+| Direct access to the S3 bucket | Blocked | 403 AccessDenied |
+| Desktop console experience | Modern console dashboard with KPIs and public feed | Comprehensive visualization on desktop screens with fast controls |
 
 **Limitation:** accurate block and false-positive rates need a larger labeled test set (e.g. 20–50 images). The toy-gun case shows the need for per-category thresholds or an admin review step for `REJECTED` images.
 
@@ -50,13 +50,13 @@ The DLQ test also proves **least privilege**: the error in the DLQ is `AccessDen
 
 | Test | Expected | Actual |
 |---|---|---|
-| `GET /images` without a token | 401 Unauthorized | ✅ `{"message":"Unauthorized"}` |
-| Open a web-bucket file directly | 403 AccessDenied | ✅ only CloudFront can read it (OAC) |
-| Open an image Object URL directly | 403 AccessDenied | ✅ |
-| Open a presigned URL after 6 minutes | Request has expired | ✅ 200 before expiry, 403 after |
-| `http://` | Redirects to `https://` | ✅ `301 Moved Permanently` |
-| Response headers | HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy | ✅ |
-| Sign-in | URL contains `code_challenge_method=S256` (PKCE) | ✅ |
+| `GET /images` without a token | 401 Unauthorized | `{"message":"Unauthorized"}` |
+| Open a web-bucket file directly | 403 AccessDenied | Only CloudFront can read it (OAC) |
+| Open an image Object URL directly | 403 AccessDenied | Passed |
+| Open a presigned URL after 6 minutes | Request has expired | 200 before expiry, 403 after |
+| `http://` | Redirects to `https://` | `301 Moved Permanently` |
+| Response headers | HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy | Passed |
+| Sign-in | URL contains `code_challenge_method=S256` (PKCE) | Passed |
 
 ![API without a token returns 401](../../images/5-workshop/27-1-api-no-token.jpg)
 

@@ -35,14 +35,14 @@ Bài test DLQ còn cho thấy **least privilege** hoạt động: lỗi trong DL
 
 | Tiêu chí | Mục tiêu | Kết quả đo |
 |---|---|---|
-| Thời gian xử lý 1 ảnh | ≤ 10 giây | ✅ Khoảng 0,5–1 giây (metric `ProcessingLatency` trên dashboard) |
-| Ảnh vi phạm bị chặn đúng | ≥ 90% | ⚠️ Chưa đủ mẫu để kết luận: bộ ảnh thử nghiệm hiện chỉ có 2 ảnh |
-| Ảnh hợp lệ bị chặn nhầm | ≤ 10% | ⚠️ 1/2 ảnh bị chặn nhầm (súng gỗ đồ chơi → Violence/Weapons 98%); mẫu quá nhỏ, cần bộ thử lớn hơn |
-| Chưa đăng nhập gọi API | Bị từ chối (401) | ✅ `{"message":"Unauthorized"}` |
-| Người dùng A xem ảnh của B | Không thể | ✅ Gallery của người dùng thật chỉ hiện ảnh của chính họ, dù bảng có cả item của `test-user-001` (`Query` theo `sub`) |
-| Phát hiện ảnh vi phạm | Gửi email quản trị viên | ✅ |
-| Truy cập trực tiếp bucket S3 | Bị chặn | ✅ 403 AccessDenied |
-| Trực quan hóa giao diện PC | Bảng điều khiển Console hiện đại, đầy đủ KPI và bảng tin | ✅ Trực quan hóa toàn diện trên màn hình máy tính, thao tác nhanh và trực quan |
+| Thời gian xử lý 1 ảnh | ≤ 10 giây | Khoảng 0,5–1 giây (metric `ProcessingLatency` trên dashboard) |
+| Ảnh vi phạm bị chặn đúng | ≥ 90% | Chưa đủ mẫu để kết luận: bộ ảnh thử nghiệm hiện chỉ có 2 ảnh |
+| Ảnh hợp lệ bị chặn nhầm | ≤ 10% | 1/2 ảnh bị chặn nhầm (súng gỗ đồ chơi → Violence/Weapons 98%); mẫu quá nhỏ, cần bộ thử lớn hơn |
+| Chưa đăng nhập gọi API | Bị từ chối (401) | `{"message":"Unauthorized"}` |
+| Người dùng A xem ảnh của B | Không thể | Gallery của người dùng thật chỉ hiện ảnh của chính họ, dù bảng có cả item của `test-user-001` (`Query` theo `sub`) |
+| Phát hiện ảnh vi phạm | Gửi email quản trị viên | Đạt |
+| Truy cập trực tiếp bucket S3 | Bị chặn | 403 AccessDenied |
+| Trực quan hóa giao diện PC | Bảng điều khiển Console hiện đại, đầy đủ KPI và bảng tin | Trực quan hóa toàn diện trên màn hình máy tính, thao tác nhanh và trực quan |
 
 **Hạn chế:** tỉ lệ chặn đúng và chặn nhầm cần một bộ ảnh thử nghiệm lớn hơn (ví dụ 20–50 ảnh có gán nhãn đúng/sai) để đo chính xác. Ví dụ súng gỗ đồ chơi cho thấy cần thêm ngưỡng riêng cho từng danh mục hoặc bước quản trị viên duyệt lại ảnh `REJECTED`.
 
@@ -50,13 +50,13 @@ Bài test DLQ còn cho thấy **least privilege** hoạt động: lỗi trong DL
 
 | Test | Kết quả mong đợi | Thực tế |
 |---|---|---|
-| Gọi `GET /images` không có token | 401 Unauthorized | ✅ `{"message":"Unauthorized"}` |
-| Mở thẳng file trên bucket web | 403 AccessDenied | ✅ chỉ CloudFront đọc được (OAC) |
-| Mở thẳng Object URL của ảnh | 403 AccessDenied | ✅ |
-| Mở presigned URL sau 6 phút | Request has expired | ✅ 200 khi còn hạn, 403 sau khi hết hạn |
-| `http://` | Tự chuyển `https://` | ✅ `301 Moved Permanently` |
-| Response header | Có HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy | ✅ |
-| Đăng nhập | URL có `code_challenge_method=S256` (PKCE) | ✅ |
+| Gọi `GET /images` không có token | 401 Unauthorized | `{"message":"Unauthorized"}` |
+| Mở thẳng file trên bucket web | 403 AccessDenied | Chỉ CloudFront đọc được (OAC) |
+| Mở thẳng Object URL của ảnh | 403 AccessDenied | Đạt |
+| Mở presigned URL sau 6 phút | Request has expired | 200 khi còn hạn, 403 sau khi hết hạn |
+| `http://` | Tự chuyển `https://` | `301 Moved Permanently` |
+| Response header | Có HSTS, X-Frame-Options, X-Content-Type-Options, Referrer-Policy | Đạt |
+| Đăng nhập | URL có `code_challenge_method=S256` (PKCE) | Đạt |
 
 ![API không có token trả 401](../../../images/5-workshop/27-1-api-no-token.jpg)
 
