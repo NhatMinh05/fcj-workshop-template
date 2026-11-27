@@ -18,6 +18,10 @@ pre: " <b> 5.5. </b> "
 | DLQ | Đổi `TABLE_NAME` sai rồi gọi Lambda bất đồng bộ | Sau 2 lần retry, DLQ có message `RetriesExhausted`, `approximateInvokeCount: 3` |
 
 ![Gallery: ảnh APPROVED và REJECTED](../../../images/5-workshop/26-3-web-gallery.png)
+*Hình: Kho ảnh của tôi (Vault) — kiểm duyệt tự động hiển thị nhãn AI và phân loại APPROVED / REJECTED*
+
+![Tổng quan kiểm duyệt](../../../images/5-workshop/26-2-web-overview.png)
+*Hình: Màn hình Tổng quan kiểm duyệt — thống kê tỷ lệ duyệt đạt chuẩn 50%, biểu đồ tần suất nhãn Rekognition và lịch sử hoạt động gần đây*
 
 {{% notice note %}}
 **False positive:** súng đồ chơi bằng gỗ bị nhận là *Violence/Weapons* với độ tin cậy ~97%. Hướng cải thiện: tăng `MIN_MODERATION_CONFIDENCE` cho danh mục cụ thể, hoặc thêm bước quản trị viên duyệt lại ảnh `REJECTED`.
@@ -38,6 +42,7 @@ Bài test DLQ còn cho thấy **least privilege** hoạt động: lỗi trong DL
 | Người dùng A xem ảnh của B | Không thể | ✅ Gallery của người dùng thật chỉ hiện ảnh của chính họ, dù bảng có cả item của `test-user-001` (`Query` theo `sub`) |
 | Phát hiện ảnh vi phạm | Gửi email quản trị viên | ✅ |
 | Truy cập trực tiếp bucket S3 | Bị chặn | ✅ 403 AccessDenied |
+| Trải nghiệm trên thiết bị di động | Bố cục co giãn linh hoạt, menu drawer | ✅ Tương thích 100% trên viewport điện thoại (390px), nút bấm to rõ dễ thao tác |
 
 **Hạn chế:** tỉ lệ chặn đúng và chặn nhầm cần một bộ ảnh thử nghiệm lớn hơn (ví dụ 20–50 ảnh có gán nhãn đúng/sai) để đo chính xác. Ví dụ súng gỗ đồ chơi cho thấy cần thêm ngưỡng riêng cho từng danh mục hoặc bước quản trị viên duyệt lại ảnh `REJECTED`.
 

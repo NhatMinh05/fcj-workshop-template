@@ -18,6 +18,10 @@ pre: " <b> 5.5. </b> "
 | DLQ | Set a wrong `TABLE_NAME`, invoke asynchronously | After 2 retries the DLQ holds a `RetriesExhausted` message, `approximateInvokeCount: 3` |
 
 ![Gallery: APPROVED and REJECTED images](../../images/5-workshop/26-3-web-gallery.png)
+*Figure: Image Vault — automated moderation showing AI labels, APPROVED and REJECTED states*
+
+![Moderation Overview](../../images/5-workshop/26-2-web-overview.png)
+*Figure: Moderation Overview — 50% pass rate KPI, Rekognition label frequency charts, and recent activity log*
 
 {{% notice note %}}
 **False positive:** a wooden toy gun is detected as *Violence/Weapons* with ~97% confidence. Improvements: raise `MIN_MODERATION_CONFIDENCE` for specific categories, or add an admin review step for `REJECTED` images.
@@ -38,6 +42,7 @@ The DLQ test also proves **least privilege**: the error in the DLQ is `AccessDen
 | User A sees user B's images | Impossible | ✅ The real user's gallery shows only their own images although the table also holds `test-user-001` items (`Query` by `sub`) |
 | Violating image detected | Admin email | ✅ |
 | Direct access to the S3 bucket | Blocked | ✅ 403 AccessDenied |
+| Mobile device experience | Responsive adaptive layout with smooth drawer navigation | ✅ 100% compatible on smartphone viewports (390px) with touch-friendly controls |
 
 **Limitation:** accurate block and false-positive rates need a larger labeled test set (e.g. 20–50 images). The toy-gun case shows the need for per-category thresholds or an admin review step for `REJECTED` images.
 

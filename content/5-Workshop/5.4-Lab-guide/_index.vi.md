@@ -223,12 +223,12 @@ Tạo 2 role riêng (least privilege) rồi 2 function Python 3.12 arm64, 128 MB
 `presign-upload` lấy `userId` từ `requestContext.authorizer.jwt.claims.sub`, tự sinh `imageId` (UUID), tạo item `PENDING` rồi ký presigned PUT URL. Presigned URL được ký bằng quyền của Lambda, nên role phải có `s3:PutObject`.
 
 ### 3.2. Web tĩnh + CloudFront
-1. Bucket `imageguard-web-<ACCOUNT_ID>` (private, SSE-S3), upload `index.html`, `app.js`, `config.js`.
+1. Bucket `imageguard-web-<ACCOUNT_ID>` (private, SSE-S3), upload `index.html`, `styles.css`, `app.js`, `config.js`.
 2. **CloudFront → Create distribution**: origin S3 bucket web với **OAC**, Redirect HTTP to HTTPS, CachingOptimized, Response headers **SecurityHeadersPolicy**, Default root object `index.html`, WAF không bật.
 3. Bucket policy chỉ cho `cloudfront.amazonaws.com` với `AWS:SourceArn` = ARN distribution.
 
 ![Hình 3.2 – Trang ImageGuard qua CloudFront](../../../images/5-workshop/21-4-web-first-load.jpg)
-*Hình 3.2 – Trang ImageGuard qua CloudFront*
+*Hình 3.2 – Trang chủ ImageGuard qua CloudFront*
 
 
 ### 3.3. Cognito
@@ -250,6 +250,9 @@ User pool `imageguard-users`, đăng nhập bằng **email**, cho tự đăng k�
 
 ![Hình 3.4 – Kết quả cuối: người dùng đăng nhập, tải ảnh lên và xem trạng thái APPROVED / REJECTED](../../../images/5-workshop/26-3-web-gallery.png)
 *Hình 3.4 – Kết quả cuối: người dùng đăng nhập, tải ảnh lên và xem trạng thái APPROVED / REJECTED*
+
+![Hình 3.5 – Giao diện tối ưu hoàn toàn trên thiết bị di động (Mobile Responsive)](../../../images/5-workshop/26-4-web-mobile.png)
+*Hình 3.5 – Giao diện tối ưu hoàn toàn trên thiết bị di động (Mobile Responsive)*
 
 
 ## Step 4 – Giám sát

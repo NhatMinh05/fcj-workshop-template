@@ -223,12 +223,12 @@ Create 2 dedicated roles (least privilege), then 2 Python 3.12 arm64 functions, 
 `presign-upload` reads `userId` from `requestContext.authorizer.jwt.claims.sub`, generates `imageId` (UUID), creates the `PENDING` item, then signs a presigned PUT URL. The URL is signed with the Lambda's own permissions, so the role needs `s3:PutObject`.
 
 ### 3.2. Static website + CloudFront
-1. Bucket `imageguard-web-<ACCOUNT_ID>` (private, SSE-S3); upload `index.html`, `app.js`, `config.js`.
+1. Bucket `imageguard-web-<ACCOUNT_ID>` (private, SSE-S3); upload `index.html`, `styles.css`, `app.js`, `config.js`.
 2. **CloudFront → Create distribution**: S3 web bucket origin with **OAC**, Redirect HTTP to HTTPS, CachingOptimized, response headers **SecurityHeadersPolicy**, default root object `index.html`, WAF off.
 3. Bucket policy allows only `cloudfront.amazonaws.com` with `AWS:SourceArn` = the distribution ARN.
 
 ![Figure 3.2 – ImageGuard served through CloudFront](../../images/5-workshop/21-4-web-first-load.jpg)
-*Figure 3.2 – ImageGuard served through CloudFront*
+*Figure 3.2 – ImageGuard landing page served through CloudFront*
 
 
 ### 3.3. Cognito
@@ -249,7 +249,10 @@ User pool `imageguard-users`, **email** sign-in, self sign-up enabled. App clien
 - Fill in `config.js` (Cognito domain, client ID, redirect URI, API URL), upload it again, create a CloudFront invalidation for `/*`.
 
 ![Figure 3.4 – End result: the user signs in, uploads images and sees APPROVED / REJECTED](../../images/5-workshop/26-3-web-gallery.png)
-*Figure 3.4 – End result: the user signs in, uploads images and sees APPROVED / REJECTED*
+*Figure 3.4 – End result: the user signs in, uploads images and sees APPROVED / REJECTED in the Image Vault*
+
+![Figure 3.5 – Responsive console optimized for mobile devices](../../images/5-workshop/26-4-web-mobile.png)
+*Figure 3.5 – Responsive console optimized for mobile devices*
 
 
 ## Step 4 – Monitoring
