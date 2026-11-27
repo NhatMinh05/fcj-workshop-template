@@ -8,7 +8,7 @@ pre: " <b> 5.8. </b> "
 
 **Live Demonstration:** [https://d1726d6l9yiqcj.cloudfront.net/](https://d1726d6l9yiqcj.cloudfront.net/)
 
-**Demo Video:** `[Paste the YouTube / Google Drive link after recording]` *(Pre-rendered HD walkthrough available at `D:\ImageGuard_Review_EN.mp4`)*
+**Demo Video:** `[Paste the YouTube / Google Drive link after recording]` *(Pre-rendered HD walkthrough available at `D:\ImageGuard_Review_VI.mp4` and English version at `D:\ImageGuard_Review_EN.mp4`)*
 
 ---
 
