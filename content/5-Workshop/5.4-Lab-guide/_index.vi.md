@@ -249,10 +249,10 @@ User pool `imageguard-users`, đăng nhập bằng **email**, cho tự đăng k�
 - Điền `config.js` (Cognito domain, client ID, redirect URI, API URL), upload lại, tạo CloudFront invalidation `/*`.
 
 ![Hình 3.4 – Kết quả cuối: người dùng đăng nhập, tải ảnh lên và xem trạng thái APPROVED / REJECTED](../../../images/5-workshop/26-3-web-gallery.png)
-*Hình 3.4 – Kết quả cuối: người dùng đăng nhập, tải ảnh lên và xem trạng thái APPROVED / REJECTED*
+*Hình 3.4 – Kết quả cuối: người dùng đăng nhập, tải ảnh lên và xem trạng thái APPROVED / REJECTED trong Kho ảnh trên PC*
 
-![Hình 3.5 – Giao diện tối ưu hoàn toàn trên thiết bị di động (Mobile Responsive)](../../../images/5-workshop/26-4-web-mobile.png)
-*Hình 3.5 – Giao diện tối ưu hoàn toàn trên thiết bị di động (Mobile Responsive)*
+![Hình 3.5 – Giao diện Tải ảnh hàng loạt (Upload Dropzone) trên PC](../../../images/5-workshop/26-5-web-upload.png)
+*Hình 3.5 – Giao diện Tải ảnh hàng loạt (Upload Dropzone) trên PC*
 
 
 ## Step 4 – Giám sát

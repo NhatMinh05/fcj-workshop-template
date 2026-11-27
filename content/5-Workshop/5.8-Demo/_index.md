@@ -32,11 +32,11 @@ User image management console showing AI label tags, blocked moderation categori
 ![ImageGuard Vault](../../images/5-workshop/26-3-web-gallery.png)
 *Figure: Image Vault displaying APPROVED (beer bottle) and REJECTED (wooden toy gun) classifications*
 
-### 4. Mobile Responsive Console
-Adaptive fluid layout, smooth drawer navigation, touch-friendly buttons, and 2-column card grids on smartphone screens.
+### 4. Moderated Public Feed
+Displays verified safe images that passed automated Amazon Rekognition moderation and were published by users to the community feed.
 
-![ImageGuard Mobile Console](../../images/5-workshop/26-4-web-mobile.png)
-*Figure: ImageGuard console optimized for mobile viewports*
+![ImageGuard Public Feed](../../images/5-workshop/26-4-web-feed.png)
+*Figure: ImageGuard Public Feed interface on desktop PC*
 
 ---
 

@@ -32,11 +32,11 @@ Quản lý các ảnh đã tải lên, hiển thị chi tiết nhãn nhận di�
 ![Kho ảnh cá nhân ImageGuard](../../../images/5-workshop/26-3-web-gallery.png)
 *Hình: Kho ảnh cá nhân với phân loại APPROVED (ảnh bia) và REJECTED (súng đồ chơi)*
 
-### 4. Tương thích thiết bị di động (Mobile Responsive)
-Bố cục co giãn linh hoạt, menu drawer trượt mượt mà, tối ưu hóa kích thước nút bấm và thẻ ảnh cho thao tác cảm ứng một tay.
+### 4. Bảng tin công khai đã kiểm duyệt (Public Feed)
+Hiển thị danh sách các bức ảnh an toàn đã vượt qua kiểm duyệt AI tự động của Amazon Rekognition và được người dùng phê duyệt xuất bản công khai.
 
-![Giao diện di động ImageGuard](../../../images/5-workshop/26-4-web-mobile.png)
-*Hình: Giao diện ImageGuard hiển thị trên điện thoại thông minh*
+![Bảng tin công khai ImageGuard](../../../images/5-workshop/26-4-web-feed.png)
+*Hình: Giao diện Bảng tin công khai (Public Feed) hiển thị trên màn hình máy tính (PC)*
 
 ---
 

@@ -248,11 +248,11 @@ User pool `imageguard-users`, **email** sign-in, self sign-up enabled. App clien
 - CORS on the image bucket: allow `PUT, GET` from the CloudFront domain.
 - Fill in `config.js` (Cognito domain, client ID, redirect URI, API URL), upload it again, create a CloudFront invalidation for `/*`.
 
-![Figure 3.4 – End result: the user signs in, uploads images and sees APPROVED / REJECTED](../../images/5-workshop/26-3-web-gallery.png)
-*Figure 3.4 – End result: the user signs in, uploads images and sees APPROVED / REJECTED in the Image Vault*
+![Figure 3.4 – End result: the user signs in, uploads images and sees APPROVED / REJECTED in the Image Vault](../../images/5-workshop/26-3-web-gallery.png)
+*Figure 3.4 – End result: the user signs in, uploads images and sees APPROVED / REJECTED in the Image Vault on PC*
 
-![Figure 3.5 – Responsive console optimized for mobile devices](../../images/5-workshop/26-4-web-mobile.png)
-*Figure 3.5 – Responsive console optimized for mobile devices*
+![Figure 3.5 – Batch upload dropzone interface on PC](../../images/5-workshop/26-5-web-upload.png)
+*Figure 3.5 – Batch upload dropzone interface on PC*
 
 
 ## Step 4 – Monitoring

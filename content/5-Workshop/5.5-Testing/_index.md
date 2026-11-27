@@ -42,7 +42,7 @@ The DLQ test also proves **least privilege**: the error in the DLQ is `AccessDen
 | User A sees user B's images | Impossible | ✅ The real user's gallery shows only their own images although the table also holds `test-user-001` items (`Query` by `sub`) |
 | Violating image detected | Admin email | ✅ |
 | Direct access to the S3 bucket | Blocked | ✅ 403 AccessDenied |
-| Mobile device experience | Responsive adaptive layout with smooth drawer navigation | ✅ 100% compatible on smartphone viewports (390px) with touch-friendly controls |
+| Desktop console experience | Modern console dashboard with KPIs and public feed | ✅ Comprehensive visualization on desktop screens with fast controls |
 
 **Limitation:** accurate block and false-positive rates need a larger labeled test set (e.g. 20–50 images). The toy-gun case shows the need for per-category thresholds or an admin review step for `REJECTED` images.
 

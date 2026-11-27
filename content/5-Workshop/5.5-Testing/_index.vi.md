@@ -42,7 +42,7 @@ Bài test DLQ còn cho thấy **least privilege** hoạt động: lỗi trong DL
 | Người dùng A xem ảnh của B | Không thể | ✅ Gallery của người dùng thật chỉ hiện ảnh của chính họ, dù bảng có cả item của `test-user-001` (`Query` theo `sub`) |
 | Phát hiện ảnh vi phạm | Gửi email quản trị viên | ✅ |
 | Truy cập trực tiếp bucket S3 | Bị chặn | ✅ 403 AccessDenied |
-| Trải nghiệm trên thiết bị di động | Bố cục co giãn linh hoạt, menu drawer | ✅ Tương thích 100% trên viewport điện thoại (390px), nút bấm to rõ dễ thao tác |
+| Trực quan hóa giao diện PC | Bảng điều khiển Console hiện đại, đầy đủ KPI và bảng tin | ✅ Trực quan hóa toàn diện trên màn hình máy tính, thao tác nhanh và trực quan |
 
 **Hạn chế:** tỉ lệ chặn đúng và chặn nhầm cần một bộ ảnh thử nghiệm lớn hơn (ví dụ 20–50 ảnh có gán nhãn đúng/sai) để đo chính xác. Ví dụ súng gỗ đồ chơi cho thấy cần thêm ngưỡng riêng cho từng danh mục hoặc bước quản trị viên duyệt lại ảnh `REJECTED`.
 
