@@ -22,6 +22,7 @@ pre: " <b> 5.3. </b> "
 | 8 | If `REJECTED` and the DB update succeeded → **SNS** emails the administrator |
 | 9 | Failures after 2 retries → **SQS DLQ** (14-day retention) |
 | 10 | `GET /images` → the `get-images` Lambda runs `Query` on `userId = sub`; only `APPROVED` images get a presigned GET URL |
+| 10c | The browser fetches the image directly from S3 `imageguard-images (uploads/)` via **Presigned GET URL** to display securely without making the bucket public |
 | 11–12 | Logs + EMF metrics → **CloudWatch**; Alarms → SNS |
 
 ## Moderation policy

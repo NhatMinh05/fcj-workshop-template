@@ -22,6 +22,7 @@ pre: " <b> 5.3. </b> "
 | 8 | Nếu `REJECTED` và DB đã cập nhật → **SNS** gửi email quản trị viên |
 | 9 | Lỗi sau 2 lần retry → **SQS DLQ** (giữ 14 ngày) |
 | 10 | `GET /images` → Lambda `get-images` `Query` theo `userId = sub`; chỉ ảnh `APPROVED` có presigned GET URL |
+| 10c | Trình duyệt dùng **Presigned GET URL** tải ảnh trực tiếp từ S3 `imageguard-images (uploads/)` về để hiển thị an toàn (không public bucket) |
 | 11–12 | Log + metric EMF → **CloudWatch**; Alarm → SNS |
 
 ## Chính sách kiểm duyệt

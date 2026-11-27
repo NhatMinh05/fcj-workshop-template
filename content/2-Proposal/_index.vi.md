@@ -101,7 +101,8 @@ Số thứ tự trong bảng trùng với số trên các mũi tên ở Hình 1.
 | 9 | `process-image` → SQS DLQ | Nếu Lambda vẫn lỗi sau 2 lần thử lại, sự kiện được đưa vào **Dead-Letter Queue** để xử lý lại |
 | 10 | User → API Gateway | Web gọi `GET /images` kèm token (dùng chung đường mũi tên với bước 3) |
 | 10a | API Gateway → Lambda `get-images` | API Gateway gọi Lambda đọc kết quả |
-| 10b | `get-images` → DynamoDB | Truy vấn **chỉ theo `userId` lấy từ claim `sub` của token**, sắp xếp ảnh mới nhất trước; ảnh **APPROVED** được hiển thị qua Presigned URL GET ngắn hạn, không public |
+| 10b | `get-images` → DynamoDB | Truy vấn **chỉ theo `userId` lấy từ claim `sub` của token**, sắp xếp ảnh mới nhất trước; sinh Presigned GET URL ngắn hạn cho ảnh **APPROVED** |
+| 10c | S3 `imageguard-images` → User (Browser) | Trình duyệt dùng Presigned GET URL tải ảnh trực tiếp từ S3 về để hiển thị an toàn (không public bucket) |
 | 11 | 3 Lambda → CloudWatch | Ghi log và metric (Embedded Metric Format) |
 | 12 | CloudWatch → SNS | Alarm (lỗi Lambda, DLQ có message, API 5xx…) gửi email qua SNS |
 | — | IAM → 3 Lambda | Mỗi Lambda có một **IAM execution role** riêng theo Least Privilege (mục 4.3) |
