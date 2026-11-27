@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 5.8. </b> "
 ---
 
-**Trải nghiệm trực tiếp:** [https://d1726d6l9yiqcj.cloudfront.net/](https://d1726d6l9yiqcj.cloudfront.net/)
+**Trải nghiệm trực tiếp:** [https://imageguard-app.vercel.app/](https://imageguard-app.vercel.app/) | [https://d1726d6l9yiqcj.cloudfront.net/](https://d1726d6l9yiqcj.cloudfront.net/)
 
 **Video demo:** `[Dán link YouTube / Google Drive sau khi tải lên]` *(Bản video HD hoàn chỉnh đã được kết xuất sẵn tại `D:\ImageGuard_Review_VI.mp4` và bản tiếng Anh tại `D:\ImageGuard_Review_EN.mp4`)*
 

@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 5.8. </b> "
 ---
 
-**Live Demonstration:** [https://d1726d6l9yiqcj.cloudfront.net/](https://d1726d6l9yiqcj.cloudfront.net/)
+**Live Demonstration:** [https://imageguard-app.vercel.app/](https://imageguard-app.vercel.app/) | [https://d1726d6l9yiqcj.cloudfront.net/](https://d1726d6l9yiqcj.cloudfront.net/)
 
 **Demo Video:** `[Paste the YouTube / Google Drive link after recording]` *(Pre-rendered HD walkthrough available at `D:\ImageGuard_Review_VI.mp4` and English version at `D:\ImageGuard_Review_EN.mp4`)*
 
