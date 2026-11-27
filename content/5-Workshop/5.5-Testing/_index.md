@@ -17,10 +17,10 @@ pre: " <b> 5.5. </b> "
 | Unknown key | Upload a file with no PENDING item | No new item, no email |
 | DLQ | Set a wrong `TABLE_NAME`, invoke asynchronously | After 2 retries the DLQ holds a `RetriesExhausted` message, `approximateInvokeCount: 3` |
 
-![Gallery: APPROVED and REJECTED images](../../images/5-workshop/26-3-web-gallery.png)
+![Gallery: APPROVED and REJECTED images](../../images/5-workshop/26-3-web-gallery-v2.png)
 *Figure: Image Vault — automated moderation showing AI labels, APPROVED and REJECTED states*
 
-![Moderation Overview](../../images/5-workshop/26-2-web-overview.png)
+![Moderation Overview](../../images/5-workshop/26-2-web-overview-v2.png)
 *Figure: Moderation Overview — 50% pass rate KPI, Rekognition label frequency charts, and recent activity log*
 
 {{% notice note %}}

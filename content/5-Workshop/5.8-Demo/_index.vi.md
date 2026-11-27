@@ -17,25 +17,25 @@ pre: " <b> 5.8. </b> "
 ### 1. Trang chủ kiểm duyệt (Guest Landing Page)
 Giao diện trực quan tích hợp hiệu ứng đèn viền LED, giới thiệu quy trình 3 bước tự động và bảng tin công khai.
 
-![Trang chủ ImageGuard](../../../images/5-workshop/21-4-web-first-load.jpg)
+![Trang chủ ImageGuard](../../../images/5-workshop/21-4-web-first-load-v2.jpg)
 *Hình: Trang chủ ImageGuard phục vụ qua CloudFront với tiêu đề và nút Đăng nhập tích hợp Cognito*
 
 ### 2. Bảng điều khiển Tổng quan (Overview Dashboard)
 Theo dõi các chỉ số quan trọng (KPIs): tổng số ảnh, tỷ lệ duyệt đạt chuẩn 50%, số ảnh đã xuất bản, biểu đồ tần suất nhãn Rekognition và nhật ký hoạt động.
 
-![Tổng quan kiểm duyệt ImageGuard](../../../images/5-workshop/26-2-web-overview.png)
+![Tổng quan kiểm duyệt ImageGuard](../../../images/5-workshop/26-2-web-overview-v2.png)
 *Hình: Màn hình Tổng quan kiểm duyệt (Overview Dashboard)*
 
 ### 3. Kho ảnh cá nhân (Image Vault)
 Quản lý các ảnh đã tải lên, hiển thị chi tiết nhãn nhận diện, danh mục vi phạm bị chặn và nút xuất bản/thu hồi khỏi bảng tin công khai.
 
-![Kho ảnh cá nhân ImageGuard](../../../images/5-workshop/26-3-web-gallery.png)
+![Kho ảnh cá nhân ImageGuard](../../../images/5-workshop/26-3-web-gallery-v2.png)
 *Hình: Kho ảnh cá nhân với phân loại APPROVED (ảnh bia) và REJECTED (súng đồ chơi)*
 
 ### 4. Bảng tin công khai đã kiểm duyệt (Public Feed)
 Hiển thị danh sách các bức ảnh an toàn đã vượt qua kiểm duyệt AI tự động của Amazon Rekognition và được người dùng phê duyệt xuất bản công khai.
 
-![Bảng tin công khai ImageGuard](../../../images/5-workshop/26-4-web-feed.png)
+![Bảng tin công khai ImageGuard](../../../images/5-workshop/26-4-web-feed-v2.png)
 *Hình: Giao diện Bảng tin công khai (Public Feed) hiển thị trên màn hình máy tính (PC)*
 
 ---

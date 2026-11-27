@@ -17,10 +17,10 @@ pre: " <b> 5.5. </b> "
 | Key lạ | Upload file không có item PENDING | Không tạo item mới, không gửi email |
 | DLQ | Đổi `TABLE_NAME` sai rồi gọi Lambda bất đồng bộ | Sau 2 lần retry, DLQ có message `RetriesExhausted`, `approximateInvokeCount: 3` |
 
-![Gallery: ảnh APPROVED và REJECTED](../../../images/5-workshop/26-3-web-gallery.png)
+![Gallery: ảnh APPROVED và REJECTED](../../../images/5-workshop/26-3-web-gallery-v2.png)
 *Hình: Kho ảnh của tôi (Vault) — kiểm duyệt tự động hiển thị nhãn AI và phân loại APPROVED / REJECTED*
 
-![Tổng quan kiểm duyệt](../../../images/5-workshop/26-2-web-overview.png)
+![Tổng quan kiểm duyệt](../../../images/5-workshop/26-2-web-overview-v2.png)
 *Hình: Màn hình Tổng quan kiểm duyệt — thống kê tỷ lệ duyệt đạt chuẩn 50%, biểu đồ tần suất nhãn Rekognition và lịch sử hoạt động gần đây*
 
 {{% notice note %}}

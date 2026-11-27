@@ -227,7 +227,7 @@ Create 2 dedicated roles (least privilege), then 2 Python 3.12 arm64 functions, 
 2. **CloudFront → Create distribution**: S3 web bucket origin with **OAC**, Redirect HTTP to HTTPS, CachingOptimized, response headers **SecurityHeadersPolicy**, default root object `index.html`, WAF off.
 3. Bucket policy allows only `cloudfront.amazonaws.com` with `AWS:SourceArn` = the distribution ARN.
 
-![Figure 3.2 – ImageGuard served through CloudFront](../../images/5-workshop/21-4-web-first-load.jpg)
+![Figure 3.2 – ImageGuard served through CloudFront](../../images/5-workshop/21-4-web-first-load-v2.jpg)
 *Figure 3.2 – ImageGuard landing page served through CloudFront*
 
 
@@ -248,10 +248,10 @@ User pool `imageguard-users`, **email** sign-in, self sign-up enabled. App clien
 - CORS on the image bucket: allow `PUT, GET` from the CloudFront domain.
 - Fill in `config.js` (Cognito domain, client ID, redirect URI, API URL), upload it again, create a CloudFront invalidation for `/*`.
 
-![Figure 3.4 – End result: the user signs in, uploads images and sees APPROVED / REJECTED in the Image Vault](../../images/5-workshop/26-3-web-gallery.png)
+![Figure 3.4 – End result: the user signs in, uploads images and sees APPROVED / REJECTED in the Image Vault](../../images/5-workshop/26-3-web-gallery-v2.png)
 *Figure 3.4 – End result: the user signs in, uploads images and sees APPROVED / REJECTED in the Image Vault on PC*
 
-![Figure 3.5 – Batch upload dropzone interface on PC](../../images/5-workshop/26-5-web-upload.png)
+![Figure 3.5 – Batch upload dropzone interface on PC](../../images/5-workshop/26-5-web-upload-v2.png)
 *Figure 3.5 – Batch upload dropzone interface on PC*
 
 
