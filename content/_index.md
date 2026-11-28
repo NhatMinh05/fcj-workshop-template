@@ -22,6 +22,8 @@ chapter: false
 
 &emsp; **Student ID:** SE193041
 
+&emsp; **Class:** AITeamFPT
+
 &emsp; **Internship Company:** Amazon Web Services Viet Nam Company Limited
 
 &emsp; **Internship Position:**  First Cloud AI Journey (FCAJ) Intern
