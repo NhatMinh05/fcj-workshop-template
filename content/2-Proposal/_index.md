@@ -17,6 +17,11 @@ pre: " <b> 2. </b> "
 
 Results are stored in **Amazon DynamoDB** and shown in the web UI within seconds. The whole system follows an **event-driven**, **serverless** architecture: there are no servers to manage, and the team pays only for actual usage.
 
+**Target users:**
+- **End users:** members of a classifieds site, forum or student club who upload images and view their own images.
+- **Platform administrators:** people responsible for content moderation, who receive an email alert when an image violates the rules.
+- **Operations team:** monitors the system through the CloudWatch dashboard and alarms.
+
 ## 2. Problem Statement
 
 - Platforms that let users post images (classified ads, forums, community groups) receive many images every day. **Manual review** is labor-intensive and slow, and it exposes reviewers directly to harmful content.
@@ -101,8 +106,8 @@ The numbers in this table match the numbers on the arrows in Figure 1.
 | 9 | `process-image` → SQS DLQ | If the Lambda still fails after 2 retries, the event goes to the **dead-letter queue** for reprocessing |
 | 10 | User → API Gateway | The web app calls `GET /images` with the token (shares the arrow of step 3) |
 | 10a | API Gateway → Lambda `get-images` | API Gateway invokes the read Lambda |
-| 10b | `get-images` → DynamoDB | Queries **only by the `userId` taken from the token's `sub` claim**, newest first; generates short-lived presigned GET URLs for **APPROVED** images |
-| 10c | S3 `imageguard-images` → User (Browser) | The browser fetches the image directly from S3 via presigned GET URL to display securely without making the bucket public |
+| 10b | `get-images` → DynamoDB | Queries **only by the `userId` taken from the token's `sub` claim**, newest first; **APPROVED** images are shown through short-lived presigned GET URLs, never made public |
+| 10c | User → S3 `imageguard-images` | The browser loads approved images directly from S3 with the presigned GET URL (5 minutes); blocked images have no URL and are never served |
 | 11 | 3 Lambdas → CloudWatch | Write logs and metrics (Embedded Metric Format) |
 | 12 | CloudWatch → SNS | Alarms (Lambda errors, messages in the DLQ, API 5xx, …) send emails through SNS |
 | — | IAM → 3 Lambdas | Each Lambda has its own least-privilege **IAM execution role** (Section 4.3) |
@@ -141,27 +146,19 @@ The initial plan used **Amazon Bedrock** for invoice processing. During testing,
 
 Internship period: 14/09/2026 – 14/12/2026. Workshop submission deadline: **30/11/2026** (confirmed by FCAJ).
 
-### 5.1. Roles
+Every member must understand the whole architecture and be able to explain all of it, not only their own part.
 
-| Member | Main responsibility |
-|---|---|
-| Member A | Team lead, integration, IAM & security |
-| Member B | `process-image` Lambda, Rekognition integration, test image set and accuracy evaluation |
-| Member C | Cognito, API Gateway, `presign-upload` and `get-images` Lambdas |
-| Member D | Static web UI, S3 + CloudFront (OAC) |
-| Member E | CloudWatch, SNS, DLQ, cost estimation, clean-up guide |
-
-*Every member must understand the whole architecture and be able to explain all of it, not only their own part.*
-
-### 5.2. Weekly Timeline
+### 5.1. Weekly Timeline
 
 | Internship week | Dates | Tasks | Output |
 |---|---|---|---|
-| Week 7 | 26/10 – 01/11 | Finalize topic, write proposal v1.0; test Bedrock, discover the zero quota | Proposal v1.0, incident notes |
-| Week 8 | 02/11 – 08/11 | Request a quota increase (denied); switch to Rekognition, write proposal v2.0; create S3, DynamoDB, IAM roles; build the `process-image` Lambda + S3 event | Proposal v2.0, working image pipeline |
-| Week 9 | 09/11 – 15/11 | Cognito, API Gateway, the two API Lambdas; static site + CloudFront; CloudWatch metrics/alarms/dashboard, SNS, DLQ; testing; AWS Pricing Calculator; record the demo video | End-to-end demo, video, cost table |
-| Week 10 | 16/11 – 19/11 | Write the bilingual 5-Workshop section (step-by-step, testing, clean-up), take screenshots, finalize the diagram, peer review | **Submit workshop on 19/11** |
-| Week 10–12 | 20/11 – 14/12 | Apply mentor feedback, finish blogs and worklogs, clean up resources | Final report |
+| Week 7 | 26/10 – 01/11 | Pick the first topic (SmartDoc), write the first proposal, build the report site | SmartDoc proposal |
+| Week 8 | 02/11 – 08/11 | Test Amazon Nova Lite on Bedrock: zero quota, increase request denied | Incident noted, change of direction needed |
+| Week 9 | 09/11 – 15/11 | Test Amazon Rekognition, switch the topic to ImageGuard, rewrite the proposal, draw the architecture diagram | ImageGuard proposal, architecture diagram |
+| Week 10 | 16/11 – 22/11 | Deploy Steps 1–5 on AWS (S3, DynamoDB, SNS, SQS, IAM, 3 Lambdas, Cognito, API Gateway, CloudFront, CloudWatch), estimate costs, write the bilingual 5-Workshop section | End-to-end system, first workshop version |
+| Week 11 | 23/11 – 29/11 | Testing (security, batch, error cases), enable PITR, rebuild the web UI, prepare the team submission files (summary `.md`, architecture `.xml`), add explanations to section 5, record the demo video | Submission files, demo video |
+| Week 12 | 30/11 – 06/12 | **Submit the workshop (deadline 30/11/2026)**; apply mentor feedback if rejected; after grading, clean up AWS resources per section 5.7 | Approved workshop, no remaining cost |
+| After week 12 | 07/12 – 14/12 | Finish the internship report; the internship ends on 14/12/2026 | Final report |
 
 ## 6. Cost Estimation
 
@@ -216,3 +213,12 @@ During development and the demo (fewer than 300 images expected), Rekognition co
 - A monitoring setup with a CloudWatch dashboard, alarms and email alerts.
 - A bilingual workshop guide that can be reproduced from scratch, including testing, troubleshooting and clean-up.
 - Hands-on skills for the team: event-driven serverless architecture, IAM least privilege, AWS AI services, monitoring and cost optimization, and how to adapt when a service is quota-restricted.
+
+## 9. Future Work
+
+- **Better moderation accuracy:** per-category thresholds (for example a lower threshold for `Drugs & Tobacco` so smoking images are not missed), re-measured on a 20–50 image test set.
+- **Admin review step:** `REJECTED` images go to a queue for an administrator to confirm, reducing the impact of false positives (for example toy guns).
+- **Search and filter images by label, PNG support**, and a public feed for approved images.
+- **Infrastructure as Code:** move the CLI scripts to AWS SAM or CloudFormation and add CI/CD for automatic redeployment.
+- **Extra edge protection:** attach AWS WAF to CloudFront once there is real traffic.
+- **Deployment for Vietnamese users:** move to Region ap-southeast-1 (Singapore) for lower latency and personal-data rules.

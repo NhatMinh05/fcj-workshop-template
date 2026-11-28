@@ -6,50 +6,30 @@ chapter: false
 pre: " <b> 5.8. </b> "
 ---
 
-**Live Demonstration:** [https://imageguard-app.vercel.app/](https://imageguard-app.vercel.app/) | [https://d1726d6l9yiqcj.cloudfront.net/](https://d1726d6l9yiqcj.cloudfront.net/)
+**Live production:** <https://d2tm9q0ah83pvf.cloudfront.net/>
 
-**Demo Video:** `[Paste the YouTube / Google Drive link after recording]` *(Pre-rendered HD walkthrough available at `D:\ImageGuard_Review_VI.mp4` and English version at `D:\ImageGuard_Review_EN.mp4`)*
+**Demo video (2 minutes):** <https://pham-nhut-an.github.io/fcj-workshop/videos/imageguard-demo.mp4>
 
----
+<video controls preload="metadata" width="100%" style="max-width:960px;border-radius:8px">
+  <source src="https://pham-nhut-an.github.io/fcj-workshop/videos/imageguard-demo.mp4" type="video/mp4">
+  Your browser cannot play the video; open the link above.
+</video>
 
-## Core Application Screens in ImageGuard
-
-### 1. Guest Landing Page
-Intuitive modern UI with rotating LED beam effects, explaining the 3-step automated workflow and previewing the public feed.
-
-![ImageGuard Landing Page](../../images/5-workshop/21-4-web-first-load-v2.jpg)
-*Figure: ImageGuard guest landing page served through CloudFront with Cognito sign-in*
-
-### 2. Moderation Overview Dashboard
-High-level KPIs showing total items, 50% approval pass rate, published count, Rekognition label frequency charts, and recent activity timeline.
-
-![ImageGuard Overview Dashboard](../../images/5-workshop/26-2-web-overview-v2.png)
-*Figure: ImageGuard Moderation Overview Dashboard*
-
-### 3. Personal Image Vault
-User image management console showing AI label tags, blocked moderation categories, and publish / unpublish controls.
-
-![ImageGuard Vault](../../images/5-workshop/26-3-web-gallery-v2.png)
-*Figure: Image Vault displaying APPROVED (beer bottle) and REJECTED (wooden toy gun) classifications*
-
-### 4. Moderated Public Feed
-Displays verified safe images that passed automated Amazon Rekognition moderation and were published by users to the community feed.
-
-![ImageGuard Public Feed](../../images/5-workshop/26-4-web-feed-v2.png)
-*Figure: ImageGuard Public Feed interface on desktop PC*
-
----
-
-## Video script (5–7 minutes)
+## Video content
 
 | Time | Content |
 |---|---|
-| 0:00 | The problem and the architecture diagram (section 5.3) |
-| 1:00 | Open the site via CloudFront → sign in / sign up with Cognito |
-| 2:00 | Upload a beer image → **APPROVED** within seconds, labels shown |
-| 2:45 | Upload the toy gun → **REJECTED**, open the alert email (mention the false positive) |
-| 3:30 | DynamoDB: the item has `userId` = `sub`, `moderationLabels`, `labels` |
-| 4:00 | CloudWatch dashboard: APPROVED/REJECTED counts, processing time, alarms |
-| 4:45 | Security: API without a token → 401; direct S3 access → AccessDenied |
-| 5:30 | Cost: AWS Pricing Calculator, USD 8.37/month |
-| 6:00 | Summary and next steps (admin review of REJECTED images, AWS WAF, presigned POST with a size limit) |
+| 0:00 | ImageGuard home page via CloudFront (English UI) |
+| 0:04 | Redirect to Cognito Managed Login and sign up with an email; the password must meet the strength rules |
+| 0:40 | Enter the confirmation code Cognito emailed; the account is activated |
+| 0:52 | Signed in, back on the site with statistics, the upload box and an empty library |
+| 1:00 | Pick the motorbike image `xe.jpg` and upload it to S3 with a presigned URL |
+| 1:20 | A few seconds later the image is **APPROVED** with the labels Machine, Wheel, Motorcycle, Transportation, Vehicle, Scooter and a toast notification |
+| 1:28 | Pick the knife image `dao.jpg` and upload it; the library shows "Moderating…" |
+| 1:40 | The image becomes **REJECTED** with the **Violence** category; the blocked image is not displayed |
+| 1:44 | Open Gmail: the administrator received the SNS alert with `userId`, `imageId`, `s3Key`, `blockedCategories` |
+| 1:52 | Back on the site: 2 images, 1 approved, 1 blocked, average completion time about 3 seconds |
+
+The SNS unsubscribe link in the email is blurred, because anyone with that link could cancel the administrator's alert emails.
+
+Everything not shown in the video is covered in writing and screenshots in the other sections: architecture and design rationale (5.3), configuration of each service (5.4), DynamoDB data, CloudWatch, security and error-case tests (5.5), cost (5.6) and clean-up (5.7).

@@ -8,6 +8,10 @@ pre: " <b> 5.7. </b> "
 
 Sau khi chấm xong, xóa toàn bộ tài nguyên để không phát sinh chi phí. Làm theo thứ tự dưới đây vì có phụ thuộc (ví dụ phải tắt CloudFront trước khi xóa).
 
+{{% notice warning %}}
+Thao tác xóa **không hoàn tác được**. Tải ảnh, log hoặc số liệu cần giữ cho báo cáo về máy trước.
+{{% /notice %}}
+
 ## 1. CloudFront (làm trước, mất ~10 phút)
 **CloudFront → distribution `imageguard-web` → Disable** → đợi Status chuyển *Disabled* → **Delete**. Sau đó xóa Origin access control `imageguard-web-oac` (**Security → Origin access**).
 

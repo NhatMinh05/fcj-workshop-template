@@ -1,5 +1,5 @@
 ---
-title: "Bản đề xuất"
+title: "Proposal"
 date: 2026-11-06
 weight: 2
 chapter: false
@@ -16,6 +16,11 @@ pre: " <b> 2. </b> "
 2. **Gắn nhãn (labeling):** với ảnh hợp lệ, tự động sinh nhãn mô tả nội dung (ví dụ *Laptop*, *Bicycle*, *Book*) để người dùng biết nhanh ảnh chứa gì và quản trị viên dễ tra cứu khi cần.
 
 Kết quả được lưu vào **Amazon DynamoDB** và hiển thị trên giao diện web chỉ sau vài giây. Toàn bộ hệ thống chạy theo kiến trúc **hướng sự kiện (event-driven)** và **serverless**: không có máy chủ nào phải quản lý, chỉ trả tiền theo lượt sử dụng.
+
+**Đối tượng sử dụng:**
+- **Người dùng cuối:** thành viên của trang rao vặt, diễn đàn hoặc câu lạc bộ sinh viên, cần đăng ảnh và xem lại ảnh của mình.
+- **Quản trị viên nền tảng:** người chịu trách nhiệm kiểm duyệt nội dung, nhận email cảnh báo khi có ảnh vi phạm.
+- **Đội vận hành:** theo dõi hệ thống qua CloudWatch Dashboard và Alarms.
 
 ## 2. Vấn đề cần giải quyết
 
@@ -101,8 +106,8 @@ Số thứ tự trong bảng trùng với số trên các mũi tên ở Hình 1.
 | 9 | `process-image` → SQS DLQ | Nếu Lambda vẫn lỗi sau 2 lần thử lại, sự kiện được đưa vào **Dead-Letter Queue** để xử lý lại |
 | 10 | User → API Gateway | Web gọi `GET /images` kèm token (dùng chung đường mũi tên với bước 3) |
 | 10a | API Gateway → Lambda `get-images` | API Gateway gọi Lambda đọc kết quả |
-| 10b | `get-images` → DynamoDB | Truy vấn **chỉ theo `userId` lấy từ claim `sub` của token**, sắp xếp ảnh mới nhất trước; sinh Presigned GET URL ngắn hạn cho ảnh **APPROVED** |
-| 10c | S3 `imageguard-images` → User (Browser) | Trình duyệt dùng Presigned GET URL tải ảnh trực tiếp từ S3 về để hiển thị an toàn (không public bucket) |
+| 10b | `get-images` → DynamoDB | Truy vấn **chỉ theo `userId` lấy từ claim `sub` của token**, sắp xếp ảnh mới nhất trước; ảnh **APPROVED** được hiển thị qua Presigned URL GET ngắn hạn, không public |
+| 10c | User → S3 `imageguard-images` | Trình duyệt tải ảnh đã duyệt thẳng từ S3 bằng presigned GET URL (5 phút); ảnh bị chặn không có URL nên không bao giờ được hiển thị |
 | 11 | 3 Lambda → CloudWatch | Ghi log và metric (Embedded Metric Format) |
 | 12 | CloudWatch → SNS | Alarm (lỗi Lambda, DLQ có message, API 5xx…) gửi email qua SNS |
 | — | IAM → 3 Lambda | Mỗi Lambda có một **IAM execution role** riêng theo Least Privilege (mục 4.3) |
@@ -141,27 +146,19 @@ Phương án ban đầu dùng **Amazon Bedrock** để xử lý hóa đơn. Khi 
 
 Thời gian thực tập: 14/09/2026 – 14/12/2026. Hạn nộp Workshop: **30/11/2026** (theo thông báo của FCAJ).
 
-### 5.1. Phân công vai trò
+Mỗi thành viên phải hiểu toàn bộ kiến trúc và tự giải thích được tất cả các phần, không chỉ phần mình phụ trách.
 
-| Thành viên | Vai trò chính |
-|---|---|
-| Thành viên A | Trưởng nhóm, tích hợp hệ thống, IAM & bảo mật |
-| Thành viên B | Lambda `process-image`, tích hợp Rekognition, bộ ảnh thử nghiệm và đánh giá độ chính xác |
-| Thành viên C | Cognito, API Gateway, Lambda `presign-upload` và `get-images` |
-| Thành viên D | Giao diện web tĩnh, S3 + CloudFront (OAC) |
-| Thành viên E | CloudWatch, SNS, DLQ, dự toán chi phí, hướng dẫn Clean-up |
-
-*Mỗi thành viên phải hiểu toàn bộ kiến trúc và tự giải thích được tất cả các phần, không chỉ phần mình phụ trách.*
-
-### 5.2. Timeline theo tuần
+### 5.1. Timeline theo tuần
 
 | Tuần thực tập | Thời gian | Công việc | Đầu ra |
 |---|---|---|---|
-| Week 7 | 26/10 – 01/11 | Chốt đề tài, viết Proposal v1.0; thử Bedrock, phát hiện quota bằng 0 | Proposal v1.0, ghi nhận sự cố |
-| Week 8 | 02/11 – 08/11 | Xin tăng quota (bị từ chối); đổi sang Rekognition, viết Proposal v2.0; tạo S3, DynamoDB, IAM Role; viết Lambda `process-image` + S3 Event | Proposal v2.0, pipeline xử lý ảnh chạy được |
-| Week 9 | 09/11 – 15/11 | Cognito, API Gateway, 2 Lambda API; web tĩnh + CloudFront; CloudWatch metrics/alarms/dashboard, SNS, DLQ; kiểm thử; AWS Pricing Calculator; quay video demo | Demo end-to-end, video, bảng chi phí |
-| Week 10 | 16/11 – 19/11 | Viết mục 5-Workshop song ngữ (step-by-step, testing, clean-up), chụp screenshot, hoàn thiện sơ đồ kiến trúc, rà soát chéo | **Nộp workshop 19/11** |
-| Week 10–12 | 20/11 – 14/12 | Sửa theo góp ý mentor, hoàn thiện blog và worklog, dọn tài nguyên | Báo cáo hoàn chỉnh |
+| Week 7 | 26/10 – 01/11 | Chốt hướng đề tài đầu tiên (SmartDoc), viết Proposal đầu tiên, dựng website báo cáo | Proposal SmartDoc |
+| Week 8 | 02/11 – 08/11 | Thử Amazon Nova Lite trên Bedrock: quota bằng 0, yêu cầu tăng quota bị từ chối | Ghi nhận sự cố, cần đổi hướng |
+| Week 9 | 09/11 – 15/11 | Thử Amazon Rekognition, đổi đề tài sang ImageGuard, viết lại Proposal, vẽ sơ đồ kiến trúc | Proposal ImageGuard, sơ đồ kiến trúc |
+| Week 10 | 16/11 – 22/11 | Triển khai Step 1–5 trên AWS (S3, DynamoDB, SNS, SQS, IAM, 3 Lambda, Cognito, API Gateway, CloudFront, CloudWatch), dự toán chi phí, viết mục 5-Workshop song ngữ | Hệ thống chạy end-to-end, Workshop bản đầu |
+| Week 11 | 23/11 – 29/11 | Kiểm thử (bảo mật, hàng loạt, kịch bản lỗi), bật PITR, làm lại giao diện web, soạn file nộp nhóm (summary `.md`, architecture `.xml`), bổ sung giải thích mục 5, quay video demo | Bộ file nộp, video demo |
+| Week 12 | 30/11 – 06/12 | **Nộp Workshop (hạn 30/11/2026)**; sửa theo góp ý của mentor nếu bị Reject; có kết quả thì dọn tài nguyên AWS theo mục 5.7 | Workshop được duyệt, không còn chi phí |
+| Sau Week 12 | 07/12 – 14/12 | Hoàn tất báo cáo thực tập, kết thúc kỳ thực tập (14/12/2026) | Báo cáo hoàn chỉnh |
 
 ## 6. Dự toán chi phí (Cost Estimation)
 
@@ -216,3 +213,12 @@ Trong giai đoạn phát triển và demo (dự kiến < 300 ảnh), chi phí Re
 - Hệ thống giám sát gồm CloudWatch Dashboard, Alarms và email cảnh báo.
 - Tài liệu workshop song ngữ, có thể triển khai lại từ đầu, kèm phần Testing, Troubleshooting và Clean-up.
 - Nhóm nắm vững các kiến thức thực tế: kiến trúc event-driven serverless, IAM Least Privilege, dịch vụ AI của AWS, giám sát và tối ưu chi phí, cũng như cách xử lý khi một dịch vụ bị giới hạn quota.
+
+## 9. Hướng phát triển
+
+- **Cải thiện độ chính xác kiểm duyệt:** đặt ngưỡng riêng cho từng danh mục (ví dụ hạ ngưỡng `Drugs & Tobacco` để không bỏ sót ảnh hút thuốc) và đo lại trên bộ ảnh thử 20–50 ảnh.
+- **Bước quản trị viên duyệt lại:** ảnh `REJECTED` đưa vào hàng chờ để quản trị viên xác nhận, giảm thiệt hại do chặn nhầm (ví dụ súng đồ chơi).
+- **Tìm kiếm và lọc ảnh theo nhãn, hỗ trợ thêm PNG**, bảng tin công khai cho ảnh đã duyệt.
+- **Hạ tầng dưới dạng mã (IaC):** chuyển các script CLI sang AWS SAM hoặc CloudFormation và thêm CI/CD để triển khai lại tự động.
+- **Bảo vệ thêm lớp ngoài:** gắn AWS WAF cho CloudFront khi có lượng người dùng thật.
+- **Triển khai cho người dùng Việt Nam:** chuyển sang Region ap-southeast-1 (Singapore) để giảm độ trễ và đáp ứng quy định về dữ liệu cá nhân.

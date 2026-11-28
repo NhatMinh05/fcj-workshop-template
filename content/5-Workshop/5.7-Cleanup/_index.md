@@ -8,6 +8,10 @@ pre: " <b> 5.7. </b> "
 
 After grading, delete every resource to avoid charges. Follow this order because of dependencies (e.g. CloudFront must be disabled before deletion).
 
+{{% notice warning %}}
+Deletion **cannot be undone**. Download any images, logs or figures you need for the report first.
+{{% /notice %}}
+
 ## 1. CloudFront (first, takes ~10 minutes)
 **CloudFront → distribution `imageguard-web` → Disable** → wait for *Disabled* → **Delete**. Then delete the origin access control `imageguard-web-oac` (**Security → Origin access**).
 
